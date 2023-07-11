@@ -89,7 +89,8 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       _pollBalanceAndAccountDetails(); // kick one off immediately
     }
 
-    _accountListener = UserPreferences().cachedDiscoveredAccounts.stream().listen((accounts) {
+    _accountListener =
+        UserPreferences().cachedDiscoveredAccounts.stream().listen((accounts) {
       // guard changes in accounts availability
       if (!accounts.contains(_selectedAccount)) {
         setState(() {
@@ -439,9 +440,10 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
         Flexible(child: _buildAccountBalance()),
         Expanded(
           child: AccountChart(
-              lotteryPot: _lotteryPot,
-              efficiency: _marketConditions?.efficiency,
-              transactions: _transactions),
+            lotteryPot: _lotteryPot,
+            efficiency: _marketConditions?.efficiency,
+            transactions: _transactions,
+          ),
         )
       ],
     );
