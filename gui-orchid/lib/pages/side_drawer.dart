@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:orchid/api/orchid_api.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_log_api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/app_colors.dart';

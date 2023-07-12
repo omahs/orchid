@@ -13,7 +13,7 @@ import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/util/json.dart';
 import 'package:orchid/util/units.dart';
 import 'package:web3dart/crypto.dart';
-import '../orchid_api.dart';
+import '../vpn/orchid_api.dart';
 import '../orchid_crypto.dart';
 import '../orchid_log_api.dart';
 import '../orchid_platform.dart';

@@ -24,7 +24,7 @@ import 'package:orchid/orchid/orchid_action_button.dart';
 import 'package:orchid/orchid/orchid_logo.dart';
 import 'package:orchid/pages/circuit/model/orchid_hop.dart';
 import 'package:orchid/common/app_dialogs.dart';
-import 'package:orchid/api/orchid_api.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/pages/connect/release.dart';
 import 'package:orchid/pages/connect/welcome_panel.dart';
 import 'package:orchid/util/units.dart';

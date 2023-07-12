@@ -4,7 +4,7 @@ import 'package:orchid/orchid.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:orchid/api/orchid_api.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/common/app_colors.dart';
 import 'package:orchid/common/app_text.dart';
 import 'package:orchid/common/app_buttons.dart';

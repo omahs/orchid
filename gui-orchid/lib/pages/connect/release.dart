@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:orchid/api/orchid_api.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:orchid/api/orchid_api.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_api_real.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/pages/app_routes.dart';

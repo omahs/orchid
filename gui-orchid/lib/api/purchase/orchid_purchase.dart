@@ -6,7 +6,7 @@ import 'package:orchid/api/configuration/orchid_user_config/orchid_user_config.d
 import 'package:orchid/api/preferences/user_secure_storage.dart';
 import 'package:orchid/api/purchase/purchase_rate.dart';
 import 'package:orchid/util/units.dart';
-import '../orchid_api.dart';
+import '../vpn/orchid_api.dart';
 import '../orchid_platform.dart';
 import 'android_purchase.dart';
 import 'ios_purchase.dart';

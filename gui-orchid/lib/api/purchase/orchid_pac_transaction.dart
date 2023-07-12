@@ -10,7 +10,7 @@ import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/util/hex.dart';
 import 'package:orchid/util/json.dart';
 
-import '../orchid_api.dart';
+import '../vpn/orchid_api.dart';
 import '../orchid_crypto.dart';
 import '../orchid_platform.dart';
 

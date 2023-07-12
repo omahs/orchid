@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import '../orchid_api.dart';
+import '../vpn/orchid_api.dart';
 import '../orchid_log_api.dart';
 import 'orchid_pac.dart';
 import 'orchid_pac_server.dart';
