@@ -6,7 +6,7 @@ import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_market_v1.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_urls.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/common/formatting.dart';

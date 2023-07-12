@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orchid/api/configuration/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_language.dart';
-import 'package:orchid/api/orchid_log_api.dart';
-import 'package:orchid/api/orchid_platform.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
 
 import 'orchid_widget_home.dart';

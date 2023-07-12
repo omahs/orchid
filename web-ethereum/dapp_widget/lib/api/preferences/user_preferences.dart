@@ -3,7 +3,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../orchid_eth/orchid_chain_config.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import 'chain_config_preferences.dart';
 import 'user_configured_chain_preferences.dart';
 
