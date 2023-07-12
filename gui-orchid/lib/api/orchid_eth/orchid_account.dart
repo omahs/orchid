@@ -9,7 +9,7 @@ import 'package:orchid/api/orchid_eth/v1/orchid_market_v1.dart';
 import 'package:orchid/api/orchid_log_api.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/util/cacheable.dart';
-import '../orchid_budget_api.dart';
+import 'orchid_lottery.dart';
 import 'orchid_market.dart';
 
 /// The base model for accounts including chain, signer, funder, and contract version.

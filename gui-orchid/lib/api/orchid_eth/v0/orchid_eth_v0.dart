@@ -9,7 +9,7 @@ import 'package:orchid/util/units.dart';
 
 import '../abi_encode.dart';
 import '../orchid_account.dart';
-import '../../orchid_budget_api.dart';
+import '../orchid_lottery.dart';
 import '../../orchid_crypto.dart';
 import 'orchid_contract_v0.dart';
 

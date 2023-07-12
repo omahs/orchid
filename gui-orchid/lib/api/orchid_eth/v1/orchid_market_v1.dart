@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'package:orchid/api/orchid_log_api.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
-import 'package:orchid/api/orchid_budget_api.dart';
+import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import '../chains.dart';
 import '../token_type.dart';
 import 'orchid_contract_v1.dart';

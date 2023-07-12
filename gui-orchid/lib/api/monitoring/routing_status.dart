@@ -1,7 +1,6 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/monitoring/http_unix_client.dart';
-import 'package:orchid/api/orchid_types.dart';
 import 'package:rxdart/rxdart.dart';
 import '../orchid_api.dart';
 import '../orchid_log_api.dart';

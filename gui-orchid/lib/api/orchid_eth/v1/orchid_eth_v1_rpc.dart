@@ -13,7 +13,7 @@ import 'package:orchid/util/hex.dart';
 import '../abi_encode.dart';
 import '../chains.dart';
 import '../orchid_account.dart';
-import '../../orchid_budget_api.dart';
+import '../orchid_lottery.dart';
 import '../../orchid_crypto.dart';
 import '../v0/orchid_contract_v0.dart';
 import 'orchid_contract_v1.dart';

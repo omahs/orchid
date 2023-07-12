@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:orchid/api/monitoring/analysis_db.dart';
 import 'package:orchid/api/monitoring/restart_manager.dart';
 import 'package:orchid/api/orchid_api.dart';
-import 'package:orchid/api/orchid_types.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 import 'configuration/orchid_vpn_config/orchid_vpn_config_generate.dart';

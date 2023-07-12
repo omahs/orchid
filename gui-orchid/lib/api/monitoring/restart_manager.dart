@@ -1,6 +1,5 @@
 // @dart=2.9
 import 'dart:async';
-import 'package:orchid/api/orchid_types.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 import '../orchid_api.dart';

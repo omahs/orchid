@@ -3,7 +3,7 @@ import 'package:orchid/orchid.dart';
 import 'dart:async';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/services.dart';
-import 'package:orchid/api/orchid_budget_api.dart';
+import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';

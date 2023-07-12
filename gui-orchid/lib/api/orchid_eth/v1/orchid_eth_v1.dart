@@ -2,7 +2,7 @@
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import '../chains.dart';
 import '../orchid_account.dart';
-import '../../orchid_budget_api.dart';
+import '../orchid_lottery.dart';
 import '../../orchid_crypto.dart';
 import 'orchid_eth_v1_rpc.dart';
 

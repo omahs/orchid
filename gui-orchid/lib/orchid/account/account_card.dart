@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:orchid/api/orchid_budget_api.dart';
+import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/orchid/account_chart.dart';
