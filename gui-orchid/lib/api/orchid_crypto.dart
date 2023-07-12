@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:orchid/util/hex.dart';

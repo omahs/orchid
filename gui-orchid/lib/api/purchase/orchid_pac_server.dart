@@ -15,7 +15,7 @@ import 'package:orchid/util/units.dart';
 import 'package:web3dart/crypto.dart';
 import '../vpn/orchid_api.dart';
 import '../orchid_crypto.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import '../orchid_platform.dart';
 import 'orchid_pac_seller.dart';
 import 'orchid_pac_transaction.dart';

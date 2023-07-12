@@ -7,7 +7,7 @@ import 'package:orchid/api/preferences/user_preferences.dart';
 
 import 'package:orchid/api/purchase/purchase_rate.dart';
 
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 
 // TODO: Stand-in until we have support for MacOS
 class NonSecureStorage {

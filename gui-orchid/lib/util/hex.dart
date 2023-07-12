@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 
 class Hex {
   static String remove0x(String text) {

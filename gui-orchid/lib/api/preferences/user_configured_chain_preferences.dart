@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import 'observable_preference.dart';
 
 class ObservableUserConfiguredChainPreference

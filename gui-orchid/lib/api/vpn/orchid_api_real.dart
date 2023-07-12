@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 import '../configuration/orchid_vpn_config/orchid_vpn_config_generate.dart';
 import '../monitoring/routing_status.dart';
 import '../orchid_eth/chains.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 
 class RealOrchidAPI implements OrchidAPI {
   static final RealOrchidAPI _singleton = RealOrchidAPI._internal();

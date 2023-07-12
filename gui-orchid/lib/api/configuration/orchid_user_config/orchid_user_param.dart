@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'dart:ui';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/hex.dart';
 
 /// This supports user supplied parameters via the URL parameters in the web

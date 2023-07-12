@@ -11,7 +11,7 @@ import '../orchid_platform.dart';
 import 'android_purchase.dart';
 import 'ios_purchase.dart';
 import 'orchid_pac.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import 'orchid_pac_server.dart';
 import 'orchid_pac_transaction.dart';
 

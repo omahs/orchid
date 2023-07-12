@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:orchid/pages/circuit/model/circuit_hop.dart';
 import 'package:orchid/pages/circuit/model/orchid_hop.dart';
-import '../../orchid_log_api.dart';
+import '../../orchid_log.dart';
 
 class OrchidVPNConfigGenerate {
   /// Generate the circuit hops list portion of the VPN config managed by the UI.

@@ -6,7 +6,7 @@ import 'package:orchid/api/configuration/orchid_user_config/orchid_user_config.d
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/uniswap_v3_contract.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/cacheable.dart';
 import 'package:orchid/util/hex.dart';
 

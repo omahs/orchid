@@ -16,7 +16,7 @@ import 'package:orchid/util/hex.dart';
 import 'package:orchid/util/units.dart';
 import 'package:web3dart/crypto.dart';
 import '../orchid_crypto.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import 'package:convert/convert.dart';
 import 'dart:convert' show utf8;
 

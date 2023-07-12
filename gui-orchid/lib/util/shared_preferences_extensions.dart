@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 extension SharedPreferencesUtil on SharedPreferences {

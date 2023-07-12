@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:orchid/api/configuration/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/util/hex.dart';
 import 'package:orchid/util/units.dart';

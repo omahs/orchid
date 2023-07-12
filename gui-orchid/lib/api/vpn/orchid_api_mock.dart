@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 import '../monitoring/analysis_db.dart';
 import '../monitoring/restart_manager.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 
 ///
 /// Mock Orchid App Channel API Implementation

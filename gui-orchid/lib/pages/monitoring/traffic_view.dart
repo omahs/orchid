@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:orchid/api/monitoring/restart_manager.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orchid/api/monitoring/analysis_db.dart';

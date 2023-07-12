@@ -10,7 +10,7 @@ import 'package:orchid/api/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 import 'accounts_preferences.dart';
 import 'chain_config_preferences.dart';
 

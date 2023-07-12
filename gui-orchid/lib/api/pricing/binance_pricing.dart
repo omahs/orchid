@@ -2,7 +2,7 @@
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'orchid_pricing.dart';
 

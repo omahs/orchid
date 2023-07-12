@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_action_button.dart';
 import 'package:orchid/util/test_app.dart';

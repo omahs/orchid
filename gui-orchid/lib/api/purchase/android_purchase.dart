@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import '../vpn/orchid_api.dart';
 import 'orchid_pac.dart';
 import 'orchid_pac_server.dart';
