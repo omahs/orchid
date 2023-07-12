@@ -209,36 +209,6 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
     }
   }
 
-  /*
-  /// Import an identity and set it as the default.
-  static void setDefaultIdentityFromString(String config) async {
-    log("xxx: set default identity from string: $config");
-    var existingKeys = await UserPreferences().getKeys();
-    var result =
-        OrchidAccountImport.parseOrchidIdentity(config, existingKeys);
-    if (result.isNew) {
-      await UserPreferences().addKey(result.signer);
-    }
-
-    // Do wait for account discovery
-    var accountStore = AccountStore();
-    // Set it as the active identity and pick the first account found
-    await accountStore.setActiveIdentity(result.signer);
-    await accountStore.load();
-    try {
-      await accountStore.setActiveAccount(accountStore.accounts.first);
-    } catch (err) {
-      log("set default identity: unable to find account: $err");
-    }
-  }
-   */
-
-  /// Get the logging API.
-  @override
-  OrchidLogAPI logger() {
-    return OrchidLogAPI.defaultLogAPI;
-  }
-
   /// Trigger a request for OS level permissions required to allow installation and activation of the
   /// Orchid VPN networking extension, potentially causing the OS to prompt the user.
   /// Returns true if the permission was granted.
@@ -307,7 +277,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
   }
 
   void _setConnectionState(OrchidVPNExtensionState state) {
-    logger().write('Connection state: $state');
+    log('Connection state: $state');
     vpnExtensionStatus.add(state);
   }
 

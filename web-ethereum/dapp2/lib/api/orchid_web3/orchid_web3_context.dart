@@ -10,7 +10,7 @@ import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_contract_v1.dart';
 import 'package:orchid/api/orchid_web3/orchid_erc20.dart';
 import 'package:orchid/api/orchid_web3/wallet_connect_eth_provider.dart';
-import '../orchid_log_api.dart';
+import '../orchid_log.dart';
 
 /// This class abstracts over the flutter_web3 ethereum and wallet connect providers
 /// and provides access to chain and wallet info for the current connection.

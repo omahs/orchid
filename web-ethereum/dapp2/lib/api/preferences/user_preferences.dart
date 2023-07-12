@@ -6,7 +6,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_configured_chain_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:orchid/api/orchid_eth/orchid_chain_config.dart';
-import 'package:orchid/api/orchid_log_api.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'accounts_preferences.dart';
 import 'chain_config_preferences.dart';
 import 'dapp_transaction.dart';

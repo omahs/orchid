@@ -162,12 +162,6 @@ class RealOrchidAPI implements OrchidAPI {
     }
   }
 
-  /// Get the logging API.
-  @override
-  OrchidLogAPI logger() {
-    return OrchidLogAPI.defaultLogAPI;
-  }
-
   @override
   Future<bool> requestVPNPermission() {
     return _platform.invokeMethod('install');

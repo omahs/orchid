@@ -12,7 +12,7 @@ import 'api/orchid_platform.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences.init();
-  OrchidAPI().logger().write("App Startup");
+  log("App Startup");
   FlutterError.onError = (FlutterErrorDetails details) {
     print("FlutterError:  ${details.exception}");
     print("FlutterError:  ${details.stack}");

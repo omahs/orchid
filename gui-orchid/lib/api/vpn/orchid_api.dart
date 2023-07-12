@@ -45,9 +45,6 @@ abstract class OrchidAPI {
   /// that the UI has finished launching and all listeners have been established.
   Future<void> applicationReady();
 
-  /// Get the logging API.
-  OrchidLogAPI logger();
-
   /// Trigger a request for OS level permission to allow installation and activation of the
   /// Orchid VPN networking extension, potentially causing the OS to prompt the user.
   /// Returns true if the permission was granted.

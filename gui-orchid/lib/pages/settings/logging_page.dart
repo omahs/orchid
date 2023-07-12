@@ -34,7 +34,7 @@ class _LoggingPageState extends State<LoggingPage> {
   }
 
   OrchidLogAPI get logger {
-    return OrchidAPI().logger();
+    return OrchidLogAPI.defaultLogAPI;
   }
 
   @override

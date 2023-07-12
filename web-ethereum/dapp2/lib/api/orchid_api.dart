@@ -1,4 +1,4 @@
-import 'orchid_log_api.dart';
+import 'orchid_log.dart';
 
 class OrchidAPI {
   OrchidLogAPI logger() {
