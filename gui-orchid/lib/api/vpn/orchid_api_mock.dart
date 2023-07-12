@@ -2,15 +2,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
-import 'package:orchid/api/orchid_api_real.dart';
+import 'package:orchid/api/vpn/orchid_api_real.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/pages/app_routes.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import 'monitoring/analysis_db.dart';
-import 'monitoring/restart_manager.dart';
-import 'orchid_log_api.dart';
+import '../monitoring/analysis_db.dart';
+import '../monitoring/restart_manager.dart';
+import '../orchid_log_api.dart';
 
 ///
 /// Mock Orchid App Channel API Implementation

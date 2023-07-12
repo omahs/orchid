@@ -7,10 +7,10 @@ import 'package:orchid/api/monitoring/restart_manager.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:rxdart/rxdart.dart';
-import 'configuration/orchid_vpn_config/orchid_vpn_config_generate.dart';
-import 'monitoring/routing_status.dart';
-import 'orchid_eth/chains.dart';
-import 'orchid_log_api.dart';
+import '../configuration/orchid_vpn_config/orchid_vpn_config_generate.dart';
+import '../monitoring/routing_status.dart';
+import '../orchid_eth/chains.dart';
+import '../orchid_log_api.dart';
 
 class RealOrchidAPI implements OrchidAPI {
   static final RealOrchidAPI _singleton = RealOrchidAPI._internal();
