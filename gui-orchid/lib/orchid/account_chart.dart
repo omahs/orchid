@@ -8,10 +8,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
 import 'package:orchid/orchid/orchid_colors.dart';
 import 'package:orchid/orchid/orchid_text.dart';
-import 'loading.dart';
-import 'formatting.dart';
+import '../common/loading.dart';
+import '../common/formatting.dart';
 
-class AccountChart extends StatelessWidget {
+class OrchidAccountChart extends StatelessWidget {
   final LotteryPot lotteryPot;
   final double efficiency;
   final List<OrchidUpdateTransactionV0> transactions;
@@ -20,7 +20,7 @@ class AccountChart extends StatelessWidget {
   // Efficiency alert
   final bool alert;
 
-  const AccountChart({
+  const OrchidAccountChart({
     Key key,
     @required this.lotteryPot,
     @required this.efficiency,

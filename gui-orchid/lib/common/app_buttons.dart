@@ -288,30 +288,3 @@ class CopyTextButton extends StatelessWidget {
     );
   }
 }
-/*
-class CopyTextButton extends StatelessWidget {
-  const CopyTextButton({
-    Key key,
-    @required this.copyText,
-  }) : super(key: key);
-
-  final String copyText;
-
-  @override
-  Widget build(BuildContext context) {
-    var s = S.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        RoundedRectButton(
-            backgroundColor: Colors.deepPurple,
-            textColor: Colors.white,
-            text: s.copy,
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: copyText));
-            }),
-      ],
-    );
-  }
-}
-*/

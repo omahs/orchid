@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orchid/api/orchid_budget_api.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
-import 'package:orchid/common/account_chart.dart';
+import 'package:orchid/orchid/account_chart.dart';
 import 'package:orchid/common/gradient_border.dart';
 import 'package:orchid/common/tap_copy_text.dart';
 import 'package:orchid/orchid/field/token_value_widget_row.dart';

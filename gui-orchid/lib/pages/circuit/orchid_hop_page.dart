@@ -10,7 +10,7 @@ import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_eth_v0.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/common/account_chart.dart';
+import 'package:orchid/orchid/account_chart.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/instructions_view.dart';
@@ -439,7 +439,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       children: [
         Flexible(child: _buildAccountBalance()),
         Expanded(
-          child: AccountChart(
+          child: OrchidAccountChart(
             lotteryPot: _lotteryPot,
             efficiency: _marketConditions?.efficiency,
             transactions: _transactions,
