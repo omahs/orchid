@@ -1,7 +1,8 @@
 // @dart=2.9
+import 'package:orchid/api/vpn/purchase/orchid_purchase.dart';
+
 import 'orchid.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/api/purchase/orchid_purchase.dart';
 import 'package:orchid/pages/orchid_app.dart';
 import 'package:window_size/window_size.dart';
 import 'api/configuration/orchid_user_config/orchid_user_config.dart';

@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
-import '../vpn/orchid_api.dart';
+import '../orchid_api.dart';
 import 'orchid_pac.dart';
 import 'orchid_pac_server.dart';
 import 'orchid_pac_transaction.dart';

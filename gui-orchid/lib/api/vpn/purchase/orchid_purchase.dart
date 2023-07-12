@@ -3,17 +3,17 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:orchid/api/configuration/orchid_user_config/orchid_user_config.dart';
+import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/preferences/user_secure_storage.dart';
-import 'package:orchid/api/purchase/purchase_rate.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
+import 'package:orchid/api/vpn/purchase/purchase_rate.dart';
 import 'package:orchid/util/units.dart';
-import '../vpn/orchid_api.dart';
-import '../orchid_platform.dart';
 import 'android_purchase.dart';
 import 'ios_purchase.dart';
 import 'orchid_pac.dart';
-import '../orchid_log.dart';
 import 'orchid_pac_server.dart';
 import 'orchid_pac_transaction.dart';
+import 'package:orchid/api/orchid_log.dart';
 
 /// Support in-app purchase of purchased access credits (PACs).
 /// @See the iOS and Android implementations of this class.

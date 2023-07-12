@@ -3,16 +3,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/eth_transaction.dart';
 import 'package:orchid/api/orchid_language.dart';
+import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/util/hex.dart';
 import 'package:orchid/util/json.dart';
-
-import '../vpn/orchid_api.dart';
-import '../orchid_crypto.dart';
-import '../orchid_platform.dart';
 
 enum PacTransactionType {
   /// Legacy transaction

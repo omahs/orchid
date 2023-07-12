@@ -8,7 +8,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/orchid_urls.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/api/purchase/orchid_pac_transaction.dart';
+import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/orchid/account/account_card.dart';
 import 'package:orchid/orchid/account/account_selector.dart';
 import 'package:orchid/orchid/account/account_store.dart';
