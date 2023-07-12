@@ -12,10 +12,6 @@ class OrchidERC20 {
   final TokenType tokenType;
   final Contract _contract;
 
-  EthereumAddress get _erc20Address {
-    return tokenType.erc20Address;
-  }
-
   OrchidERC20({
     this.context,
     this.tokenType,
