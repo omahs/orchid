@@ -2,13 +2,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:orchid/api/monitoring/analysis_db.dart';
-import 'package:orchid/api/monitoring/restart_manager.dart';
+import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
+import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 import '../configuration/orchid_vpn_config/orchid_vpn_config_generate.dart';
-import '../monitoring/routing_status.dart';
+import 'monitoring/routing_status.dart';
 import '../orchid_eth/chains.dart';
 import '../orchid_log.dart';
 

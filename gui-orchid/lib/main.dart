@@ -5,7 +5,7 @@ import 'package:orchid/api/purchase/orchid_purchase.dart';
 import 'package:orchid/pages/orchid_app.dart';
 import 'package:window_size/window_size.dart';
 import 'api/configuration/orchid_user_config/orchid_user_config.dart';
-import 'api/monitoring/routing_status.dart';
+import 'api/vpn/monitoring/routing_status.dart';
 import 'api/vpn/orchid_api.dart';
 import 'api/orchid_platform.dart';
 

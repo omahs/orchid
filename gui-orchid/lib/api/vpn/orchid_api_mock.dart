@@ -8,8 +8,8 @@ import 'package:orchid/pages/app_routes.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import '../monitoring/analysis_db.dart';
-import '../monitoring/restart_manager.dart';
+import 'monitoring/analysis_db.dart';
+import 'monitoring/restart_manager.dart';
 import '../orchid_log.dart';
 
 ///

@@ -4,7 +4,7 @@ import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import '../vpn/orchid_api.dart';
+import '../orchid_api.dart';
 import 'iana.dart';
 import 'query_parser.dart';
 
