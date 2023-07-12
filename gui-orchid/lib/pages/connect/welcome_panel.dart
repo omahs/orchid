@@ -22,7 +22,7 @@ import 'package:orchid/orchid/orchid_circular_identicon.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
 import 'package:orchid/orchid/orchid_titled_panel.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/format_currency.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:styled_text/styled_text.dart';
 import '../app_routes.dart';

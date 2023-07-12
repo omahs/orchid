@@ -2,8 +2,8 @@
 import 'package:orchid/api/configuration/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/configuration/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
+import 'package:orchid/api/orchid_eth/tokens_legacy.dart';
 import 'package:orchid/util/hex.dart';
-import 'package:orchid/util/units.dart';
 
 class OrchidContractV0 {
   // The final lottery V0 contract address on Ethereum main net.

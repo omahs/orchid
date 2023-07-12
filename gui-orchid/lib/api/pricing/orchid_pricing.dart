@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/cacheable.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/usd.dart';
 
 /// Token Exchange rates
 class OrchidPricing {
@@ -85,5 +85,18 @@ abstract class ExchangeRateSource {
       throw Exception("invalid rate: $rate");
     }
     return 1.0 / rate;
+  }
+}
+
+class FixedPriceToken extends ExchangeRateSource {
+  final USD usdPrice;
+
+  static const zero = const FixedPriceToken(USD.zero);
+
+  const FixedPriceToken(this.usdPrice);
+
+  @override
+  Future<double> tokenToUsdRate(TokenType tokenType) async {
+    return usdPrice.value;
   }
 }

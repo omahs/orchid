@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:math';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/api/orchid_eth/tokens_legacy.dart';
 import '../../pricing/orchid_pricing_v0.dart';
 import '../orchid_market.dart';
 import '../chains.dart';

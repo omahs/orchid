@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:orchid/api/orchid_crypto.dart';
+import 'package:uuid/uuid.dart';
 
 /// A simple widget that rebuilds at an interval
 class TimedBuilder<T> extends StatefulWidget {
@@ -40,7 +40,7 @@ class _TimedBuilderState<T> extends State<TimedBuilder<T>> {
     super.initState();
     _timer = Timer.periodic(widget.duration, _update);
     _update(null); // invoke immediately
-    _name = Crypto.uuid();
+    _name = Uuid().v4();
   }
 
   void _update(_) async {

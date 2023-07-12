@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/foundation.dart';
-import 'package:orchid/util/units.dart';
 import 'package:intl/intl.dart';
+import 'package:orchid/util/usd.dart';
 
 /// A purchased access credit with a localized price and product id.
 class PAC {

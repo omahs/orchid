@@ -7,7 +7,7 @@ import 'package:orchid/api/pricing/orchid_pricing_v0.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/common/link_text.dart';
 import 'package:orchid/orchid.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/format_currency.dart';
 
 class MarketStatsDialog {
   static Future<void> show({

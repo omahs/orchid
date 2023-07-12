@@ -5,9 +5,10 @@ import 'package:orchid/api/pricing/coingecko_pricing.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/api/pricing/uniswap_pricing.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/usd.dart';
 import 'chains.dart';
 import 'token_type.dart';
+export 'tokens_legacy.dart';
 
 class Tokens {
   // Indicates that we do not have a source for pricing information for the token.
@@ -179,15 +180,3 @@ class Tokens {
   ];
 }
 
-class FixedPriceToken extends ExchangeRateSource {
-  final USD usdPrice;
-
-  static const zero = const FixedPriceToken(USD.zero);
-
-  const FixedPriceToken(this.usdPrice);
-
-  @override
-  Future<double> tokenToUsdRate(TokenType tokenType) async {
-    return usdPrice.value;
-  }
-}

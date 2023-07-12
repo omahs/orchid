@@ -9,7 +9,7 @@ import 'package:orchid/orchid/field/orchid_labeled_text_field.dart';
 import 'package:orchid/orchid/orchid_action_button.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
 import 'package:orchid/util/hex.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/usd.dart';
 
 class UserConfiguredChainPanel extends StatefulWidget {
   const UserConfiguredChainPanel({Key? key}) : super(key: key);

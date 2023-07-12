@@ -16,7 +16,8 @@ import 'package:orchid/orchid/orchid_circular_identicon.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
 import 'package:orchid/util/timed_builder.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/format_currency.dart';
+import 'package:orchid/util/usd.dart';
 import '../orchid_panel.dart';
 import 'account_detail_poller.dart';
 

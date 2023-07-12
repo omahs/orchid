@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/util/polling_builder.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/usd.dart';
 
 // TODO: expand to multi-token, selectable currency
 class TokenPriceBuilder extends StatelessWidget {

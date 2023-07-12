@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:orchid/api/orchid_crypto.dart';
+import 'package:uuid/uuid.dart';
 
 /// A builder widget that polls an async resource requiring disposal.
 class PollingBuilder<T> extends StatefulWidget {
@@ -47,7 +47,7 @@ class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
     super.initState();
     _timer = Timer.periodic(widget.duration, _update);
     _update(null); // invoke immediately
-    _name = Crypto.uuid();
+    _name = Uuid().v4();
   }
 
   void _update(_) async {

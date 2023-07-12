@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import '../orchid_crypto.dart';
 import 'chains.dart';
-import 'package:orchid/util/units.dart' as units;
+import 'package:orchid/util/format_currency.dart' as units;
 
 // Token type
 // Note: Unfortunately Dart does not have a polyomorphic 'this' type so the
@@ -264,3 +264,4 @@ class Token {
     return 'Token{type: ${type.symbol}, floatValue: $floatValue}';
   }
 }
+
