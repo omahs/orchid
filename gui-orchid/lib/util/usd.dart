@@ -1,36 +1,13 @@
 // @dart=2.9
 import 'package:flutter/widgets.dart';
-import 'package:orchid/util/localization.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
+import 'package:orchid/util/localization.dart';
 import 'format_currency.dart';
-
-final _formatCurrency = formatCurrency;
-
-class ScalarValue<T extends num> {
-  final T value;
-
-  const ScalarValue(this.value);
-
-  String toString() {
-    return value.toString();
-  }
-
-  // Note: This is *not* locale sensitive. See NumberFormat.
-  // @See formatCurrency()
-  String toStringAsFixed(int len) {
-    return value.toStringAsFixed(len);
-  }
-
-  bool operator ==(o) => o is ScalarValue<T> && o.value == value;
-
-  int get hashCode => value.hashCode;
-}
 
 class USD extends ScalarValue<double> {
   static const zero = USD(0.0);
 
-  // TODO: rebase on pennies?
   const USD(double value) : super(value);
 
   USD multiplyDouble(double other) {
@@ -81,5 +58,27 @@ class USD extends ScalarValue<double> {
         showPrefix: false,
         showSuffix: showSuffix);
   }
+}
+
+final _formatCurrency = formatCurrency;
+
+class ScalarValue<T extends num> {
+  final T value;
+
+  const ScalarValue(this.value);
+
+  String toString() {
+    return value.toString();
+  }
+
+  // Note: This is *not* locale sensitive. See NumberFormat.
+  // @See formatCurrency()
+  String toStringAsFixed(int len) {
+    return value.toStringAsFixed(len);
+  }
+
+  bool operator ==(o) => o is ScalarValue<T> && o.value == value;
+
+  int get hashCode => value.hashCode;
 }
 

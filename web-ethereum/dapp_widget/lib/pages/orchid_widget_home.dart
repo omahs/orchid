@@ -14,7 +14,7 @@ import 'package:orchid/orchid/orchid_text.dart';
 import 'package:orchid/util/collections.dart';
 import 'package:orchid/util/dispose.dart';
 import 'package:orchid/util/poller.dart';
-import 'package:orchid/util/units.dart';
+import 'package:orchid/util/usd.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:orchid/util/localization.dart';
 

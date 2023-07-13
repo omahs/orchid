@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orchid/api/configuration/orchid_user_config/orchid_user_param.dart';
+import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
