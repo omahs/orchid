@@ -1,5 +1,6 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:flutter/widgets.dart';
+import 'package:orchid/util/localization.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'format_currency.dart';
