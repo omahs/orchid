@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import 'package:orchid/api/configuration/orchid_user_config/orchid_user_config.dart';
+import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/preferences/user_secure_storage.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';

@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:orchid/orchid.dart';
 import 'package:flutter/services.dart';
-import 'package:orchid/api/configuration/orchid_vpn_config/orchid_vpn_config_import.dart';
+import 'package:orchid/api/vpn/orchid_vpn_config/orchid_vpn_config_import.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/common/qrcode_scan.dart';
 import 'package:orchid/common/app_buttons.dart';

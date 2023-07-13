@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 
-import 'configuration/orchid_user_config/orchid_user_config.dart';
+import 'orchid_user_config/orchid_user_config.dart';
 
 /// Supports app localization and language override
 class OrchidLanguage {

@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
+import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/orchid.dart';
-import 'package:orchid/api/configuration/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
@@ -16,7 +16,6 @@ import 'package:orchid/orchid/orchid_action_button.dart';
 import 'package:orchid/orchid/orchid_circular_identicon.dart';
 import 'package:orchid/orchid/account/account_detail_store.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
-import 'package:orchid/orchid/orchid_panel.dart';
 import 'package:orchid/orchid/orchid_titled_panel.dart';
 import 'package:orchid/pages/account_manager/scan_paste_identity_dialog.dart';
 import 'package:orchid/common/app_dialogs.dart';
@@ -26,7 +25,6 @@ import 'package:orchid/pages/circuit/circuit_utils.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:orchid/pages/circuit/model/orchid_hop.dart';
 import 'package:orchid/orchid/account/orchid_account_entry.dart';
-import 'package:orchid/pages/connect/welcome_panel.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
 import 'package:orchid/pages/purchase/purchase_status.dart';
 import 'package:orchid/util/listenable_builder.dart';
