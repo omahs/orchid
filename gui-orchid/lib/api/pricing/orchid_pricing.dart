@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/cacheable.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 /// Token Exchange rates
 class OrchidPricing {

@@ -5,7 +5,7 @@ import 'package:orchid/api/pricing/coingecko_pricing.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/api/pricing/uniswap_pricing.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'chains.dart';
 import 'token_type.dart';
 export 'tokens_legacy.dart';

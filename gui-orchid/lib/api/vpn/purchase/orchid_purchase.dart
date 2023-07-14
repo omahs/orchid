@@ -13,7 +13,7 @@ import 'orchid_pac.dart';
 import 'orchid_pac_server.dart';
 import 'orchid_pac_transaction.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 /// Support in-app purchase of purchased access credits (PACs).
 /// @See the iOS and Android implementations of this class.

@@ -10,7 +10,7 @@ import 'package:orchid/api/preferences/dapp_transaction.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/pages/dapp_tab_context.dart';
 import 'package:orchid/util/timed_builder.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import '../dapp_button.dart';
 import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';

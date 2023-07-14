@@ -2,7 +2,7 @@
 import 'package:orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 // Display token value (child widget) and symbol on a row with usd price in a row below
 class TokenValueWidgetRow extends StatelessWidget {

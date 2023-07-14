@@ -13,7 +13,7 @@ import 'package:orchid/api/orchid_eth/v1/orchid_contract_v1.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'orchid_pac_transaction.dart';
 import 'package:orchid/util/hex.dart';
 import 'package:web3dart/crypto.dart';

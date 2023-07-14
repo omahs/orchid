@@ -21,7 +21,7 @@ import 'orchid_pac_transaction.dart';
 import 'orchid_purchase.dart';
 import 'package:orchid/util/strings.dart';
 import 'package:convert/convert.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 /// The PAC service exchanges an in-app purchase receipt for an Orchid PAC.
 class OrchidPACServer {

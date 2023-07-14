@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/util/localization.dart';
-import 'format_currency.dart';
+import '../../util/format_currency.dart';
 
 class USD extends ScalarValue<double> {
   static const zero = USD(0.0);

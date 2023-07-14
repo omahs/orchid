@@ -9,7 +9,7 @@ import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'token_type.dart';
 import 'package:orchid/util/collections.dart';
 import 'tokens.dart';

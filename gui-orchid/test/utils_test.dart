@@ -9,7 +9,7 @@ import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/util/cacheable.dart';
 import 'package:orchid/util/json.dart';
 import 'package:orchid/util/strings.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'expect.dart';
 
 void main() {

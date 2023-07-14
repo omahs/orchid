@@ -10,7 +10,7 @@ import 'package:orchid/orchid/orchid_panel.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 import 'package:orchid/util/localization.dart';
 import 'package:orchid/util/format_currency.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 import '../app_routes.dart';
 

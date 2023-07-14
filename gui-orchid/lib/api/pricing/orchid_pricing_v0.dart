@@ -3,7 +3,7 @@ import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:flutter/foundation.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 /// Token Exchange rates
 @deprecated

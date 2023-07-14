@@ -24,7 +24,7 @@ import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
 import 'package:orchid/orchid/orchid_panel.dart';
 import 'package:orchid/util/format_currency.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'package:styled_text/styled_text.dart';
 import '../../common/app_sizes.dart';
 import '../../common/app_text.dart';

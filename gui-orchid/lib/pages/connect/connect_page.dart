@@ -27,7 +27,7 @@ import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/pages/connect/release.dart';
 import 'package:orchid/pages/connect/welcome_panel.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'connect_status_panel.dart';
 
 /// The main page containing the connect button.

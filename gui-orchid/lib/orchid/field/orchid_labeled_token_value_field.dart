@@ -4,7 +4,7 @@ import 'package:orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
 import 'package:orchid/orchid/field/value_field_controller.dart';
-import 'package:orchid/util/usd.dart';
+import 'package:orchid/api/pricing/usd.dart';
 
 import 'token_value_widget_row.dart';
 
