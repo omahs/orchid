@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
-import 'package:orchid/util/test_app.dart';
+import 'package:orchid/orchid/test_app.dart';
 import 'account_card.dart';
 import 'account_detail_poller.dart';
 

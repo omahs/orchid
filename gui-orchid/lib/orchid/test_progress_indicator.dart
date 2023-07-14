@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
-import 'package:orchid/util/test_app.dart';
+import 'package:orchid/orchid/test_app.dart';
 
 void main() {
   runApp(TestApp(content: _Test()));

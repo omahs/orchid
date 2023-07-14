@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:orchid/orchid.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
-import 'package:orchid/util/test_app.dart';
+import 'package:orchid/orchid/test_app.dart';
 
 void main() {
   runApp(TestApp(scale: 5.0, content: _Test()));

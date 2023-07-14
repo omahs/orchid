@@ -8,7 +8,7 @@ import 'package:orchid/pages/circuit/model/openvpn_hop.dart';
 import 'package:orchid/pages/circuit/model/orchid_hop.dart';
 import 'package:orchid/pages/circuit/model/wireguard_hop.dart';
 import 'package:orchid/util/on_off.dart';
-import 'package:orchid/util/test_app.dart';
+import 'package:orchid/orchid/test_app.dart';
 import 'manage_accounts_card.dart';
 
 void main() {
