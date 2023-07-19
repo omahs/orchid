@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_urls.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/orchid/menu/expanding_popup_menu_item.dart';

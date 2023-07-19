@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_eth/chainlink.dart';
 import 'package:orchid/api/orchid_eth/historical_gas_prices.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/common/rounded_rect.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 
 // TODO: Just a placeholder... Needs a proper design.

@@ -1,7 +1,7 @@
 import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_contract_v1.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
 import 'package:flutter_web3/src/ethers/ethers.dart';

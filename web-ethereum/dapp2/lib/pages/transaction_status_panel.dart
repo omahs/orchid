@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_eth/chains.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';

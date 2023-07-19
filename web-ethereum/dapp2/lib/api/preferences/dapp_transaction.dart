@@ -1,7 +1,5 @@
 // @dart=2.9
-import 'package:orchid/util/enums.dart';
-
-import '../../orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 enum DappTransactionType {
   unknown,
