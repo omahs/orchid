@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 class OrchidCheckbox extends StatelessWidget {
   final bool value;

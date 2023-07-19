@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';

@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:intl/intl.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';

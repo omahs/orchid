@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:orchid/common/app_sizes.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/common/app_dialogs.dart';

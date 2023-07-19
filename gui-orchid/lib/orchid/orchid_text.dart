@@ -1,5 +1,5 @@
 // @dart=2.9
-import '../orchid.dart';
+import 'orchid.dart';
 import 'package:orchid/api/orchid_urls.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/common/link_text.dart';

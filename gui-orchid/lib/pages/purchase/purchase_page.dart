@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/api/orchid_crypto.dart';

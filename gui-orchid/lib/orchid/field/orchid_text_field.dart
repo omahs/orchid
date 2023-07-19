@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:flutter/services.dart';
 
 /// A styled text field with an optional custom trailing component.

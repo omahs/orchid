@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 /// Support a background color for individual menu items
 class ColorPopupMenuItem<T> extends PopupMenuItem<T> {

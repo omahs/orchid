@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/common/app_buttons.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:flutter/services.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';

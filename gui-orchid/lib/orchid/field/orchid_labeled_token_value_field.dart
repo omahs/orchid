@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:orchid/common/rounded_rect.dart';
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
 import 'package:orchid/orchid/field/value_field_controller.dart';

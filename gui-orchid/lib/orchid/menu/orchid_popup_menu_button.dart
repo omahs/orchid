@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 /// Rounded rect popup menu button with the Orchid theme including a selected state.
 class OrchidPopupMenuButton<T> extends StatelessWidget {

@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 /// A text editing controller that manages a typed value
 abstract class ValueFieldController<T> {

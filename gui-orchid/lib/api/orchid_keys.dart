@@ -1,5 +1,5 @@
 // @dart=2.12
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 

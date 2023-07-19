@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:orchid/orchid.dart';
+import 'package:orchid/orchid/orchid.dart';
 
 /// A PopupMenuItem that builds its child with a builder accepting an expanded flag.
 /// Tapping on this (parent) menu item toggles the expanded flag.
