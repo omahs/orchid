@@ -194,47 +194,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                 )),
-
-              /*
-              if (_tester)
-                _divided(PageTile(
-                  title: "(TEST) Test Active Account Migration",
-                  trailing: RaisedButtonDeprecated(
-                    child: Text(
-                      s.reset.toUpperCase(),
-                      style: buttonStyle,
-                    ),
-                    onPressed: () async {
-                      log("Testing migration by setting an active account");
-                      await UserPreferences().circuit.clear();
-                      AccountFinder().find((accounts) async {
-                        if (accounts.isNotEmpty) {
-                          await UserPreferences()
-                              .activeAccounts
-                              .set([accounts.first]);
-                          AppDialogs.showAppDialog(
-                              context: context,
-                              title: "Migration reset. Quit the app now.");
-                        }
-                      });
-                    },
-                  ),
-                )),
-               */
-
-              /*
-              if (_tester)
-                _divided(PageTile(
-                  title: "(TEST) Reset V1 Account Data",
-                  trailing: RaisedButtonDeprecated(
-                    child: Text(s.reset.toUpperCase(), style: buttonStyle),
-                    onPressed: () {
-                      UserPreferences().activeAccounts.set([]);
-                      UserPreferences().cachedDiscoveredAccounts.set({});
-                    },
-                  ),
-                )),
-               */
             ],
           ),
         ),

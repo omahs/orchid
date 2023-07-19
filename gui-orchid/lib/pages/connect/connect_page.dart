@@ -516,9 +516,6 @@ class _ConnectPageState extends State<ConnectPage>
 
   /// Do first launch and per-release activities.
   Future<void> _launchCheckItems() async {
-    // Support migration from very early versions of the app.
-    await _doMigrationActivities();
-
     // Show release notes if needed
     log("first launch: check.");
     var lastVersion = await _getReleaseVersionWithOverride();
@@ -564,39 +561,6 @@ class _ConnectPageState extends State<ConnectPage>
       title: await Release.whatsNewTitle(context),
       body: await Release.messagesSince(context, lastVersion),
     );
-  }
-
-  Future<void> _doMigrationActivities() async {
-    await _migrateActiveAccountTo1Hop();
-  }
-
-  // If this is an existing user with no multi-hop circuit and an active
-  // account, migrate it to a 1-hop config.
-  Future<void> _migrateActiveAccountTo1Hop() async {
-    var activeAccount = await activeAccountLegacy;
-    if (activeAccount != null) {
-      log("migration: User has no hops and a legacy active account: migrating.");
-      await CircuitUtils.defaultCircuitIfNeededFrom(activeAccount);
-
-      // Clear the legacy active accounts (one time migration)
-      await UserPreferences().activeAccounts.set([]);
-    }
-  }
-
-  // Note: Used in migration from the old active account model
-  static Future<Account> get activeAccountLegacy async {
-    return _filterActiveAccountLegacyLogic(
-        UserPreferences().activeAccounts.get());
-  }
-
-  // Note: Used in migration from the old active account model
-  // Return the active account from the accounts list or null.
-  static Account _filterActiveAccountLegacyLogic(List<Account> accounts) {
-    return accounts == null ||
-            accounts.isEmpty ||
-            accounts[0].isIdentityPlaceholder
-        ? null
-        : accounts[0];
   }
 
   Future _circuitConfigurationChanged() async {

@@ -235,17 +235,6 @@ class UserPreferences {
         return UserPreferences().putStringForKey(key, value);
       });
 
-  // TODO: Currently maintained only for use in migration to new circuit builder.
-  /// A list of account information indicating the active identity (signer key)
-  /// and the active account (funder and chainid) for that identity.
-  /// The order of this list is significant in that the first account designates
-  /// the active identity for routing.  The remaining items in the list serve
-  /// as a history of previous account selections for the respective identities.
-  /// Identities should appear in this list only once.
-  /// @See Account.activeAccount
-  ObservablePreference<List<Account>> activeAccounts =
-      ObservableAccountListPreference(UserPreferenceKey.ActiveAccounts);
-
   /// Add to the set of discovered accounts.
   Future<void> addCachedDiscoveredAccounts(List<Account> accounts) async {
     if (accounts == null || accounts.isEmpty) {
@@ -345,7 +334,6 @@ enum UserPreferenceKey {
   DefaultCurator,
   QueryBalances,
   PacTransaction,
-  ActiveAccounts,
   CachedDiscoveredAccounts,
   ReleaseVersion,
   RoutingEnabled,

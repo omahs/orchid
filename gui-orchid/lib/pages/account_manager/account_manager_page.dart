@@ -592,6 +592,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
     ).padx(32).top(16);
   }
 
+  //
   Widget _buildAccountListAnnotatedActive() {
     return StreamBuilder<Circuit>(
         stream: UserPreferences().circuit.stream(),
