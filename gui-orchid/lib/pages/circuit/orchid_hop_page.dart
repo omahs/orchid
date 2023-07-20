@@ -9,7 +9,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_eth_v0.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/orchid/account_chart.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
@@ -74,12 +74,12 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     // If the hop is empty initialize it to defaults now.
     if (_hop == null) {
       widget.editableHop.update(OrchidHop.from(_hop,
-          curator: UserPreferences().getDefaultCurator() ??
+          curator: UserPreferencesVPN().getDefaultCurator() ??
               OrchidHop.appDefaultCurator));
     }
 
     // init balance and account details polling
-    if (widget.readOnly() && UserPreferences().getQueryBalances()) {
+    if (widget.readOnly() && UserPreferencesVPN().getQueryBalances()) {
       setState(() {
         _showBalance = true;
       });
@@ -90,7 +90,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     }
 
     _accountListener =
-        UserPreferences().cachedDiscoveredAccounts.stream().listen((accounts) {
+        UserPreferencesVPN().cachedDiscoveredAccounts.stream().listen((accounts) {
       // guard changes in accounts availability
       if (!accounts.contains(_selectedAccount)) {
         setState(() {
@@ -192,7 +192,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
           pady(16),
           _buildAccountManagerLinkText(),
           StreamBuilder<Set<Account>>(
-              stream: UserPreferences().cachedDiscoveredAccounts.stream(),
+              stream: UserPreferencesVPN().cachedDiscoveredAccounts.stream(),
               builder: (context, snapshot) {
                 final accounts = snapshot.data;
                 if ((accounts ?? {}).isEmpty) {
@@ -562,7 +562,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
 
   // Participate in the save operation and then delegate to the on complete handler.
   void _onSave(CircuitHop result) async {
-    await UserPreferences().ensureSaved(_selectedAccount);
+    await UserPreferencesVPN().ensureSaved(_selectedAccount);
     // Pass on the updated hop
     widget.onAddFlowComplete(widget.editableHop.value.hop);
   }

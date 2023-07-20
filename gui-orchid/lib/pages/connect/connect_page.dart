@@ -9,7 +9,7 @@ import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/common/screen_orientation.dart';
@@ -195,7 +195,7 @@ class _ConnectPageState extends State<ConnectPage>
     }).dispose(_subs);
 
     // Monitor routing preference
-    UserPreferences().routingEnabled.stream().listen((enabled) {
+    UserPreferencesVPN().routingEnabled.stream().listen((enabled) {
       log("connect: routing enabled changed: $enabled");
       setState(() {
         _routingEnabled = enabled;
@@ -203,7 +203,7 @@ class _ConnectPageState extends State<ConnectPage>
     }).dispose(_subs);
 
     // Monitor traffic monitoring preference
-    UserPreferences().monitoringEnabled.stream().listen((enabled) {
+    UserPreferencesVPN().monitoringEnabled.stream().listen((enabled) {
       setState(() {
         _monitoringEnabled = enabled;
       });
@@ -224,14 +224,14 @@ class _ConnectPageState extends State<ConnectPage>
     }).dispose(_subs);
 
     // Monitor identities
-    UserPreferences().keys.stream().listen((keys) async {
+    UserPreferencesVPN().keys.stream().listen((keys) async {
       setState(() {
         _keys = keys;
       });
     }).dispose(_subs);
 
     // Monitor found accounts
-    UserPreferences()
+    UserPreferencesVPN()
         .cachedDiscoveredAccounts
         .stream()
         .listen((accounts) async {
@@ -511,7 +511,7 @@ class _ConnectPageState extends State<ConnectPage>
 
   /// Toggle the current connection state
   void _onConnectButtonPressed() async {
-    UserPreferences().routingEnabled.set(!_routingEnabled);
+    UserPreferencesVPN().routingEnabled.set(!_routingEnabled);
   }
 
   /// Do first launch and per-release activities.
@@ -529,13 +529,13 @@ class _ConnectPageState extends State<ConnectPage>
       }
     }
 
-    await UserPreferences().releaseVersion.set(Release.current);
+    await UserPreferencesVPN().releaseVersion.set(Release.current);
   }
 
   // Allow override of the last viewed release notes version for testing.
   // e.g. set to 0 to see all release notes, or high to hide them.
   Future<ReleaseVersion> _getReleaseVersionWithOverride() async {
-    var version = UserPreferences().releaseVersion.get();
+    var version = UserPreferencesVPN().releaseVersion.get();
 
     const release_version = 'release_version';
     // From user config
@@ -564,7 +564,7 @@ class _ConnectPageState extends State<ConnectPage>
   }
 
   Future _circuitConfigurationChanged() async {
-    var prefs = UserPreferences();
+    var prefs = UserPreferencesVPN();
     _circuit = prefs.circuit.get();
     _selectedIndex = 0;
 

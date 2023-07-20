@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orchid/api/orchid_crypto.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/common/blockies/blockies.dart';
 import 'package:orchid/common/jazzicon/jazzicon.dart';
 
@@ -19,7 +19,7 @@ class OrchidIdenticon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UserPreferences().useBlockiesIdenticons.builder(
+    return UserPreferencesUI().useBlockiesIdenticons.builder(
       (bool useBlockies) {
         if (address == null || useBlockies == null) {
           return Container();

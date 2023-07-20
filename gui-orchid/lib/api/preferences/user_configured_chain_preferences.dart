@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import '../orchid_log.dart';
 import 'observable_preference.dart';
 

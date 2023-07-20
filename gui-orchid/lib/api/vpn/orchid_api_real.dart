@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
 import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import 'orchid_vpn_config/orchid_vpn_config_generate.dart';
 import 'monitoring/routing_status.dart';
@@ -136,7 +136,7 @@ class RealOrchidAPI implements OrchidAPI {
   // (as opposed to e.g. a change in state for traffic monitoring)
   static applyRoutingStatus(OrchidVPNRoutingState state) async {
     var publishStatus = OrchidAPI().vpnRoutingStatus;
-    var routingEnabled = await UserPreferences().routingEnabled.get();
+    var routingEnabled = await UserPreferencesVPN().routingEnabled.get();
 
     switch (state) {
       case OrchidVPNRoutingState.VPNNotConnected:
@@ -195,7 +195,7 @@ class RealOrchidAPI implements OrchidAPI {
   // The desired format is (JavaScript, not JSON) e.g.:
   static Future<String> generateManagedConfig() async {
     // Circuit configuration
-    var managedConfig = (await UserPreferences().routingEnabled.get())
+    var managedConfig = (await UserPreferencesVPN().routingEnabled.get())
         ? await OrchidVPNConfigGenerate.generateConfig()
         : "";
 
@@ -207,7 +207,7 @@ class RealOrchidAPI implements OrchidAPI {
 
     // 'logdb' sets the analysis file location.
     // To disable monitoring set 'logdb' to an empty string.
-    final pathOrEmptyString = UserPreferences().monitoringEnabled.get()
+    final pathOrEmptyString = UserPreferencesVPN().monitoringEnabled.get()
         ? AnalysisDb.defaultAnalysisFilename
         : '';
     managedConfig += '\nlogdb="$pathOrEmptyString";';
@@ -217,7 +217,7 @@ class RealOrchidAPI implements OrchidAPI {
 
   // Generate the combined user config and generated config
   static Future<String> generateCombinedConfig() async {
-    var userConfig = UserPreferences().userConfig.get();
+    var userConfig = UserPreferencesVPN().userConfig.get();
 
     // Append the generated config before saving.
     String generatedConfig;

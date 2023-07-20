@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'dart:async';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import '../orchid_api.dart';
 import '../../orchid_log.dart';
@@ -39,8 +39,8 @@ class OrchidRestartManager {
     // Listen for changes in monitoring preferences
     _enableVPNListener = CombineLatestStream.combine2(
       // The initial values are both valid on startup and distinct
-      UserPreferences().routingEnabled.stream().distinct(),
-      UserPreferences().monitoringEnabled.stream().distinct(),
+      UserPreferencesVPN().routingEnabled.stream().distinct(),
+      UserPreferencesVPN().monitoringEnabled.stream().distinct(),
       (routing, monitoring) {
         log("restart_manager: enable vpn listener: routing=$routing, monitoring=$monitoring");
         return routing || monitoring;

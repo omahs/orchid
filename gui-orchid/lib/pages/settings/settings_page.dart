@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_switch.dart';
@@ -35,9 +35,9 @@ class _SettingsPageState extends State<SettingsPage> {
     initStateAsync();
     _defaultCurator.addListener(_curatorChanged);
 
-    _queryBalances = UserPreferences().getQueryBalances();
+    _queryBalances = UserPreferencesVPN().getQueryBalances();
     _defaultCurator.text =
-        UserPreferences().getDefaultCurator() ?? OrchidHop.appDefaultCurator;
+        UserPreferencesVPN().getDefaultCurator() ?? OrchidHop.appDefaultCurator;
   }
 
   void initStateAsync() async {
@@ -89,7 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 trailing: OrchidSwitch(
                   value: _queryBalances,
                   onChanged: (bool value) {
-                    UserPreferences().setQueryBalances(value);
+                    UserPreferencesVPN().setQueryBalances(value);
                     setState(() {
                       _queryBalances = value;
                     });
@@ -203,7 +203,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _resetEverything() async {
     log("Clearing everything");
-    await UserPreferences().circuit.clear();
+    await UserPreferencesVPN().circuit.clear();
     await _clearAllKeysAndAccounts();
     await _resetFirstLaunch();
     Navigator.pop(context);
@@ -233,19 +233,19 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _clearAllKeysAndAccounts() async {
-    await UserPreferences().cachedDiscoveredAccounts.clear();
-    await UserPreferences().keys.clear();
+    await UserPreferencesVPN().cachedDiscoveredAccounts.clear();
+    await UserPreferencesVPN().keys.clear();
   }
 
   void _clearCachedAccounts() async {
     log("Clearing cached discovered accounts");
-    await UserPreferences().cachedDiscoveredAccounts.clear();
+    await UserPreferencesVPN().cachedDiscoveredAccounts.clear();
     await AppDialogs.showAppDialog(
         context: context, title: "Cached accounts cleared.");
   }
 
   Future<void> _resetFirstLaunch() async {
-    await UserPreferences()
+    await UserPreferencesVPN()
         .releaseVersion
         .set(ReleaseVersion.resetFirstLaunch());
   }
@@ -261,7 +261,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _curatorChanged() {
-    UserPreferences().setDefaultCurator(_defaultCurator.text);
+    UserPreferencesVPN().setDefaultCurator(_defaultCurator.text);
     setState(() {});
   }
 

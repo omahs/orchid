@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/scheduler.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/account/account_finder.dart';
 import 'add_hop_page.dart';
@@ -65,7 +65,7 @@ class CircuitUtils {
   }
 
   static void addHopToCircuit(CircuitHop hop) async {
-    var circuit = await UserPreferences().circuit.get();
+    var circuit = await UserPreferencesVPN().circuit.get();
     circuit.hops.add(hop);
     saveCircuit(circuit);
   }
@@ -74,7 +74,7 @@ class CircuitUtils {
   static Future<void> saveCircuit(Circuit circuit) async {
     try {
       //log("Saving circuit: ${circuit.hops.map((e) => e.toJson())}");
-      await UserPreferences().circuit.set(circuit);
+      await UserPreferencesVPN().circuit.set(circuit);
     } catch (err, stack) {
       log("Error saving circuit: $err, $stack");
     }
@@ -95,7 +95,7 @@ class CircuitUtils {
   /// supplied account.
   /// Returns true if a circuit was created.
   static Future<bool> defaultCircuitIfNeededFrom(Account account) async {
-    var circuit = UserPreferences().circuit.get();
+    var circuit = UserPreferencesVPN().circuit.get();
     if (circuit.hops.isEmpty && account != null) {
       log("circuit: creating default circuit from account: $account");
       await CircuitUtils.saveCircuit(

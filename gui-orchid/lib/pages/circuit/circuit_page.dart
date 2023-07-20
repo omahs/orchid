@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/common/formatting.dart';
@@ -66,7 +66,7 @@ class CircuitPageState extends State<CircuitPage>
   }
 
   void _updateCircuit() async {
-    var circuit = await UserPreferences().circuit.get();
+    var circuit = await UserPreferencesVPN().circuit.get();
     if (mounted) {
       setState(() {
         var keyBase = DateTime.now().millisecondsSinceEpoch;

@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'dart:async';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:orchid/pages/circuit/model/circuit_hop.dart';
@@ -20,8 +20,8 @@ class OrchidVPNConfigGenerate {
   static Future<String> generateConfig({
     bool forExport = false,
   }) async {
-    Circuit circuit = UserPreferences().circuit.get();
-    List<StoredEthereumKey> keys = UserPreferences().keys.get();
+    Circuit circuit = UserPreferencesVPN().circuit.get();
+    List<StoredEthereumKey> keys = UserPreferencesVPN().keys.get();
     List<CircuitHop> hops = circuit?.hops ?? [];
 
     var hopsConfig = await Future.wait(hops.map((hop) {
@@ -72,7 +72,7 @@ class OrchidVPNConfigGenerate {
     var signerKey = hop.account.signerKey;
     var funder = hop.account.funder;
     var curator = hop.curator ??
-        (UserPreferences().getDefaultCurator()) ??
+        (UserPreferencesVPN().getDefaultCurator()) ??
         OrchidHop.appDefaultCurator;
 
     // V0 fields

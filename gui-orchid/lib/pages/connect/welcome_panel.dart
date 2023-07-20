@@ -8,7 +8,7 @@ import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_urls.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/api/vpn/purchase/orchid_purchase.dart';
@@ -65,7 +65,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
   }
 
   void initStateAsync() async {
-    UserPreferences().pacTransaction.stream().listen((tx) {
+    UserPreferencesVPN().pacTransaction.stream().listen((tx) {
       if (tx == null) {
         // If we already have an identity supplied skip the choice.
         if (_selectedIdentity != null) {
@@ -650,7 +650,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
                   funder: funderAddress,
                   chainId: Chains.GNOSIS_CHAINID,
                   version: 1);
-              await UserPreferences().addCachedDiscoveredAccounts([account]);
+              await UserPreferencesVPN().addCachedDiscoveredAccounts([account]);
               widget.onAccount(account);
             },
             child: Text(
@@ -730,7 +730,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     if (_generatedIdentity == null) {
       log("welcome panel: generating identity");
       final key = StoredEthereumKey.generate();
-      await UserPreferences().addKey(key);
+      await UserPreferencesVPN().addKey(key);
       setState(() {
         _generatedIdentity = key;
       });
@@ -777,7 +777,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
       chainId: _chain.chainId,
       version: 1,
     );
-    await UserPreferences().addCachedDiscoveredAccounts([account]);
+    await UserPreferencesVPN().addCachedDiscoveredAccounts([account]);
     log("XXX: saved account: $account");
     widget.onAccount(account);
   }

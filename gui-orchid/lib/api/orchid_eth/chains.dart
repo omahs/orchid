@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/api/pricing/usd.dart';
@@ -246,7 +246,7 @@ class Chains {
   }
 
   static Map<int, Chain> get userConfiguredChains {
-    return UserPreferences()
+    return UserPreferencesVPN()
         .userConfiguredChains
         .get()
         .toMap(withKey: (e) => e.chainId, withValue: (e) => e);
@@ -255,7 +255,7 @@ class Chains {
   /// The map of supported chains, filtered to remove disabled chains.
   static Map<int, Chain> get map {
     // Remove disabled chains
-    final Iterable<int> disabled = UserPreferences()
+    final Iterable<int> disabled = UserPreferencesVPN()
         .chainConfig
         .get()
         .where((e) => !e.enabled)
@@ -326,7 +326,7 @@ class Chain {
   });
 
   String get providerUrl {
-    final config = UserPreferences().chainConfigFor(chainId);
+    final config = UserPreferencesVPN().chainConfigFor(chainId);
 
     // TODO: Decide what we do with configured hops.
     // Prevent any usage of the chain if the user has it disabled.

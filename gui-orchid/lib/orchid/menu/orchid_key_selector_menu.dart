@@ -2,7 +2,7 @@
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:orchid/api/orchid_crypto.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/orchid/orchid_circular_identicon.dart';
 import 'orchid_selector_menu.dart';
 
@@ -47,7 +47,7 @@ class _OrchidKeySelectorMenuState extends State<OrchidKeySelectorMenu> {
 
   void initStateAsync() async {
     // Monitor changes to keys
-    UserPreferences().keys.stream().listen((keys) {
+    UserPreferencesVPN().keys.stream().listen((keys) {
       setState(() {
         this._keys = keys;
 

@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_chain_config.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/orchid/field/orchid_labeled_numeric_field.dart';
@@ -39,7 +39,7 @@ class _RpcPageState extends State<RpcPage> {
 
   Widget buildPage(BuildContext context) {
     return SafeArea(
-      child: UserPreferences().userConfiguredChains.builder((_) {
+      child: UserPreferencesVPN().userConfiguredChains.builder((_) {
         return _buildChains().padx(20).top(8).bottom(24);
       }),
     );
@@ -67,10 +67,10 @@ class _RpcPageState extends State<RpcPage> {
     knownChains.remove(Chains.Ethereum);
     knownChains.insert(0, Chains.Ethereum);
 
-    final userConfiguredChains = UserPreferences().userConfiguredChains.get();
+    final userConfiguredChains = UserPreferencesVPN().userConfiguredChains.get();
     final chains =
         userConfiguredChains.cast<Chain>() + knownChains.cast<Chain>();
-    final config = ChainConfig.map(UserPreferences().chainConfig.get());
+    final config = ChainConfig.map(UserPreferencesVPN().chainConfig.get());
 
     return ListView.builder(
         itemCount: chains.length,
@@ -312,7 +312,7 @@ class _ChainItemState extends State<_ChainItem> {
       enabled: _show,
       rpcUrl: text,
     );
-    var list = UserPreferences()
+    var list = UserPreferencesVPN()
         .chainConfig
         .get()
         .where((e) => e.chainId != chainId)
@@ -321,7 +321,7 @@ class _ChainItemState extends State<_ChainItem> {
     if (!newConfig.isEmpty) {
       list.add(newConfig);
     }
-    await UserPreferences().chainConfig.set(list);
+    await UserPreferencesVPN().chainConfig.set(list);
     setState(() {});
   }
 
@@ -331,7 +331,7 @@ class _ChainItemState extends State<_ChainItem> {
         title: s.deleteChainQuestion,
         bodyText: s.deleteUserConfiguredChain + ': ' + userConfiguredChain.name,
         commitAction: () async {
-          await UserPreferences()
+          await UserPreferencesVPN()
               .userConfiguredChains
               .remove(userConfiguredChain);
         });

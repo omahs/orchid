@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'circuit_hop.dart';
 
 class OrchidHop extends CircuitHop {
@@ -110,7 +110,7 @@ class OrchidHop extends CircuitHop {
   /// Return key uids for configured hops
   static Future<List<String>> getInUseKeyUids() async {
     // Get the active hop keys
-    var activeHops = UserPreferences().circuit.get().hops;
+    var activeHops = UserPreferencesVPN().circuit.get().hops;
     List<OrchidHop> activeOrchidHops =
         activeHops.where((h) => h is OrchidHop).cast<OrchidHop>().toList();
     List<StoredEthereumKeyRef> activeKeys = activeOrchidHops.map((h) {

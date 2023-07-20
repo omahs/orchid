@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/pages/circuit/circuit_utils.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:orchid/pages/circuit/model/circuit_hop.dart';
@@ -119,13 +119,13 @@ class OrchidVPNConfigImport {
   /// Import a new configuration file, replacing any existing configuration.
   /// Existing signer keys are unaffected.
   static Future<bool> importConfig(String config) async {
-    var existingKeys = UserPreferences().keys.get();
+    var existingKeys = UserPreferencesVPN().keys.get();
     var parsedCircuit = parseCircuit(config, existingKeys);
 
     // Save any newly imported keys found in the circuit
     if (parsedCircuit.newKeys.isNotEmpty) {
       log("Import added ${parsedCircuit.newKeys.length} new keys.");
-      await UserPreferences().addKeys(parsedCircuit.newKeys);
+      await UserPreferencesVPN().addKeys(parsedCircuit.newKeys);
     }
 
     // Save the imported circuit.
@@ -134,11 +134,11 @@ class OrchidVPNConfigImport {
 
     // Parse the optional imported keys list.
     // First update the existing keys with any just imported above.
-    existingKeys = await UserPreferences().keys.get();
+    existingKeys = await UserPreferencesVPN().keys.get();
     var newKeys = parseImportedKeysList(config, existingKeys);
     if (newKeys.isNotEmpty) {
       log("Imported keys list added ${newKeys.length} new keys.");
-      await UserPreferences().addKeys(newKeys);
+      await UserPreferencesVPN().addKeys(newKeys);
     }
 
     return true;

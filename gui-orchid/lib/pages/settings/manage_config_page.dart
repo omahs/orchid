@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/api/vpn/orchid_vpn_config/orchid_vpn_config_generate.dart';
 import 'package:orchid/api/vpn/orchid_vpn_config/orchid_vpn_config_import.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/common/page_tile.dart';
@@ -121,7 +121,7 @@ class _ManageConfigPageState extends State<ManageConfigPage> {
   void _doExport() async {
     var config = '// Circuit\n' +
         (await OrchidVPNConfigGenerate.generateConfig(forExport: true));
-    var keys = UserPreferences().keys.get()
+    var keys = UserPreferencesVPN().keys.get()
         .map((storedKey) => storedKey.formatSecretFixed())
         .toList();
     config += '\n\n// All keys\nkeys=' + keys.toString();

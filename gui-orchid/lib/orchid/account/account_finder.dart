@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'account_store.dart';
 
 /// A thin wrapper around the user's list of identities that supports searching
@@ -83,7 +83,7 @@ class AccountFinder {
 
   void _poll(_) async {
     log("account finder: polling for accounts");
-    var keys = UserPreferences().keys.get();
+    var keys = UserPreferencesVPN().keys.get();
     Set<Account> found = {};
     List<EthereumKeyRef> keyRefs =
         keys.map((e) => e.ref()).cast<EthereumKeyRef>().toList();

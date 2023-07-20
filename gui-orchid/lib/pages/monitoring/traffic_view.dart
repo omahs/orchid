@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_scroll.dart';
 import 'package:collection/collection.dart';
@@ -118,7 +118,7 @@ class _TrafficViewState extends State<TrafficView>
   void initStateAsync() async {
     // monitoringEnabledController.onChange = _monitoringSwitchChanged;
     // monitoringEnabledController.controlledState.value =
-    await UserPreferences().monitoringEnabled.get();
+    await UserPreferencesVPN().monitoringEnabled.get();
   }
 
   @override
@@ -196,7 +196,7 @@ class _TrafficViewState extends State<TrafficView>
         builder: (context, snapshot) {
           var restarting = snapshot.data ?? false;
           return StreamBuilder<bool>(
-              stream: UserPreferences().monitoringEnabled.stream(),
+              stream: UserPreferencesVPN().monitoringEnabled.stream(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return Container();
@@ -535,7 +535,7 @@ class _TrafficViewState extends State<TrafficView>
   void _confirmMonitoringSwitchChange(bool enabled) async {
     var enablingText =
         s.changingMonitoringStatusRequiresRestartingTheVpnWhichMayBriefly;
-    if (await UserPreferences().routingEnabled.get()) {
+    if (await UserPreferencesVPN().routingEnabled.get()) {
       AppDialogs.showConfirmationDialog(
           context: context,
           title: s.confirmRestart,
@@ -550,7 +550,7 @@ class _TrafficViewState extends State<TrafficView>
 
   void _monitoringSwitchChanged(bool enabled) async {
     log('vpn: traffic monitoring enabled: $enabled');
-    UserPreferences().monitoringEnabled.set(enabled);
+    UserPreferencesVPN().monitoringEnabled.set(enabled);
     // monitoringEnabledController.controlledState.value = enabled;
   }
 }

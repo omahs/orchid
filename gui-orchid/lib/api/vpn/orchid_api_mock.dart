@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/orchid_api_real.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/pages/app_routes.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
 import 'package:rxdart/rxdart.dart';
@@ -66,7 +66,7 @@ class MockOrchidAPI implements OrchidAPI {
           applyRoutingStatus(OrchidVPNRoutingState.VPNConnected);
 
           // Mock orchid routing if routing is enabled.
-          var routing = UserPreferences().routingEnabled.get();
+          var routing = UserPreferencesVPN().routingEnabled.get();
           if (routing) {
             Future.delayed(Duration(seconds: 1), () {
               applyRoutingStatus(OrchidVPNRoutingState.OrchidConnected);
@@ -84,7 +84,7 @@ class MockOrchidAPI implements OrchidAPI {
     vpnPermissionStatus.add(false);
 
     // fake monitoring traffic data
-    UserPreferences().monitoringEnabled.stream().listen((monitoring) {
+    UserPreferencesVPN().monitoringEnabled.stream().listen((monitoring) {
       if (monitoring) {
         insertMockTrafficData();
       }
@@ -181,7 +181,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
     const connected = bool.fromEnvironment('connected', defaultValue: null);
     if (connected != null) {
       fakeVPNDelay = 0;
-      UserPreferences().routingEnabled.set(connected);
+      UserPreferencesVPN().routingEnabled.set(connected);
     }
 
     // Push to named screen
@@ -202,7 +202,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
                     });
               }));
     } else if (showScreen == 'traffic') {
-      await UserPreferences().monitoringEnabled.set(true);
+      await UserPreferencesVPN().monitoringEnabled.set(true);
       await Navigator.pushNamed(context, AppRoutes.traffic);
     } else if (showScreen == 'circuit') {
       await Navigator.pushNamed(context, AppRoutes.circuit);

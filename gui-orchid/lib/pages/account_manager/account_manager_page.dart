@@ -7,7 +7,7 @@ import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/orchid_urls.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/orchid/account/account_card.dart';
 import 'package:orchid/orchid/account/account_selector.dart';
@@ -80,7 +80,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
   void initStateAsync() async {
     // Listen for changes to identities
-    UserPreferences().keys.stream().listen((keys) {
+    UserPreferencesVPN().keys.stream().listen((keys) {
       _identities = keys;
       // Default if needed
       if (_selectedIdentity == null) {
@@ -296,7 +296,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
     Account _accountToImport;
 
     final doImport = (BuildContext context) async {
-      await UserPreferences().ensureSaved(_accountToImport);
+      await UserPreferencesVPN().ensureSaved(_accountToImport);
 
       // Set the identity and refresh
       _setSelectedIdentity(_accountToImport.signerKey);
@@ -368,14 +368,14 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
   void _generateIdentity() async {
     var identity = StoredEthereumKey.generate();
-    await UserPreferences().addKey(identity);
+    await UserPreferencesVPN().addKey(identity);
     _setSelectedIdentity(identity);
   }
 
   void _deleteIdentity(StoredEthereumKey identity) async {
-    await UserPreferences().removeKey(identity.ref());
+    await UserPreferencesVPN().removeKey(identity.ref());
     // Remove accounts for this key.
-    var matchingAccounts = UserPreferences().cachedDiscoveredAccounts.get();
+    var matchingAccounts = UserPreferencesVPN().cachedDiscoveredAccounts.get();
 
     // TODO: TESTING
     var matching = matchingAccounts
@@ -385,7 +385,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
     matchingAccounts
         .removeWhere((account) => account.signerKeyRef == identity.ref());
 
-    UserPreferences().cachedDiscoveredAccounts.set(matchingAccounts);
+    UserPreferencesVPN().cachedDiscoveredAccounts.set(matchingAccounts);
     _setSelectedIdentity(_chooseDefaultIdentity(_identities));
   }
 
@@ -595,7 +595,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
   //
   Widget _buildAccountListAnnotatedActive() {
     return StreamBuilder<Circuit>(
-        stream: UserPreferences().circuit.stream(),
+        stream: UserPreferencesVPN().circuit.stream(),
         builder: (context, snapshot) {
           Circuit circuit = snapshot.data;
           Set<Account> activeAccounts = circuit?.activeOrchidAccounts ?? {};
