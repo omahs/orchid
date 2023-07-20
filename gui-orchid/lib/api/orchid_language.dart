@@ -45,7 +45,7 @@ class OrchidLanguage {
     if (envLanguageOverride != null && hasLanguage(envLanguageOverride)) {
       return envLanguageOverride;
     }
-    return UserPreferences().initialized
+    return UserPreferences.initialized
         ? UserPreferencesUI().languageOverride.get()
         : null;
   }

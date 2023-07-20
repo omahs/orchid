@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import '../orchid_log.dart';
 
 // Holds a list of accounts. Returns [] empty list initially.

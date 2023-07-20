@@ -1,27 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
   /// The shared instance, initialized by init()
-  SharedPreferences? _sharedPreferences;
+  static SharedPreferences? _sharedPreferences;
 
-  bool get initialized {
+  static bool get initialized {
     return _sharedPreferences != null;
   }
 
-  @protected
   /// This should be awaited during app launch.
-  Future<void> initSharedPreferences() async {
-    if (!initialized) {
-      log("Initialized user preferences API");
-      _sharedPreferences = await SharedPreferences.getInstance();
-    }
-  }
-
-  /// This shouldd be awaited in main before launching the app.
   static Future<void> init() async {
-    return UserPreferences().initSharedPreferences();
+    if (!initialized) {
+      _sharedPreferences = await SharedPreferences.getInstance();
+      log("Initialized user preferences API");
+    }
   }
 
   SharedPreferences sharedPreferences() {
@@ -31,20 +24,26 @@ class UserPreferences {
     return _sharedPreferences!;
   }
 
+  // Match legacy usage
+  String _keyToLookupString(UserPreferenceKey key) {
+    return 'UserPreferenceKey.' + key.name;
+  }
+
   String? getStringForKey(UserPreferenceKey key) {
-    return sharedPreferences().getString(key.toString());
+    var keyString = _keyToLookupString(key);
+    return sharedPreferences().getString(keyString);
   }
 
   // This method maps null to property removal.
   Future<bool> putStringForKey(UserPreferenceKey key, String? value) async {
+    var keyString = _keyToLookupString(key);
     var shared = sharedPreferences();
     if (value == null) {
-      return await shared.remove(key.toString());
+      return await shared.remove(keyString);
     }
-    return await shared.setString(key.toString(), value);
+    return await shared.setString(keyString, value);
   }
 }
 
-abstract class UserPreferenceKey {
-  String toString();
-}
+/// Should be implemented by enums of user preference keys.
+abstract class UserPreferenceKey extends Enum {}

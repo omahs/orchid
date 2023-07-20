@@ -53,7 +53,9 @@ class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
   void _update(_) async {
     // log("XXX: polling builder ($_name) update, duration = ${widget.duration.inMilliseconds}");
     _currentValue = await widget.poll();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
