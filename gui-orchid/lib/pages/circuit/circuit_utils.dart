@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/scheduler.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/account/account_finder.dart';
 import 'add_hop_page.dart';

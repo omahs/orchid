@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 

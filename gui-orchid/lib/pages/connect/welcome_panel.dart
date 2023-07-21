@@ -9,7 +9,7 @@ import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_urls.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/api/vpn/purchase/orchid_purchase.dart';
