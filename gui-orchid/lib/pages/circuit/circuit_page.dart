@@ -358,7 +358,7 @@ class CircuitPageState extends State<CircuitPage>
 
   void _saveCircuit() async {
     var circuit = Circuit(_hops.map((uniqueHop) => uniqueHop.hop).toList());
-    CircuitUtils.saveCircuit(circuit);
+    UserPreferencesVPN().saveCircuit(circuit);
     _showConfigurationChangedDialog();
   }
 

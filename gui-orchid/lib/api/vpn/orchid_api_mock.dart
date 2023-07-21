@@ -1,11 +1,8 @@
 // @dart=2.9
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/orchid_api_real.dart';
 import 'package:orchid/api/preferences/user_preferences_vpn.dart';
-import 'package:orchid/pages/app_routes.dart';
-import 'package:orchid/pages/purchase/purchase_page.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 import 'monitoring/analysis_db.dart';
@@ -158,56 +155,6 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
   }
 
   static bool hidePrices = const bool.fromEnvironment('hide_prices');
-
-  /// Check for startup args. e.g. for screenshot rigging.
-  static void checkStartupCommandArgs(BuildContext context) async {
-    log("Check command args");
-
-    // TODO: This should be updated to import a circuit config.
-    // Allow setting the account for screenshots
-    // Must use 'const' here:  https://github.com/flutter/flutter/issues/55870
-    /*
-    const identity = String.fromEnvironment('identity', defaultValue: null);
-    if (identity != null) {
-      try {
-        setDefaultIdentityFromString(identity);
-      } catch (err) {
-        log("Error setting default identity from string: $err");
-      }
-    }
-     */
-
-    // Set connected status
-    const connected = bool.fromEnvironment('connected', defaultValue: null);
-    if (connected != null) {
-      fakeVPNDelay = 0;
-      UserPreferencesVPN().routingEnabled.set(connected);
-    }
-
-    // Push to named screen
-    const showScreen = String.fromEnvironment('screen');
-    if (showScreen == 'accounts') {
-      await Navigator.pushNamed(context, AppRoutes.account_manager);
-    } else if (showScreen == 'purchase') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (BuildContext context) {
-                return PurchasePage(
-                    signerKey: null,
-                    cancellable: true,
-                    completion: () {
-                      log("purchase complete");
-                    });
-              }));
-    } else if (showScreen == 'traffic') {
-      await UserPreferencesVPN().monitoringEnabled.set(true);
-      await Navigator.pushNamed(context, AppRoutes.traffic);
-    } else if (showScreen == 'circuit') {
-      await Navigator.pushNamed(context, AppRoutes.circuit);
-    }
-  }
 
   /// Trigger a request for OS level permissions required to allow installation and activation of the
   /// Orchid VPN networking extension, potentially causing the OS to prompt the user.

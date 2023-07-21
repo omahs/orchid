@@ -1,11 +1,10 @@
 // @dart=2.9
+import 'dart:async';
+import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
-import 'package:orchid/orchid/orchid.dart';
-import 'dart:async';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
-import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
@@ -29,6 +28,7 @@ import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/pages/connect/release.dart';
 import 'package:orchid/pages/connect/welcome_panel.dart';
 import 'package:orchid/api/pricing/usd.dart';
+import 'connect_page_utils.dart';
 import 'connect_status_panel.dart';
 
 /// The main page containing the connect button.
@@ -143,7 +143,7 @@ class _ConnectPageState extends State<ConnectPage>
     // Note: There seems to be a bug in SharedPreferences where accessing it
     // Note: too early during startup causes problems for this setup.
     Future.delayed(Duration(seconds: 0)).then((_) {
-      MockOrchidAPI.checkStartupCommandArgs(context);
+      ConnectPageUtils.checkStartupCommandArgs(context);
     });
   }
 

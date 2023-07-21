@@ -3,6 +3,7 @@ import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_preferences_mock.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
+import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/api/vpn/model/circuit.dart';
 import '../orchid_log.dart';
@@ -22,6 +23,18 @@ class UserPreferencesVPN {
   ///
   /// Begin: Circuit
   ///
+
+  /// Save the circuit and update published config and configuration listeners
+  Future<void> saveCircuit(Circuit circuit) async {
+    try {
+      //log("Saving circuit: ${circuit.hops.map((e) => e.toJson())}");
+      await UserPreferencesVPN().circuit.set(circuit);
+    } catch (err, stack) {
+      log("Error saving circuit: $err, $stack");
+    }
+    await OrchidAPI().publishConfiguration();
+    OrchidAPI().circuitConfigurationChanged.add(null);
+  }
 
   ObservablePreference<Circuit> circuit = ObservablePreference(
       key: _UserPreferenceKeyVPN.Circuit,
@@ -159,7 +172,6 @@ class UserPreferencesVPN {
   ObservableBoolPreference monitoringEnabled = ObservableBoolPreference(
       _UserPreferenceKeyVPN.MonitoringEnabled,
       defaultValue: false);
-
 }
 
 enum _UserPreferenceKeyVPN implements UserPreferenceKey {

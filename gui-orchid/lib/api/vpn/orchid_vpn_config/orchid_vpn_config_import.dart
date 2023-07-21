@@ -6,6 +6,7 @@ import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
+import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/pages/circuit/circuit_utils.dart';
 import 'package:orchid/api/vpn/model/circuit.dart';
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
@@ -129,7 +130,8 @@ class OrchidVPNConfigImport {
     }
 
     // Save the imported circuit.
-    await CircuitUtils.saveCircuit(parsedCircuit.circuit);
+    await UserPreferencesVPN().saveCircuit(parsedCircuit.circuit);
+
     log("Import saved ${parsedCircuit.circuit.hops.length} hop circuit.");
 
     // Parse the optional imported keys list.

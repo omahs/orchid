@@ -64,22 +64,10 @@ class CircuitUtils {
     }
   }
 
-  static void addHopToCircuit(CircuitHop hop) async {
-    var circuit = await UserPreferencesVPN().circuit.get();
+  static Future<void> addHopToCircuit(CircuitHop hop) async {
+    var circuit = UserPreferencesVPN().circuit.get();
     circuit.hops.add(hop);
-    saveCircuit(circuit);
-  }
-
-  /// Save the circuit and update published config and configuration listeners
-  static Future<void> saveCircuit(Circuit circuit) async {
-    try {
-      //log("Saving circuit: ${circuit.hops.map((e) => e.toJson())}");
-      await UserPreferencesVPN().circuit.set(circuit);
-    } catch (err, stack) {
-      log("Error saving circuit: $err, $stack");
-    }
-    await OrchidAPI().publishConfiguration();
-    OrchidAPI().circuitConfigurationChanged.add(null);
+    await UserPreferencesVPN().saveCircuit(circuit);
   }
 
   static Future<bool> defaultCircuitFromMostEfficientAccountIfNeeded(
@@ -98,7 +86,7 @@ class CircuitUtils {
     var circuit = UserPreferencesVPN().circuit.get();
     if (circuit.hops.isEmpty && account != null) {
       log("circuit: creating default circuit from account: $account");
-      await CircuitUtils.saveCircuit(
+      await UserPreferencesVPN().saveCircuit(
         Circuit([OrchidHop.fromAccount(account)]),
       );
       return true;
