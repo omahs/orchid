@@ -7,7 +7,6 @@ import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/api/preferences/user_preferences_vpn.dart';
-import 'package:orchid/pages/circuit/circuit_utils.dart';
 import 'package:orchid/api/vpn/model/circuit.dart';
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'package:orchid/api/vpn/model/orchid_hop.dart';
