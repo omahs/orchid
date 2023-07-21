@@ -7,7 +7,7 @@ import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/api/orchid_web3/v1/orchid_web3_v1.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/api/pricing/usd.dart';
 import '../dapp_button.dart';
 import '../dapp_error_row.dart';
@@ -455,7 +455,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
         warnAmount: _warnedAmountAdd,
       );
 
-      UserPreferences().addTransaction(DappTransaction(
+      UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
         chainId: widget.context.chain.chainId,
         type: DappTransactionType.accountChanges,

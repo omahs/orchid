@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/api/pricing/usd.dart';

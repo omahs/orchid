@@ -1,6 +1,6 @@
-import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_contract_v1.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
@@ -71,7 +71,7 @@ class OrchidContractDeployment {
                 ),
               );
 
-      UserPreferences().addTransaction(DappTransaction(
+      UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: response1.hash,
         chainId: chainId,
         type: DappTransactionType.fundContractDeployer,
@@ -84,7 +84,7 @@ class OrchidContractDeployment {
     // Note: this does not trigger a metamask confirmation!
     log('Deploying orchid singleton factory...');
     final response2 = await web3.sendTransaction(factory_deploy_tx_data);
-    UserPreferences().addTransaction(DappTransaction(
+    UserPreferencesDapp().addTransaction(DappTransaction(
       transactionHash: response2.hash,
       chainId: chainId,
       type: DappTransactionType.deploySingletonFactory,
@@ -113,7 +113,7 @@ class OrchidContractDeployment {
             nounce: nonce,
           ),
         );
-    UserPreferences().addTransaction(DappTransaction(
+    UserPreferencesDapp().addTransaction(DappTransaction(
       transactionHash: response.hash,
       chainId: chainId,
       type: DappTransactionType.deployContract,

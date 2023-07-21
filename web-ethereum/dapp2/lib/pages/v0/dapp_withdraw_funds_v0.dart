@@ -7,7 +7,7 @@ import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/api/orchid_web3/v0/orchid_web3_v0.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/formatting.dart';
 import '../dapp_button.dart';
 import '../../orchid/field/orchid_labeled_token_value_field.dart';
@@ -114,7 +114,7 @@ class _WithdrawFundsPaneV0State extends State<WithdrawFundsPaneV0> {
         withdrawBalance: _withdrawBalanceField.value,
         withdrawEscrow: _withdrawEscrowField.value,
       );
-      UserPreferences().addTransaction(DappTransaction(
+      UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
         chainId: widget.context.chain.chainId,
         type: DappTransactionType.withdrawFunds,

@@ -2,7 +2,7 @@
 import 'package:orchid/api/orchid_urls.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_language.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/orchid/menu/expanding_popup_menu_item.dart';
 import 'package:orchid/orchid/menu/orchid_popup_menu_item_utils.dart';
 import 'package:orchid/orchid/menu/submenu_popup_menu_item.dart';
@@ -168,7 +168,7 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
   }
 
   Widget _buildLanguagePref(bool expanded) {
-    return UserPreferences().languageOverride.builder((languageOverride) {
+    return UserPreferencesUI().languageOverride.builder((languageOverride) {
       return ExpandingPopupMenuItem(
         expanded: expanded,
         title: s.language,
@@ -187,7 +187,7 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
             selected: key == selected,
             title: OrchidLanguage.languages[key],
             onTap: () async {
-              await UserPreferences().languageOverride.set(key);
+              await UserPreferencesUI().languageOverride.set(key);
             },
           ),
         )
@@ -203,7 +203,7 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
           selected: selected == null,
           title: s.systemDefault,
           onTap: () async {
-            await UserPreferences().languageOverride.set(null);
+            await UserPreferencesUI().languageOverride.set(null);
           },
         ));
 
@@ -214,7 +214,7 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
   }
 
   Widget _buildIdenticonsPref(bool expanded) {
-    return UserPreferences().useBlockiesIdenticons.builder(
+    return UserPreferencesUI().useBlockiesIdenticons.builder(
       (useBlockies) {
         if (useBlockies == null) {
           return Container();
@@ -255,7 +255,7 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
    */
 
   Widget _identiconOptions(bool useBlockies) {
-    final pref = UserPreferences().useBlockiesIdenticons;
+    final pref = UserPreferencesUI().useBlockiesIdenticons;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

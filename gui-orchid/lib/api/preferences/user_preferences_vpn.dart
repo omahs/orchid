@@ -57,10 +57,6 @@ class UserPreferencesVPN {
   /// End: Circuit
   ///
 
-  /// The user-editable portion of the configuration file text.
-  ObservableStringPreference userConfig =
-      ObservableStringPreference(UserPreferenceKeyVPN.UserConfig);
-
   ///
   /// Begin: Keys
   ///
@@ -206,7 +202,7 @@ class UserPreferencesVPN {
 
   /// Add to the set of discovered accounts.
   Future<void> addCachedDiscoveredAccounts(List<Account> accounts) async {
-    if (accounts == null || accounts.isEmpty) {
+    if (accounts.isEmpty) {
       return;
     }
     if (accounts.contains(null)) {
@@ -289,7 +285,6 @@ class UserPreferencesVPN {
 
 enum UserPreferenceKeyVPN implements UserPreferenceKey {
   Circuit,
-  UserConfig,
   Keys,
   DefaultCurator,
   QueryBalances,

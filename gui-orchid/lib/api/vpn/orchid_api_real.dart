@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
 import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
@@ -217,7 +218,7 @@ class RealOrchidAPI implements OrchidAPI {
 
   // Generate the combined user config and generated config
   static Future<String> generateCombinedConfig() async {
-    var userConfig = UserPreferencesVPN().userConfig.get();
+    var userConfig = UserPreferencesUI().userConfig.get();
 
     // Append the generated config before saving.
     String generatedConfig;

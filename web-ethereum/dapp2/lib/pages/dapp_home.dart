@@ -11,7 +11,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/orchid/account/account_card.dart';
@@ -320,7 +320,7 @@ class _DappHomeState extends State<DappHome> {
   // The individual transaction panels trigger refresh of the wallet and orchid
   // account info here whenever they are added or updated.
   Widget _buildTransactionsList() {
-    return UserPreferences().transactions.builder((txs) {
+    return UserPreferencesDapp().transactions.builder((txs) {
       // Limit to currently selected chain
       txs = (txs ?? [])
           .where((tx) => tx.chainId == _web3Context?.chain?.chainId)
@@ -782,7 +782,7 @@ class _DappHomeState extends State<DappHome> {
   }
 
   _dismissTransaction(String txHash) {
-    UserPreferences().removeTransaction(txHash);
+    UserPreferencesDapp().removeTransaction(txHash);
   }
 
   void _onContractVersionChanged(int version) async {

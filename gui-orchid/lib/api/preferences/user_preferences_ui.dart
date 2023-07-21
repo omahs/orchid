@@ -14,6 +14,10 @@ class UserPreferencesUI {
   /// UI
   ///
 
+  /// User configuration JS for app customization and testing.
+  ObservableStringPreference userConfig =
+      ObservableStringPreference(UserPreferenceKeyUI.UserConfig);
+
   /// User locale override (e.g. en, pt_BR)
   ObservableStringPreference languageOverride =
       ObservableStringPreference(UserPreferenceKeyUI.LanguageOverride);
@@ -25,6 +29,7 @@ class UserPreferencesUI {
 }
 
 enum UserPreferenceKeyUI implements UserPreferenceKey {
+  UserConfig,
   LanguageOverride,
   UseBlockiesIdenticons,
 }

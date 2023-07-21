@@ -80,7 +80,7 @@ class OrchidEthereumV1Web3Impl implements OrchidEthereumV1 {
         balance: amount, deposit: escrow, unlock: unlock, warned: warned);
   }
 
-  // Note: This method requires signer key because to produce orchid accounts that
+  // Note: This method requires signer key to produce orchid accounts that
   // Note: are capable of signing.  If we need this in the web3 context we should
   // Note: provide another version that accepts the signer address and produces
   // Note: tracked accounts by address.

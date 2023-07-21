@@ -1,6 +1,6 @@
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_platform.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/util/js_config.dart';
 
 /// This class supports stored JS configuration from user preferences.
@@ -21,7 +21,7 @@ class OrchidUserConfig {
   /// If there is an error parsing the configuation an empty JSConfig is returned.
   JSConfig getUserConfigJS() {
     try {
-      var js = UserPreferencesVPN().userConfig.get() ?? '';
+      var js = UserPreferencesUI().userConfig.get() ?? '';
       if (OrchidPlatform.isWeb) {
         js += OrchidUserParams().asJS();
       }

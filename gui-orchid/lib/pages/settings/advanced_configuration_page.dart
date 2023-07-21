@@ -1,9 +1,9 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/common/tap_clears_focus.dart';
@@ -36,7 +36,7 @@ class _AdvancedConfigurationPageState extends State<AdvancedConfigurationPage> {
   void initState() {
     super.initState();
 
-    var text = UserPreferencesVPN().userConfig.get();
+    var text = UserPreferencesUI().userConfig.get();
     setState(() {
       _configFileTextLast = text;
       _configFileTextController.text = text;
@@ -159,7 +159,7 @@ class _AdvancedConfigurationPageState extends State<AdvancedConfigurationPage> {
 
     // save
     try {
-      await UserPreferencesVPN().userConfig.set(newConfig);
+      await UserPreferencesUI().userConfig.set(newConfig);
       setState(() {
         _configFileTextLast = newConfig;
       });

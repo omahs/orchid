@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_urls.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
-import 'package:orchid/api/preferences/user_preferences.dart';
+import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 import 'package:orchid/api/pricing/usd.dart';
 import 'package:styled_text/styled_text.dart';
@@ -192,7 +192,7 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
       );
 
       // Persisting the transaction(s) will update the UI elsewhere.
-      UserPreferences().addTransactions(txHashes.map((hash) => DappTransaction(
+      UserPreferencesDapp().addTransactions(txHashes.map((hash) => DappTransaction(
             transactionHash: hash,
             chainId: widget.context.chain.chainId,
             type: DappTransactionType.addFunds,
