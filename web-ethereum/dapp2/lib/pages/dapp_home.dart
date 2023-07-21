@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'dart:math';
+import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/api/orchid_web3/v1/orchid_contract_deployment_v1.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -15,7 +16,6 @@ import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/orchid/account/account_card.dart';
-import 'package:orchid/orchid/account/account_detail_poller.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'package:orchid/api/orchid_web3/v1/orchid_eth_v1_web3.dart';
 import 'package:orchid/pages/settings/logging_page.dart';

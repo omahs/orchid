@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/api/orchid_web3/v1/orchid_web3_v1.dart';
-import 'package:orchid/orchid/account/account_detail_poller.dart';
+import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/pages/v1/dapp_withdraw_funds_v1.dart';
 import '../dapp_add_funds.dart';
 import 'dapp_advanced_funds_v1.dart';
