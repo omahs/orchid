@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:flutter/foundation.dart';
+import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -8,7 +9,6 @@ import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
-import 'package:orchid/orchid/account/account_detail_poller.dart';
 
 /// Mock account data for testing and screenshot generation
 class AccountMock {

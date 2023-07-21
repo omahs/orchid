@@ -19,7 +19,7 @@ import 'package:orchid/util/timed_builder.dart';
 import 'package:orchid/util/format_currency.dart';
 import 'package:orchid/api/pricing/usd.dart';
 import '../orchid_panel.dart';
-import 'account_detail_poller.dart';
+import '../../api/orchid_eth/orchid_account_detail.dart';
 
 /// The account cards used on the account manager
 class AccountCard extends StatefulWidget {

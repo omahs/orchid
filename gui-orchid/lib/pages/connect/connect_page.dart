@@ -14,7 +14,7 @@ import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/common/screen_orientation.dart';
 import 'package:orchid/orchid/orchid_panel.dart';
-import 'package:orchid/orchid/account/account_detail_poller.dart';
+import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/pages/account_manager/account_manager_page.dart';
 import 'package:orchid/pages/circuit/circuit_utils.dart';
 import 'package:orchid/api/vpn/model/circuit.dart';
