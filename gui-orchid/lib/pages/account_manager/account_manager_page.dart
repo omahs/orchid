@@ -35,7 +35,7 @@ import 'package:styled_text/styled_text.dart';
 import '../../common/app_sizes.dart';
 import '../app_routes.dart';
 import 'account_manager_mock.dart';
-import 'account_view_model.dart';
+import '../../orchid/account/account_view_model.dart';
 import 'export_identity_dialog.dart';
 
 class AccountManagerPage extends StatefulWidget {

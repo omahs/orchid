@@ -4,7 +4,7 @@ import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/common/app_dialogs.dart';
-import 'package:orchid/pages/account_manager/account_view_model.dart';
+import 'package:orchid/orchid/account/account_view_model.dart';
 import 'package:orchid/util/listenable_builder.dart';
 import 'account_card.dart';
 import 'account_detail_store.dart';
