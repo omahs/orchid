@@ -16,19 +16,19 @@ class UserPreferencesUI {
 
   /// User configuration JS for app customization and testing.
   ObservableStringPreference userConfig =
-      ObservableStringPreference(UserPreferenceKeyUI.UserConfig);
+      ObservableStringPreference(_UserPreferenceKeyUI.UserConfig);
 
   /// User locale override (e.g. en, pt_BR)
   ObservableStringPreference languageOverride =
-      ObservableStringPreference(UserPreferenceKeyUI.LanguageOverride);
+      ObservableStringPreference(_UserPreferenceKeyUI.LanguageOverride);
 
   /// Identicons UI
   ObservableBoolPreference useBlockiesIdenticons = ObservableBoolPreference(
-      UserPreferenceKeyUI.UseBlockiesIdenticons,
+      _UserPreferenceKeyUI.UseBlockiesIdenticons,
       defaultValue: true);
 }
 
-enum UserPreferenceKeyUI implements UserPreferenceKey {
+enum _UserPreferenceKeyUI implements UserPreferenceKey {
   UserConfig,
   LanguageOverride,
   UseBlockiesIdenticons,

@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
+import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -80,7 +81,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
   void initStateAsync() async {
     // Listen for changes to identities
-    UserPreferencesVPN().keys.stream().listen((keys) {
+    UserPreferencesKeys().keys.stream().listen((keys) {
       _identities = keys;
       // Default if needed
       if (_selectedIdentity == null) {
@@ -368,12 +369,12 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
   void _generateIdentity() async {
     var identity = StoredEthereumKey.generate();
-    await UserPreferencesVPN().addKey(identity);
+    await UserPreferencesKeys().addKey(identity);
     _setSelectedIdentity(identity);
   }
 
   void _deleteIdentity(StoredEthereumKey identity) async {
-    await UserPreferencesVPN().removeKey(identity.ref());
+    await UserPreferencesKeys().removeKey(identity.ref());
     // Remove accounts for this key.
     var matchingAccounts = UserPreferencesVPN().cachedDiscoveredAccounts.get();
 

@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
+import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
@@ -224,7 +225,7 @@ class _ConnectPageState extends State<ConnectPage>
     }).dispose(_subs);
 
     // Monitor identities
-    UserPreferencesVPN().keys.stream().listen((keys) async {
+    UserPreferencesKeys().keys.stream().listen((keys) async {
       setState(() {
         _keys = keys;
       });

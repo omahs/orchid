@@ -2,6 +2,7 @@
 import 'package:dartjsengine/dartjsengine.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
+import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/util/hex.dart';
 import 'package:orchid/util/js_config.dart';
@@ -10,7 +11,7 @@ import 'package:orchid/util/js_config.dart';
 class OrchidAccountImport {
   static ParseOrchidIdentityOrAccountResult parse(String config,
       {List<StoredEthereumKey>? keys}) {
-    final existingKeys = keys ?? UserPreferencesVPN().keys.get();
+    final existingKeys = keys ?? UserPreferencesKeys().keys.get();
 
     // Try multiple full accounts
     try {
@@ -215,7 +216,7 @@ class ParseOrchidIdentityOrAccountResult {
 
   Future<void> saveIfNeeded() async {
     if (signerOptional != null) {
-      await UserPreferencesVPN().addKeyIfNeeded(signerOptional!);
+      await UserPreferencesKeys().addKeyIfNeeded(signerOptional!);
     }
     if (accounts != null) {
       // https://stackoverflow.com/questions/65456958/dart-null-safety-doesnt-work-with-class-fields/65457221#65457221
@@ -225,7 +226,7 @@ class ParseOrchidIdentityOrAccountResult {
 
   static Future<void> saveAccountsIfNeeded(Iterable<Account> accounts) async {
     for (var account in (accounts)) {
-      await UserPreferencesVPN().addKeyIfNeeded(account.signerKey);
+      await UserPreferencesKeys().addKeyIfNeeded(account.signerKey);
     }
     await UserPreferencesVPN().addAccountsIfNeeded(accounts.toList());
   }

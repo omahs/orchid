@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:math';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
@@ -234,7 +235,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _clearAllKeysAndAccounts() async {
     await UserPreferencesVPN().cachedDiscoveredAccounts.clear();
-    await UserPreferencesVPN().keys.clear();
+    await UserPreferencesKeys().keys.clear();
   }
 
   void _clearCachedAccounts() async {

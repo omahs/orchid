@@ -1,11 +1,12 @@
 // @dart=2.9
 import 'dart:async';
+import 'package:orchid/api/orchid_log.dart';
+import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import 'package:orchid/pages/circuit/model/circuit_hop.dart';
 import 'package:orchid/pages/circuit/model/orchid_hop.dart';
-import '../../orchid_log.dart';
 
 class OrchidVPNConfigGenerate {
   /// Generate the circuit hops list portion of the VPN config managed by the UI.
@@ -21,7 +22,7 @@ class OrchidVPNConfigGenerate {
     bool forExport = false,
   }) async {
     Circuit circuit = UserPreferencesVPN().circuit.get();
-    List<StoredEthereumKey> keys = UserPreferencesVPN().keys.get();
+    List<StoredEthereumKey> keys = UserPreferencesKeys().keys.get();
     List<CircuitHop> hops = circuit?.hops ?? [];
 
     var hopsConfig = await Future.wait(hops.map((hop) {
