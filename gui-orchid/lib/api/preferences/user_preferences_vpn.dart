@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'package:orchid/api/orchid_eth/orchid_chain_config.dart';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/user_configured_chain_preferences.dart';
 import 'package:orchid/api/preferences/user_preferences_mock.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/pages/circuit/model/circuit.dart';
 import '../orchid_log.dart';
 import 'accounts_preferences.dart';
-import 'chain_config_preferences.dart';
 import 'user_preferences.dart';
 import 'user_preferences_keys.dart';
 
@@ -163,23 +160,6 @@ class UserPreferencesVPN {
       _UserPreferenceKeyVPN.MonitoringEnabled,
       defaultValue: false);
 
-  /// User Chain config overrides
-  // Note: Now that we have fully user-configurable chains we should probably
-  // Note: fold this into that structure.
-  ObservableChainConfigPreference chainConfig =
-      ObservableChainConfigPreference(_UserPreferenceKeyVPN.ChainConfig);
-
-  /// User Chain config overrides
-  // Note: Now that we have fully user-configurable chains we should probably
-  // Note: fold this into that structure.
-  ChainConfig? chainConfigFor(int chainId) {
-    return ChainConfig.map(chainConfig.get())[chainId];
-  }
-
-  /// Fully user configured chains.
-  ObservableUserConfiguredChainPreference userConfiguredChains =
-      ObservableUserConfiguredChainPreference(
-          _UserPreferenceKeyVPN.UserConfiguredChains);
 }
 
 enum _UserPreferenceKeyVPN implements UserPreferenceKey {
@@ -191,6 +171,4 @@ enum _UserPreferenceKeyVPN implements UserPreferenceKey {
   ReleaseVersion,
   RoutingEnabled,
   MonitoringEnabled,
-  ChainConfig,
-  UserConfiguredChains,
 }

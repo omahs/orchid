@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
@@ -39,7 +40,7 @@ class _RpcPageState extends State<RpcPage> {
 
   Widget buildPage(BuildContext context) {
     return SafeArea(
-      child: UserPreferencesVPN().userConfiguredChains.builder((_) {
+      child: UserPreferencesUI().userConfiguredChains.builder((_) {
         return _buildChains().padx(20).top(8).bottom(24);
       }),
     );
@@ -67,10 +68,10 @@ class _RpcPageState extends State<RpcPage> {
     knownChains.remove(Chains.Ethereum);
     knownChains.insert(0, Chains.Ethereum);
 
-    final userConfiguredChains = UserPreferencesVPN().userConfiguredChains.get();
+    final userConfiguredChains = UserPreferencesUI().userConfiguredChains.get();
     final chains =
         userConfiguredChains.cast<Chain>() + knownChains.cast<Chain>();
-    final config = ChainConfig.map(UserPreferencesVPN().chainConfig.get());
+    final config = ChainConfig.map(UserPreferencesUI().chainConfig.get());
 
     return ListView.builder(
         itemCount: chains.length,
@@ -312,7 +313,7 @@ class _ChainItemState extends State<_ChainItem> {
       enabled: _show,
       rpcUrl: text,
     );
-    var list = UserPreferencesVPN()
+    var list = UserPreferencesUI()
         .chainConfig
         .get()
         .where((e) => e.chainId != chainId)
@@ -321,7 +322,7 @@ class _ChainItemState extends State<_ChainItem> {
     if (!newConfig.isEmpty) {
       list.add(newConfig);
     }
-    await UserPreferencesVPN().chainConfig.set(list);
+    await UserPreferencesUI().chainConfig.set(list);
     setState(() {});
   }
 
@@ -331,7 +332,7 @@ class _ChainItemState extends State<_ChainItem> {
         title: s.deleteChainQuestion,
         bodyText: s.deleteUserConfiguredChain + ': ' + userConfiguredChain.name,
         commitAction: () async {
-          await UserPreferencesVPN()
+          await UserPreferencesUI()
               .userConfiguredChains
               .remove(userConfiguredChain);
         });

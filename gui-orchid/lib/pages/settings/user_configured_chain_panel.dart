@@ -2,7 +2,7 @@
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
-import 'package:orchid/api/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/orchid/field/orchid_labeled_numeric_field.dart';
 import 'package:orchid/orchid/field/orchid_labeled_text_field.dart';
@@ -158,7 +158,7 @@ class _UserConfiguredChainPanelState extends State<UserConfiguredChainPanel> {
       defaultProviderUrl: _providerUrl.text,
       tokenPriceUSD: USD(double.parse(_tokenPrice.text)),
     );
-    await UserPreferencesVPN().userConfiguredChains.add(chain);
+    await UserPreferencesUI().userConfiguredChains.add(chain);
     Navigator.pop(context);
   }
 }
