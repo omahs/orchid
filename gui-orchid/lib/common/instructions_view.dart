@@ -32,6 +32,8 @@ class InstructionsView extends StatelessWidget {
         // Orientation builder provides the parent widget orientation, not
         // necessarily the device. Fetch device orientation.
         var orientation = MediaQuery.of(context).orientation;
+        var titleStyle = OrchidText.subtitle.copyWith(color: titleColor ?? textColor);
+        var bodyStyle = OrchidText.body2.copyWith(color: textColor);
         return Visibility(
           visible: orientation == Orientation.portrait || !hideInLandscape,
           child: SafeArea(
@@ -39,14 +41,14 @@ class InstructionsView extends StatelessWidget {
                   children: <Widget>[
                         image ?? Container(),
                         SizedBox(height: 20),
-                        Text(title, style: OrchidText.subtitle.copyWith(color: titleColor ?? textColor)),
+                        Text(title, style: titleStyle),
                         SizedBox(height: 20),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: 450),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 45),
-                            child: body != null ?
-                                Text(body, style: OrchidText.body2.copyWith(color: textColor))
+                            child: body != null
+                                ? Text(body, style: bodyStyle)
                                 : Container(),
                           ),
                         ),
