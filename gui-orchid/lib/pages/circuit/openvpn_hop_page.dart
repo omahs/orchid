@@ -12,7 +12,7 @@ import 'package:orchid/orchid/field/orchid_text_field.dart';
 import '../../common/app_sizes.dart';
 import '../../common/app_text.dart';
 import 'hop_editor.dart';
-import 'model/openvpn_hop.dart';
+import '../../api/vpn/model/openvpn_hop.dart';
 
 /// Create / edit / view an OpenVPN Hop
 class OpenVPNHopPage extends HopEditor<OpenVPNHop> {

@@ -16,13 +16,13 @@ import 'package:orchid/orchid/orchid_text.dart';
 import 'package:orchid/orchid/account/account_card.dart';
 import 'package:orchid/orchid/account/account_detail_store.dart';
 import 'package:orchid/pages/circuit/config_change_dialogs.dart';
-import 'package:orchid/pages/circuit/model/openvpn_hop.dart';
-import 'package:orchid/pages/circuit/model/wireguard_hop.dart';
+import 'package:orchid/api/vpn/model/openvpn_hop.dart';
+import 'package:orchid/api/vpn/model/wireguard_hop.dart';
 import 'circuit_utils.dart';
 import 'hop_editor.dart';
-import 'model/circuit.dart';
-import 'model/circuit_hop.dart';
-import 'model/orchid_hop.dart';
+import '../../api/vpn/model/circuit.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import '../../api/vpn/model/orchid_hop.dart';
 import 'package:orchid/util/collections.dart';
 
 /// The multi-hop circuit builder page.

@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/pages/circuit/model/wireguard_hop.dart';
-import 'circuit_hop.dart';
+import 'package:orchid/api/vpn/model/wireguard_hop.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'openvpn_hop.dart';
 import 'orchid_hop.dart';
 

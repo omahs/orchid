@@ -6,7 +6,7 @@ import 'package:orchid/orchid/orchid_text.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
 import 'hop_editor.dart';
-import 'model/orchid_hop.dart';
+import '../../api/vpn/model/orchid_hop.dart';
 
 class CuratorEditorPage extends HopEditor<OrchidHop> {
   CuratorEditorPage({@required editableHop})

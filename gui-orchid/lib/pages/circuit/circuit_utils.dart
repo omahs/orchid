@@ -8,9 +8,9 @@ import 'package:orchid/api/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/account/account_finder.dart';
 import 'add_hop_page.dart';
-import 'model/circuit.dart';
-import 'model/circuit_hop.dart';
-import 'model/orchid_hop.dart';
+import '../../api/vpn/model/circuit.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import '../../api/vpn/model/orchid_hop.dart';
 
 typedef HopCompletion = void Function(UniqueHop);
 

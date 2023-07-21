@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'circuit_hop.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
 
 class OpenVPNHop extends CircuitHop {
   final String userName;

@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_preferences_mock.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
-import 'package:orchid/pages/circuit/model/circuit.dart';
+import 'package:orchid/api/vpn/model/circuit.dart';
 import '../orchid_log.dart';
 import 'accounts_preferences.dart';
 import 'user_preferences.dart';

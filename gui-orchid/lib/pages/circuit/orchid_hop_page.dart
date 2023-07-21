@@ -30,8 +30,8 @@ import 'curator_page.dart';
 import '../../orchid/menu/orchid_funder_selector_menu.dart';
 import 'hop_editor.dart';
 import 'package:orchid/orchid/menu/orchid_key_selector_menu.dart';
-import 'model/circuit_hop.dart';
-import 'model/orchid_hop.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import '../../api/vpn/model/orchid_hop.dart';
 
 /// Create / edit / view an Orchid Hop
 // The OrchidHopEditor operates in a "settings"-like fashion and allows

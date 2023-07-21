@@ -9,7 +9,7 @@ import 'package:orchid/common/tap_clears_focus.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
 import '../../common/app_sizes.dart';
 import 'hop_editor.dart';
-import 'model/wireguard_hop.dart';
+import '../../api/vpn/model/wireguard_hop.dart';
 
 /// Create / edit / view an WireGuard Hop
 class WireGuardHopPage extends HopEditor<WireGuardHop> {

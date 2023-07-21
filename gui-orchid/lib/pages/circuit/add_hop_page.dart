@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
 import 'package:orchid/orchid/orchid_panel.dart';
 import 'package:orchid/orchid/orchid_text.dart';
+import 'package:orchid/pages/circuit/hop_editor.dart';
 import 'package:orchid/pages/circuit/wireguard_hop_page.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
-import '../../common/app_sizes.dart';
-import 'hop_editor.dart';
-import 'model/circuit_hop.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'openvpn_hop_page.dart';
 import 'orchid_hop_page.dart';
 

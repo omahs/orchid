@@ -1,10 +1,10 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:orchid/common/app_transitions.dart';
 import 'package:orchid/pages/circuit/wireguard_hop_page.dart';
 import 'package:orchid/common/app_buttons.dart';
-import '../../common/app_transitions.dart';
 import 'add_hop_page.dart';
-import 'model/circuit_hop.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'openvpn_hop_page.dart';
 import 'orchid_hop_page.dart';
 

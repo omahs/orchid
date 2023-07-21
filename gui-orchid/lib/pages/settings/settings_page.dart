@@ -10,7 +10,7 @@ import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_switch.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
-import 'package:orchid/pages/circuit/model/orchid_hop.dart';
+import 'package:orchid/api/vpn/model/orchid_hop.dart';
 import 'package:orchid/common/page_tile.dart';
 import 'package:orchid/common/screen_orientation.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
