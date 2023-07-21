@@ -1,5 +1,7 @@
 // @dart=2.9
-import 'package:orchid/orchid/orchid.dart';
+
+import 'package:flutter/foundation.dart';
+import 'package:orchid/util/collections.dart';
 
 /// User overrides for default chain configuration
 class ChainConfig {
