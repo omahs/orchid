@@ -137,7 +137,7 @@ class Account {
   /// This method loads market conditions for each account and sorts them by efficiency.
   static Future<List<Account>> sortAccountsByEfficiency(
       Set<Account> accounts) async {
-    var accountMarketConditions =
+    List<_AccountMarketConditions> accountMarketConditions =
         (await Future.wait(accounts.map((account) async {
       try {
         return _AccountMarketConditions(
@@ -147,16 +147,17 @@ class Account {
         return null;
       }
     })))
-            .where((e) => e != null) // skip errors
+            .whereType<_AccountMarketConditions>()
             .toList();
 
     // Sort by efficiency descending
     // Note: We have a similar sort in the account manager.
     accountMarketConditions
         .sort((_AccountMarketConditions a, _AccountMarketConditions b) {
-      return -((a.marketConditions?.efficiency ?? 0)
-          .compareTo((b.marketConditions?.efficiency ?? 0)));
+      return -((a.marketConditions.efficiency ?? 0)
+          .compareTo((b.marketConditions.efficiency ?? 0)));
     });
+
     return accountMarketConditions.map((e) => e.account).toList();
   }
 
@@ -170,21 +171,21 @@ class Account {
           'Account does not resolve to a stored key: $resolvedSignerAddress');
     }
 
-    return StoredEthereumKeyRef(this.signerKeyUid);
+    return StoredEthereumKeyRef(this.signerKeyUid!);
   }
 
   StoredEthereumKey get signerKey {
     if (resolvedSignerKey == null) {
       resolvedSignerKey = signerKeyRef.get();
     }
-    return resolvedSignerKey;
+    return resolvedSignerKey!;
   }
 
   EthereumAddress get signerAddress {
     if (resolvedSignerAddress == null) {
-      resolvedSignerAddress = signerKey?.address;
+      resolvedSignerAddress = signerKey.address;
     }
-    return resolvedSignerAddress;
+    return resolvedSignerAddress!;
   }
 
   // Resolve the signer address using the supplied keystore.
@@ -196,21 +197,15 @@ class Account {
   /// End key methods
   ///
 
-  /// Indicates that this account selects an identity but not yet a designated
-  /// account for the identity.
-  bool get isIdentityPlaceholder {
-    return chainId == null && funder == null;
-  }
-
   static String signerKeyUidJsonName = 'identityUid';
 
   Account.fromJson(Map<String, dynamic> json)
       : this.signerKeyUid = json[signerKeyUidJsonName],
         this.version = int.parse(json['version']),
-        this.chainId = parseNullableInt(json['chainId']),
+        this.chainId = int.parse(json['chainId']),
         this.funder = EthereumAddress.fromNullable(json['funder']);
 
-  static int parseNullableInt(String val) {
+  static int? parseNullableInt(String? val) {
     return val == null ? null : int.parse(val);
   }
 

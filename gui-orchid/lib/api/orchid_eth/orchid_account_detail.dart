@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ abstract class AccountDetail {
   Account get account;
 
   // The resolved signer address. Null until details are polled.
-  EthereumAddress signerAddress;
+  EthereumAddress? signerAddress;
 
   // The funder from the account
   EthereumAddress get funder {
@@ -23,16 +22,16 @@ abstract class AccountDetail {
   }
 
   // The lotter pot.  Null until polled
-  LotteryPot get lotteryPot;
+  LotteryPot? get lotteryPot;
 
   // The market conditions. Null until polled
-  MarketConditions get marketConditions;
+  MarketConditions? get marketConditions;
 
   // The market alert flag.  False until polled
   bool get showMarketStatsAlert;
 
   // The transactions.  Null until polled
-  List<OrchidUpdateTransactionV0> get transactions;
+  List<OrchidUpdateTransactionV0>? get transactions;
 }
 
 class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
@@ -42,31 +41,30 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
   final Duration pollingPeriod;
 
   // The resolved signer address (non-async). Null until details are polled.
-  EthereumAddress signerAddress;
+  EthereumAddress? signerAddress;
 
   EthereumAddress get funder {
     return account.funder;
   }
 
   AccountDetailPoller({
-    @required this.account,
+    required this.account,
     this.pollingPeriod = const Duration(seconds: 30),
   }) : this.id = nextId++ {
     log("XXX: AccountDetailPoller $id created.");
   }
 
-  Timer _balanceTimer;
+  Timer? _balanceTimer;
   bool _balancePollInProgress = false;
-  DateTime _lotteryPotLastUpdate;
+  DateTime? _lotteryPotLastUpdate;
 
   // Account Detail
-  LotteryPot lotteryPot; // initially null
-  MarketConditions marketConditions;
+  LotteryPot? lotteryPot; // initially null
+  MarketConditions? marketConditions;
   bool showMarketStatsAlert = false;
   bool _isCancelled = false;
 
-  // TODO:
-  List<OrchidUpdateTransactionV0> transactions;
+  List<OrchidUpdateTransactionV0>? transactions;
 
   /// Start periodic polling
   Future<void> startPolling() async {
@@ -116,7 +114,7 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
       lotteryPot = _pot;
       _lotteryPotLastUpdate = DateTime.now();
 
-      MarketConditions _marketConditions;
+      MarketConditions? _marketConditions;
       try {
         _marketConditions = await account
             .getMarketConditionsFor(_pot)
@@ -128,7 +126,7 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
 
       // TODO: Complete for V1 and move to Accounts
       // TODO: Implement caching if appropriate
-      List<OrchidUpdateTransactionV0> _transactions;
+      List<OrchidUpdateTransactionV0>? _transactions;
       try {
         if (account.version == 0) {
           _transactions = await OrchidEthereumV0()
@@ -144,7 +142,7 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
 
       if (marketConditions != null) {
         showMarketStatsAlert =
-            marketConditions.efficiency < MarketConditions.minEfficiency;
+            marketConditions!.efficiency < MarketConditions.minEfficiency;
       }
 
       this.notifyListeners();
@@ -153,7 +151,7 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
 
       // Allow a stale balance for a period of time.
       if (_lotteryPotLastUpdate != null &&
-          _lotteryPotLastUpdate.difference(DateTime.now()) >
+          _lotteryPotLastUpdate!.difference(DateTime.now()) >
               Duration(hours: 1)) {
         lotteryPot = null; // no balance available
         notifyListeners();
