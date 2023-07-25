@@ -96,11 +96,19 @@ class JSConfig {
     throw Exception("Expression not double: $val");
   }
 
-  String? evalStringDefault(String expression, String? defaultValue) {
+  String evalStringDefault(String expression, String defaultValue) {
     try {
       return evalString(expression);
     } catch (err) {
       return defaultValue;
+    }
+  }
+
+  String? evalStringDefaultNull(String expression) {
+    try {
+      return evalString(expression);
+    } catch (err) {
+      return null;
     }
   }
 

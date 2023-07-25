@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
@@ -18,7 +17,7 @@ class TitledPage extends StatelessWidget {
 
   TitledPage({
     this.title = '',
-    @required this.child,
+    required this.child,
     this.lightTheme = false,
     this.actions = const [],
     this.backAction,

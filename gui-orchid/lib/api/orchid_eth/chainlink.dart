@@ -1,4 +1,3 @@
-// @dart=2.12
 import 'dart:math';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/util/cacheable.dart';

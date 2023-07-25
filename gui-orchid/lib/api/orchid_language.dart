@@ -42,7 +42,7 @@ class OrchidLanguage {
         const String.fromEnvironment('language', defaultValue: '');
     if (envLanguageOverride == '')
       envLanguageOverride =
-          OrchidUserConfig().getUserConfigJS().evalStringDefault('lang', null);
+          OrchidUserConfig().getUserConfigJS().evalStringDefaultNull('lang');
 
     if (envLanguageOverride != null && hasLanguage(envLanguageOverride)) {
       return envLanguageOverride;

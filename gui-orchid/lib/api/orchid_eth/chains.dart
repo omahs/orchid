@@ -1,6 +1,4 @@
-// @dart=2.9
 // ignore_for_file: non_constant_identifier_names
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
@@ -36,9 +34,8 @@ class Chains {
   static Chain unknownChain(int chainId) {
     return Chain(
       chainId: chainId,
-      // TODO:
       name: "Unknown",
-      defaultProviderUrl: null,
+      defaultProviderUrl: '',
       iconPath: OrchidAssetSvgChain.unknown_chain_path,
       blocktime: 0,
       eip1559: false,
@@ -142,7 +139,8 @@ class Chains {
     // Additional L1 fees.
     hasNonstandardTransactionFees: true,
     supportsLogs: true,
-    blocktime: 0, // non-standard transaction structure...
+    blocktime: 0,
+    // non-standard transaction structure...
     eip1559: false,
   );
 
@@ -167,7 +165,7 @@ class Chains {
     nativeCurrency: Tokens.AURORA_ETH,
     defaultProviderUrl: 'https://mainnet.aurora.dev',
     iconPath: OrchidAssetSvgChain.near_aurora_chain_path,
-    // TODO: Missing explorer URL
+    explorerUrl: 'https://explorer.aurora.dev/',
     // Additional L1 fees.
     hasNonstandardTransactionFees: true,
     supportsLogs: true,
@@ -309,16 +307,16 @@ class Chain {
   }
 
   /// Optional explorer URL
-  final String explorerUrl;
+  final String? explorerUrl;
 
   const Chain({
-    @required this.chainId,
-    @required this.name,
-    @required this.nativeCurrency,
-    @required this.defaultProviderUrl,
-    @required this.blocktime,
+    required this.chainId,
+    required this.name,
+    required this.nativeCurrency,
+    required this.defaultProviderUrl,
+    required this.blocktime,
     this.requiredConfirmations = 1,
-    this.iconPath,
+    required this.iconPath,
     this.explorerUrl,
     this.hasNonstandardTransactionFees = false,
     this.supportsLogs = false,
@@ -372,18 +370,18 @@ class Chain {
 
 class UserConfiguredChain extends Chain {
   UserConfiguredChain({
-    String name,
-    int chainId,
-    String defaultProviderUrl,
-    USD tokenPriceUSD,
+    required String name,
+    required int chainId,
+    required String defaultProviderUrl,
+    required USD tokenPriceUSD,
   }) : super(
-          chainId: chainId,
-          name: name,
-          defaultProviderUrl: defaultProviderUrl,
-          nativeCurrency: userConfiguredTokenType(chainId, tokenPriceUSD),
-          blocktime: 0,
-          eip1559: false,
-        );
+            chainId: chainId,
+            name: name,
+            defaultProviderUrl: defaultProviderUrl,
+            nativeCurrency: userConfiguredTokenType(chainId, tokenPriceUSD),
+            blocktime: 0,
+            eip1559: false,
+            iconPath: OrchidAssetSvgChain.unknown_chain_path);
 
   UserConfiguredChain.fromJson(Map<String, dynamic> json)
       : this(

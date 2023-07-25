@@ -1,5 +1,3 @@
-// @dart=2.9
-import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_eth_v0.dart';
@@ -15,7 +13,7 @@ import 'orchid_market.dart';
 /// The base model for accounts including chain, signer, funder, and contract version.
 class Account {
   /// If this account was created for a stored key then this is the key uid.
-  final String signerKeyUid;
+  final String? signerKeyUid;
   final EthereumAddress funder;
 
   /// The contract version: 0 for the original OXT contract.
@@ -25,10 +23,10 @@ class Account {
   /// For an account that is created from a stored key the signer address is
   /// resolved lazily by looking up the key and calculating the address from the secret.
   /// For an account that is created from a signer address this holds the address.
-  EthereumAddress resolvedSignerAddress;
+  EthereumAddress? resolvedSignerAddress;
 
   /// For an account created from a full signer key this is the resolved key.
-  StoredEthereumKey resolvedSignerKey;
+  StoredEthereumKey? resolvedSignerKey;
 
   bool get hasKey {
     return signerKeyUid != null;
@@ -39,20 +37,20 @@ class Account {
   }
 
   Account.base({
-    @required this.signerKeyUid,
+    required this.signerKeyUid,
     this.resolvedSignerAddress,
     this.resolvedSignerKey,
     this.version = 0,
-    this.chainId,
-    this.funder,
+    required this.chainId, // required?
+    required this.funder, // required?
   });
 
   /// Create an account with referencing a stored signer key
   Account.fromSignerKeyRef({
-    @required StoredEthereumKeyRef signerKey,
+    required StoredEthereumKeyRef signerKey,
     int version = 0,
-    int chainId,
-    EthereumAddress funder,
+    required int chainId,
+    required EthereumAddress funder,
   }) : this.base(
           signerKeyUid: signerKey.keyUid,
           resolvedSignerAddress: null,
@@ -63,10 +61,10 @@ class Account {
 
   /// Create an account with a full signer key
   Account.fromSignerKey({
-    @required StoredEthereumKey signerKey,
+    required StoredEthereumKey signerKey,
     int version = 0,
-    int chainId,
-    EthereumAddress funder,
+    required int chainId,
+    required EthereumAddress funder,
   }) : this.base(
           signerKeyUid: signerKey.uid,
           resolvedSignerAddress: null,
@@ -78,10 +76,10 @@ class Account {
 
   /// Create an account with an external signer address (no key)
   Account.fromSignerAddress({
-    @required EthereumAddress signerAddress,
+    required EthereumAddress signerAddress,
     int version = 0,
-    int chainId,
-    EthereumAddress funder,
+    required int chainId,
+    required EthereumAddress funder,
   }) : this.base(
           signerKeyUid: null,
           resolvedSignerAddress: signerAddress,
