@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 
 void log(String text) {
@@ -12,7 +11,7 @@ void logDetail(String text) {
 /// Work around log line length limits
 void logWrapped(String text) {
   final pattern = new RegExp('.{1,800}');
-  pattern.allMatches(text).forEach((match) => log(match.group(0)));
+  pattern.allMatches(text).forEach((match) => log(match.group(0) ?? ''));
 }
 
 /// Logging support, if any, implemented by the channel API.

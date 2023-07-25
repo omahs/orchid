@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:dartjsengine/dartjsengine.dart';
 import 'package:jsparser/jsparser.dart';
 import 'package:orchid/api/orchid_log.dart';
@@ -97,7 +96,7 @@ class JSConfig {
     throw Exception("Expression not double: $val");
   }
 
-  String evalStringDefault(String expression, String defaultValue) {
+  String? evalStringDefault(String expression, String? defaultValue) {
     try {
       return evalString(expression);
     } catch (err) {
