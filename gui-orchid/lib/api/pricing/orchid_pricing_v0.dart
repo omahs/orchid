@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
@@ -20,7 +19,7 @@ class OrchidPricingAPIV0 {
   /// This method may return null if no pricing data is available and the UI
   /// should handle this as a routine condition by hiding displayed conversions.
   /// This method is cached for a period of time and safe to call repeatedly.
-  Future<PricingV0> getPricing() async {
+  Future<PricingV0?> getPricing() async {
     try {
       return PricingV0(
         ethPriceUSD: await OrchidPricing().usdPrice(Tokens.ETH),

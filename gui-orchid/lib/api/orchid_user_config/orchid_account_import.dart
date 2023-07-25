@@ -1,4 +1,3 @@
-// @dart=2.12
 import 'package:dartjsengine/dartjsengine.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
@@ -93,7 +92,7 @@ class OrchidAccountImport {
       var signer = resolveImportedKey(secret, existingKeys, newKeys);
 
       // has account info
-      final String? funder = config.evalStringDefault('account.funder', null);
+      final String? funder = config.evalStringDefaultNull('account.funder');
       if (funder != null) {
         final version = config.evalIntDefault('account.version', 1);
         final chainid = config.evalIntDefault('account.chainid', 1);

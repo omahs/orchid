@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
@@ -44,14 +43,14 @@ class OrchidPricing {
 
   /// (USD/Token): Tokens * Rate = USD
   Future<double> tokenToUsdRate(TokenType tokenType) async {
-    if (tokenType.exchangeRateSource == Tokens.NoExchangeRateSource) {
+    if (tokenType.exchangeRateSource == null) {
       throw Exception('No exchange rate source for token: ${tokenType.symbol}');
     }
 
     return cache.get(
         key: tokenType,
         producer: (tokenType) {
-          return tokenType.exchangeRateSource.tokenToUsdRate(tokenType);
+          return tokenType.exchangeRateSource!.tokenToUsdRate(tokenType);
         });
   }
 
@@ -67,7 +66,7 @@ class OrchidPricing {
   static logTokenPrices() async {
     String out = "Token Prices:\n";
     for (var token in Tokens.all) {
-      out += "${token.symbol}:  \$${await token.exchangeRateSource.tokenToUsdRate(token)}\n";
+      out += "${token.symbol}:  \$${await token.exchangeRateSource?.tokenToUsdRate(token)}\n";
     }
     log(out);
   }

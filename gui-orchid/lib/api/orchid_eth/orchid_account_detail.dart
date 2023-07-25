@@ -141,8 +141,8 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
       transactions = _transactions;
 
       if (marketConditions != null) {
-        showMarketStatsAlert =
-            marketConditions!.efficiency < MarketConditions.minEfficiency;
+        showMarketStatsAlert = (marketConditions!.efficiency ?? 0) <
+            MarketConditions.minEfficiency;
       }
 
       this.notifyListeners();
