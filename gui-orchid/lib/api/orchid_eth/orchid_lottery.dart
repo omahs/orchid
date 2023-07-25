@@ -1,5 +1,3 @@
-// @dart=2.9
-import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/util/time_extensions.dart';
 
@@ -56,10 +54,10 @@ class LotteryPot {
   }
 
   LotteryPot({
-    @required this.deposit,
-    @required this.balance,
-    @required this.unlock,
-    @required this.warned,
+    required this.deposit,
+    required this.balance,
+    required this.unlock,
+    required this.warned,
   });
 
   Token get maxTicketFaceValue {

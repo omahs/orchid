@@ -1,10 +1,8 @@
-// @dart=2.9
 import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 String toFixedLocalized(num value,
-    {int precision = 2, String ifNull = "...", @required Locale locale}) {
+    {int precision = 2, String ifNull = "...", required Locale locale}) {
   return formatCurrency(value,
       locale: locale, ifNull: ifNull, precision: precision);
 }
@@ -12,7 +10,7 @@ String toFixedLocalized(num value,
 /// Format a currency to default precision with an optional suffix and null behavior.
 String formatCurrency(
   num value, {
-  String suffix,
+  String? suffix,
 
   /// The exact number of digits, possibly zero padded, to display after the decimal.
   /// If minPrecision and maxPrecision are specified this value is ignored.
@@ -22,13 +20,13 @@ String formatCurrency(
   /// If minPrecision and maxPrecision are specified the value shows the required number
   /// of digits after the decimal with a minimum (zero padded) and up to the maximum provided.
   /// e.g. 1.0, 1.123456789
-  int maxPrecision,
-  int minPrecision,
+  int? maxPrecision,
+  int? minPrecision,
 
   /// If true show ellipsis when full precision is not shown
   bool showPrecisionIndicator = false,
   String ifNull = "...",
-  @required Locale locale,
+  required Locale locale,
 }) {
   if (value == null) {
     return ifNull;
@@ -45,10 +43,10 @@ String formatCurrency(
         NumberFormat(format, locale?.toLanguageTag()).format(value);
 
     var precisionIndicator = '';
-    if (showPrecisionIndicator ?? false) {
+    if (showPrecisionIndicator) {
       const ellipsis = '…';
       final unrestricted =
-          NumberFormat("#0." + "#" * 16, locale?.toLanguageTag()).format(value);
+          NumberFormat("#0." + "#" * 16, locale.toLanguageTag()).format(value);
       precisionIndicator =
           restricted.length < unrestricted.length ? ellipsis : '';
     }
@@ -62,4 +60,3 @@ String formatCurrency(
         suffixPadded;
   }
 }
-
