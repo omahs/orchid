@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:ui';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/hex.dart';
@@ -26,11 +25,11 @@ class OrchidUserParams {
     return params.entries.map((e) => "${e.key}=${e.value};").join();
   }
 
-  String get(String name) {
+  String? get(String name) {
     return params[name];
   }
 
-  Color getColor(String name) {
+  Color? getColor(String name) {
     var svalue = params[name];
     if (svalue == null) {
       return null;

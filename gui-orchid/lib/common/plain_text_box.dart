@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orchid/common/app_text.dart';
@@ -7,8 +6,8 @@ import 'app_colors.dart';
 
 class PlainTextBox extends StatelessWidget {
   const PlainTextBox({
-    Key key,
-    @required String text,
+    Key? key,
+    required String text,
   })  : _text = text,
         super(key: key);
 

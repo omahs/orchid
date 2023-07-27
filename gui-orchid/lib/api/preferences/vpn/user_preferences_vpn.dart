@@ -10,6 +10,7 @@ import '../../orchid_log.dart';
 import 'accounts_preferences.dart';
 import '../user_preferences.dart';
 import '../user_preferences_keys.dart';
+import 'release_version.dart';
 
 class UserPreferencesVPN {
   static final UserPreferencesVPN _singleton = UserPreferencesVPN._internal();
@@ -42,12 +43,12 @@ class UserPreferencesVPN {
         return _getCircuit();
       },
       putValue: (key, circuit) {
-        return _setCircuit(circuit);
+        return _setCircuit(circuit ?? Circuit([]));
       });
 
   // Set the circuit / hops configuration
   static Future<bool> _setCircuit(Circuit circuit) async {
-    String? value = jsonEncode(circuit);
+    String value = jsonEncode(circuit);
     return UserPreferences()
         .putStringForKey(_UserPreferenceKeyVPN.Circuit, value);
   }
@@ -117,7 +118,8 @@ class UserPreferencesVPN {
     if (accounts.contains(null)) {
       throw Exception('null account in add to cache');
     }
-    var cached = cachedDiscoveredAccounts.get();
+    var cached =
+        cachedDiscoveredAccounts.get() ?? {}; // won't actually return null
     cached.addAll(accounts);
     await cachedDiscoveredAccounts.set(cached);
   }
@@ -152,10 +154,10 @@ class UserPreferencesVPN {
       },
       putValue: (key, value) async {
         var sharedPreferences = UserPreferences().sharedPreferences();
-        if (value.version == null) {
+        if (value?.version == null) {
           return sharedPreferences.remove(key.toString());
         }
-        return sharedPreferences.setInt(key.toString(), value.version);
+        return sharedPreferences.setInt(key.toString(), value!.version!);
       });
 
   /// User preference indicating that the VPN should be enabled to route traffic

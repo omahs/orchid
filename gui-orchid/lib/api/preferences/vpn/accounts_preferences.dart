@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
@@ -12,7 +11,7 @@ class ObservableAccountListPreference
       : super(
             key: key,
             getValue: (key) {
-              String value = UserPreferences().getStringForKey(key);
+              String? value = UserPreferences().getStringForKey(key);
               try {
                 return fromJson(value);
               } catch (err) {
@@ -21,11 +20,15 @@ class ObservableAccountListPreference
               }
             },
             putValue: (key, accounts) {
-              String value = toJson(accounts);
-              return UserPreferences().putStringForKey(key, value);
+              if (accounts == null) {
+                return UserPreferences().putStringForKey(key, null);
+              } else {
+                String value = toJson(accounts);
+                return UserPreferences().putStringForKey(key, value);
+              }
             });
 
-  static List<Account> fromJson(String value) {
+  static List<Account> fromJson(String? value) {
     if (value == null) {
       return [];
     }
@@ -39,7 +42,7 @@ class ObservableAccountListPreference
             return null;
           }
         })
-        .where((account) => account != null)
+        .whereType<Account>()
         .toList();
   }
 
@@ -56,7 +59,7 @@ class ObservableAccountSetPreference
       : super(
             key: key,
             getValue: (key) {
-              String value = UserPreferences().getStringForKey(key);
+              String? value = UserPreferences().getStringForKey(key);
               try {
                 return Set.from(
                     ObservableAccountListPreference.fromJson(value));
