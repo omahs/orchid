@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -31,7 +30,7 @@ class AccountStore extends ChangeNotifier {
   List<Account> circuitAccounts = [];
 
   AccountStore({
-    @required this.identity,
+    required this.identity,
     this.discoverAccounts = true,
   }) {
     if (identity == null) {
@@ -70,7 +69,7 @@ class AccountStore extends ChangeNotifier {
   // This method can be awaited without potential long delays for network activity.
   void _loadCached() {
     // Load cached previously discovered accounts for this identity
-    var cached = UserPreferencesVPN().cachedDiscoveredAccounts.get();
+    var cached = UserPreferencesVPN().cachedDiscoveredAccounts.get() ?? {};
     cachedAccounts = cached
         .where((account) => account.signerKeyUid == identity.keyUid)
         .toList();
@@ -85,7 +84,8 @@ class AccountStore extends ChangeNotifier {
   // Note: hop configuration is currently where this data resides.
   void _loadFromCircuitConfig() {
     final circuit = UserPreferencesVPN().circuit.get();
-    circuitAccounts = circuit.hops
+    // circuit will not be null
+    circuitAccounts = circuit!.hops
         .whereType<OrchidHop>()
         .map((hop) => hop.account)
         .where((account) => account.signerKeyUid == identity.keyUid)
@@ -141,7 +141,7 @@ class AccountStore extends ChangeNotifier {
 
   // discover and add accounts to the discovered accounts list
   Future<void> _discoverV1Accounts(
-      {Chain chain, StoredEthereumKey signer}) async {
+      {required Chain chain, required StoredEthereumKey signer}) async {
     try {
       var found = await OrchidEthereumV1()
           .discoverAccounts(chain: chain, signer: signer);

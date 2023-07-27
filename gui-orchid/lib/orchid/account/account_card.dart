@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
@@ -23,22 +22,22 @@ import '../../api/orchid_eth/orchid_account_detail.dart';
 
 /// The account cards used on the account manager
 class AccountCard extends StatefulWidget {
-  final AccountDetail accountDetail;
+  final AccountDetail? accountDetail;
 
   /// Support for partial account display during user entry. These values
   /// populate the display in lieu of an accountDetail. If accountDetail is
   /// set these values are ignored.
-  final EthereumAddress partialAccountFunderAddress;
-  final EthereumAddress partialAccountSignerAddress;
+  final EthereumAddress? partialAccountFunderAddress;
+  final EthereumAddress? partialAccountSignerAddress;
 
   // If non-null show the selected circle and checkmark for selection
-  final bool selected;
+  final bool? selected;
 
   // If non-null designates the active / inactive status line.
-  final bool active;
+  final bool? active;
 
   // Callback for selection when selected is non-null.
-  final VoidCallback onSelected;
+  final VoidCallback? onSelected;
 
   final bool initiallyExpanded;
 
@@ -52,7 +51,7 @@ class AccountCard extends StatefulWidget {
   final bool showContractVersion;
 
   const AccountCard({
-    Key key,
+    Key? key,
     this.accountDetail,
     this.active,
     this.selected,
@@ -72,9 +71,9 @@ class AccountCard extends StatefulWidget {
 
 class _AccountCardState extends State<AccountCard>
     with TickerProviderStateMixin {
-  bool expanded;
-  var expandDuration = const Duration(milliseconds: 330);
-  AnimationController _gradientAnim;
+  final expandDuration = const Duration(milliseconds: 330);
+  late bool expanded;
+  late AnimationController _gradientAnim;
 
   bool get _hasSelection {
     return widget.selected != null;
@@ -92,9 +91,10 @@ class _AccountCardState extends State<AccountCard>
     return widget.minHeight;
   }
 
-  double get efficiency => widget.accountDetail?.marketConditions?.efficiency;
+  double get efficiency =>
+      widget.accountDetail?.marketConditions?.efficiency ?? 0;
 
-  LotteryPot get pot {
+  LotteryPot? get pot {
     // return AccountMock.account1xdaiLocked.mockLotteryPot;
     // return AccountMock.account1xdaiUnlocking.mockLotteryPot;
     // return AccountMock.account1xdaiUnlocked.mockLotteryPot;
@@ -143,7 +143,7 @@ class _AccountCardState extends State<AccountCard>
               Positioned(
                 bottom: 0,
                 right: 0,
-                child: _buildToggleButton(checked: widget.selected),
+                child: _buildToggleButton(checked: widget.selected!),
               )
           ],
         ),
@@ -151,8 +151,8 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  TokenType get tokenType {
-    return widget.accountDetail?.lotteryPot?.balance?.type;
+  TokenType? get tokenType {
+    return widget.accountDetail?.lotteryPot?.balance.type;
   }
 
   Widget _buildCardContent(BuildContext context) {
@@ -275,8 +275,8 @@ class _AccountCardState extends State<AccountCard>
   }
 
   Widget _buildFunderIconAddress({
-    TextStyle textStyle,
-    double pad,
+    TextStyle? textStyle,
+    double? pad,
   }) {
     final funder =
         widget.accountDetail?.funder ?? widget.partialAccountFunderAddress;
@@ -285,8 +285,8 @@ class _AccountCardState extends State<AccountCard>
   }
 
   Widget _buildSignerIconAddress({
-    TextStyle textStyle,
-    double pad,
+    TextStyle? textStyle,
+    double? pad,
   }) {
     final signer = widget.accountDetail?.signerAddress ??
         widget.partialAccountSignerAddress;
@@ -299,10 +299,10 @@ class _AccountCardState extends State<AccountCard>
   }
 
   Widget _identiconAddressRow(
-    EthereumAddress address,
+    EthereumAddress? address,
     String emptyString, {
-    TextStyle textStyle,
-    double pad,
+    TextStyle? textStyle,
+    double? pad,
   }) {
     final text = address?.toString(elide: false) ?? '';
     final bool active = address != null;
