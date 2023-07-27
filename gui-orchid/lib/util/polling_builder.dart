@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -10,10 +9,10 @@ class PollingBuilder<T> extends StatefulWidget {
   final Widget Function(T arg) builder;
 
   PollingBuilder({
-    Key key,
-    @required this.duration,
-    @required this.poll,
-    @required this.builder,
+    Key? key,
+    required this.duration,
+    required this.poll,
+    required this.builder,
   }) : super(key: key) {
     if (this.duration.inMilliseconds <= 0) {
       throw Exception("invalid duration: ${this.duration}");
@@ -21,11 +20,11 @@ class PollingBuilder<T> extends StatefulWidget {
   }
 
   PollingBuilder.interval({
-    Key key,
-    int seconds,
-    int millis,
-    Future<T> Function() poll,
-    Widget Function(T arg) builder,
+    Key? key,
+    int? seconds,
+    int? millis,
+    required Future<T> Function() poll,
+    required Widget Function(T arg) builder,
   }) : this(
             key: key,
             duration:
@@ -38,9 +37,9 @@ class PollingBuilder<T> extends StatefulWidget {
 }
 
 class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
-  String _name;
-  Timer _timer;
-  T _currentValue;
+  late String _name;
+  late Timer _timer;
+  late T _currentValue;
 
   @override
   void initState() {

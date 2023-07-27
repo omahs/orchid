@@ -10,9 +10,10 @@ class TitledPage extends StatelessWidget {
   final Widget child;
   final bool lightTheme;
   final List<Widget> actions;
-  final VoidCallback backAction;
+  final VoidCallback? backAction;
   final bool cancellable;
-  final BoxDecoration decoration;
+
+  // final BoxDecoration? decoration;
   final bool constrainWidth;
 
   TitledPage({
@@ -22,7 +23,7 @@ class TitledPage extends StatelessWidget {
     this.actions = const [],
     this.backAction,
     this.cancellable = false,
-    this.decoration,
+    // this.decoration,
     this.constrainWidth = true,
   });
 
@@ -72,7 +73,7 @@ class TitledPage extends StatelessWidget {
 
   void _performBackAction(BuildContext context) async {
     if (backAction != null) {
-      backAction();
+      backAction!();
     } else {
       Navigator.pop(context);
     }

@@ -57,6 +57,6 @@ class AppRoutes {
   };
 
   static Future<void> pushAccountManager(BuildContext context) async {
-    return await Navigator.pushNamed(context, AppRoutes.account_manager);
+    await Navigator.pushNamed(context, AppRoutes.account_manager);
   }
 }

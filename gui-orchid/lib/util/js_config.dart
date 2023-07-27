@@ -8,7 +8,7 @@ import 'package:orchid/api/orchid_log.dart';
 class JSConfig {
   var jsEngine = JSEngine();
 
-  JSConfig(String js) {
+  JSConfig(String? js) {
     // parsejs doesn't like an empty input or statement
     if (js == null || js.trim().isEmpty) {
       js = "{}";
@@ -19,13 +19,13 @@ class JSConfig {
 
   // Note: This executes the program like jsEngine.visitProgram() but guards
   // Note: each statement execution, ignoring exceptions.
-  JsObject visitProgram(Program node, JSEngine jsEngine) {
+  JsObject? visitProgram(Program node, JSEngine jsEngine) {
     String stackName = node.filename ?? '<entry>';
     CallStack callStack = new CallStack();
     JSContext ctx = new JSContext(jsEngine.globalScope, callStack);
     callStack.push(node.filename, node.line, stackName);
 
-    JsObject out;
+    JsObject? out;
     for (var statement in node.body) {
       callStack.push(statement.filename, statement.line, stackName);
       var result;
