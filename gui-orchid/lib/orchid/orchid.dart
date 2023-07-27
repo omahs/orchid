@@ -1,4 +1,3 @@
-// @dart=2.9
 /// Common imports
 export 'package:flutter/material.dart';
 export 'package:orchid/api/orchid_log.dart';

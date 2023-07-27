@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
@@ -13,14 +12,14 @@ class OrchidIdenticon extends StatelessWidget {
   final EthereumAddress address;
 
   const OrchidIdenticon({
-    Key key,
-    @required this.address,
+    Key? key,
+    required this.address,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return UserPreferencesUI().useBlockiesIdenticons.builder(
-      (bool useBlockies) {
+      (bool? useBlockies) {
         if (address == null || useBlockies == null) {
           return Container();
         }
@@ -40,8 +39,8 @@ class OrchidLegacyIdenticon extends StatelessWidget {
   final double size;
 
   const OrchidLegacyIdenticon({
-    Key key,
-    @required this.value,
+    Key? key,
+    required this.value,
     this.size = 64,
   }) : super(key: key);
 
