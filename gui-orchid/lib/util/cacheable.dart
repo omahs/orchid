@@ -1,4 +1,3 @@
-// @dart=2.12
 import 'package:orchid/api/orchid_log.dart';
 
 bool _logCaching = false;

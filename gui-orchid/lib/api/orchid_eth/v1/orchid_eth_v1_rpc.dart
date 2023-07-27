@@ -1,7 +1,4 @@
-// @dart=2.9
 import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
@@ -34,7 +31,7 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
     // Allow override via config for testing
     var jsConfig = OrchidUserConfig().getUserConfigJS();
     // TODO: gas price override should be per-chain
-    double overrideValue = jsConfig.evalDoubleDefault('gasPrice', null);
+    double? overrideValue = jsConfig.evalDoubleDefaultNull('gasPrice');
     if (overrideValue != null) {
       TokenType tokenType = chain.nativeCurrency;
       return tokenType.fromDouble(overrideValue);
@@ -91,7 +88,7 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
   // Note: provide another version that accepts the signer address and produces
   // Note: tracked accounts by address.
   Future<List<Account>> discoverAccounts(
-      {Chain chain, StoredEthereumKey signer}) async {
+      {required Chain chain, required StoredEthereumKey signer}) async {
     List<OrchidCreateEvent> createEvents =
         await _getCreateEvents(chain, signer.address);
     return createEvents.map((event) {
@@ -105,7 +102,7 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
 
   // Note: this method's results are cached by the Account API
   Future<LotteryPot> getLotteryPot(
-      {Chain chain, EthereumAddress funder, EthereumAddress signer}) async {
+      {required Chain chain, required EthereumAddress funder, required EthereumAddress signer}) async {
     logDetail("fetch pot V1 for: $funder, $signer, chain = $chain");
 
     var address = AbiEncode.address;
@@ -178,8 +175,8 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
   }
 
   static Future<dynamic> _jsonRPC({
-    @required String url,
-    @required String method,
+    required String url,
+    required String method,
     List<Object> params = const [],
   }) async {
     return EthereumJsonRpc.ethJsonRpcCall(

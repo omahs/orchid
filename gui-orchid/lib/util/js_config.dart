@@ -88,6 +88,14 @@ class JSConfig {
     }
   }
 
+  double? evalDoubleDefaultNull(String expression) {
+    try {
+      return evalDouble(expression);
+    } catch (err) {
+      return null;
+    }
+  }
+
   double evalDouble(String expression) {
     JsObject val = _eval(expression);
     if (val?.valueOf is double) {

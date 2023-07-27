@@ -1,8 +1,13 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
 
 class Hex {
   static String remove0x(String text) {
+    if (text.toLowerCase().startsWith("0x")) {
+      text = text.substring(2);
+    }
+    return text;
+  }
+  static String? remove0xNullable(String? text) {
     if (text != null && text.toLowerCase().startsWith("0x")) {
       text = text.substring(2);
     }

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_log.dart';
 

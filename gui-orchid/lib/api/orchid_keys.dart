@@ -163,7 +163,7 @@ class StoredEthereumKeyRef extends EthereumKeyRef {
 
   @override
   StoredEthereumKey get() {
-    var keys = UserPreferencesKeys().keys.get();
+    var keys = UserPreferencesKeys().keys.get() ?? [];
     try {
       return getFrom(keys);
     } catch (err) {

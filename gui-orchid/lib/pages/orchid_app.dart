@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/common/app_sizes.dart';

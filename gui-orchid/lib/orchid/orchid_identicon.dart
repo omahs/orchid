@@ -9,11 +9,11 @@ import 'package:orchid/common/jazzicon/jazzicon.dart';
 
 /// Supports Jazzicon and Blockies
 class OrchidIdenticon extends StatelessWidget {
-  final EthereumAddress address;
+  final EthereumAddress? address;
 
   const OrchidIdenticon({
     Key? key,
-    required this.address,
+    this.address,
   }) : super(key: key);
 
   @override

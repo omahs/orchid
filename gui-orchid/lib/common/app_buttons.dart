@@ -12,7 +12,7 @@ import 'formatting.dart';
 class RoundedRectButton extends StatelessWidget {
   final String text;
   final TextStyle? style;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? textColor;
   final Icon? icon;
