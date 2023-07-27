@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -117,13 +116,16 @@ class OrchidTransactionV0 {
   OrchidTransactionTypeV0 type;
 
   // Payment amount or null for no payment
-  OXT payment;
+  OXT? payment;
 
   bool get isPayment {
     return payment != null;
   }
 
-  OrchidTransactionV0({this.transactionHash, this.type, this.payment});
+  OrchidTransactionV0(
+      {required this.transactionHash,
+      required this.type,
+      required this.payment});
 
   /*
   {
@@ -165,7 +167,7 @@ class OrchidTransactionV0 {
     OrchidTransactionTypeV0 transactionType =
         inverseMap[methodId] ?? OrchidTransactionTypeV0.unknown;
 
-    OXT amount;
+    OXT? amount;
     if (transactionType == OrchidTransactionTypeV0.grab) {
       buff.takeBytes32(); // bytes32 reveal,
       buff.takeBytes32(); // bytes32 commit,
@@ -192,7 +194,7 @@ class OrchidUpdateEventV0 {
   OXT endBalance;
   OXT endDeposit;
 
-  OrchidUpdateEventV0({this.transactionHash, this.endBalance, this.endDeposit});
+  OrchidUpdateEventV0({required this.transactionHash, required this.endBalance, required this.endDeposit});
 
   /*
     {
@@ -235,7 +237,7 @@ class OrchidCreateEvent {
   final EthereumAddress funder;
   final EthereumAddress signer;
 
-  OrchidCreateEvent({this.transactionHash, this.funder, this.signer});
+  OrchidCreateEvent({required this.transactionHash, required this.funder, required this.signer});
 }
 
 class OrchidCreateEventV1 {
@@ -260,7 +262,7 @@ class OrchidCreateEventV0 implements OrchidCreateEvent {
   final EthereumAddress funder;
   final EthereumAddress signer;
 
-  OrchidCreateEventV0({this.transactionHash, this.funder, this.signer});
+  OrchidCreateEventV0({required this.transactionHash, required this.funder, required this.signer});
 
   static OrchidCreateEventV0 fromJsonRpcResult(dynamic result) {
     // Parse the results
