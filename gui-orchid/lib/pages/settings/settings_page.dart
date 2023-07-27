@@ -1,10 +1,9 @@
-// @dart=2.9
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
+import 'package:orchid/api/preferences/vpn/release_version.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:math';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_platform.dart';
-import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/app_dialogs.dart';
@@ -64,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     final height = 56.0;
     return TitledPage(
-      title: s.settings,
+      title: context.s.settings,
       decoration: BoxDecoration(),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -74,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
               // Default curator
               _divided(PageTile(
                 height: height,
-                title: s.defaultCurator,
+                title: context.s.defaultCurator,
                 trailing: Container(
                     width: min(275, screenWidth * 0.5),
                     child: OrchidTextField(
@@ -86,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
               // Balance query
               _divided(PageTile(
                 height: height,
-                title: s.queryBalances,
+                title: context.s.queryBalances,
                 trailing: OrchidSwitch(
                   value: _queryBalances,
                   onChanged: (bool value) {
@@ -102,14 +101,14 @@ class _SettingsPageState extends State<SettingsPage> {
               _divided(PageTile.route(
                   // leading: Icon(Icons.cloud_outlined, color: Colors.white, size: 24),
                   leading: OrchidAsset.chain.unknown_chain_no_bg,
-                  title: s.chainSettings,
+                  title: context.s.chainSettings,
                   routeName: '/settings/rpc',
                   context: context)),
 
               // Advanced Configuration
               _divided(PageTile(
                 height: height,
-                title: s.advancedConfiguration,
+                title: context.s.advancedConfiguration,
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 2.0),
                   child: Icon(Icons.settings, color: Colors.white, size: 20),
@@ -124,14 +123,14 @@ class _SettingsPageState extends State<SettingsPage> {
               _divided(PageTile.route(
                   leading:
                       Icon(Icons.import_export, color: Colors.white, size: 24),
-                  title: s.configurationManagement,
+                  title: context.s.configurationManagement,
                   routeName: '/settings/manage_config',
                   context: context)),
 
               // Logging
               _divided(PageTile.route(
                   // height: height,
-                  title: s.logging,
+                  title: context.s.logging,
                   routeName: '/settings/log',
                   context: context)),
 
@@ -141,7 +140,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   trailing: RaisedButtonDeprecated(
                     color: OrchidColors.tappable,
                     child: Text(
-                      s.reset.toUpperCase(),
+                      context.s.reset.toUpperCase(),
                       style: buttonStyle,
                     ),
                     onPressed: _resetFirstLaunch,
@@ -154,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   trailing: RaisedButtonDeprecated(
                     color: OrchidColors.tappable,
                     child: Text(
-                      s.clear.toUpperCase(),
+                      context.s.clear.toUpperCase(),
                       style: buttonStyle,
                     ),
                     onPressed: _clearCachedAccounts,
@@ -167,7 +166,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   trailing: RaisedButtonDeprecated(
                     color: OrchidColors.tappable,
                     child: Text(
-                      s.remove.toUpperCase(),
+                      context.s.remove.toUpperCase(),
                       style: buttonStyle,
                     ),
                     onPressed: _confirmClearAllKeysAndAccounts,
@@ -271,9 +270,5 @@ class _SettingsPageState extends State<SettingsPage> {
     super.dispose();
     ScreenOrientation.reset();
     _defaultCurator.removeListener(_curatorChanged);
-  }
-
-  S get s {
-    return S.of(context);
   }
 }

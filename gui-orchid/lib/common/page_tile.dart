@@ -6,7 +6,7 @@ import 'package:orchid/orchid/orchid_text.dart';
 class PageTile extends StatelessWidget {
   final String title;
   final String? imageName;
-  final Widget body;
+  final Widget? body;
   final Widget? trailing;
   final Widget? leading;
   late final GestureTapCallback? onTap;
@@ -16,7 +16,7 @@ class PageTile extends StatelessWidget {
 
   PageTile({
     required this.title,
-    required this.body,
+    this.body,
     this.imageName,
     this.onTap,
     this.leading,
@@ -33,7 +33,7 @@ class PageTile extends StatelessWidget {
       required BuildContext context,
       required String routeName,
       this.textColor,
-      required this.body,
+      this.body,
       this.trailing,
       this.backgroundColor,
       this.height}) {

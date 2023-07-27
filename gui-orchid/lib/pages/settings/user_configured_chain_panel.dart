@@ -1,4 +1,3 @@
-// @dart=2.12
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
@@ -150,11 +149,11 @@ class _UserConfiguredChainPanelState extends State<UserConfiguredChainPanel> {
 
   void _saveChain() async {
     if (_chainId == null) {
-      throw Exception();
+      throw Exception('chainId');
     }
     final chain = UserConfiguredChain(
       name: _name.text,
-      chainId: _chainId,
+      chainId: _chainId!,
       defaultProviderUrl: _providerUrl.text,
       tokenPriceUSD: USD(double.parse(_tokenPrice.text)),
     );
