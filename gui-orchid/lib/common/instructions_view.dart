@@ -1,26 +1,25 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 
 /// Instructional text with vertically arranged image, title, and body.
 /// Optionally hides itself in landscape mode.
 class InstructionsView extends StatelessWidget {
-  final Image image;
+  final Image? image;
   final String title;
-  final Color titleColor;
-  final String body;
+  final Color? titleColor;
+  final String? body;
   final bool hideInLandscape;
   final List<Widget> children;
-  final double bodyFontSize;
+  // final double? bodyFontSize;
 
   const InstructionsView({
-    Key key,
+    Key? key,
     this.image,
-    @required this.title,
+    required this.title,
     this.body,
     this.hideInLandscape = true,
     this.children = const <Widget>[],
-    this.bodyFontSize,
+    // this.bodyFontSize,
     this.titleColor,
   }) : super(key: key);
 
@@ -48,7 +47,7 @@ class InstructionsView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 45),
                             child: body != null
-                                ? Text(body, style: bodyStyle)
+                                ? Text(body!, style: bodyStyle)
                                 : Container(),
                           ),
                         ),
