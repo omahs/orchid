@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';

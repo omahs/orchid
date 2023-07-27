@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/api/preferences/vpn/user_preferences_mock.dart';
