@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
@@ -24,17 +22,17 @@ class AccountViewModel {
   }
 
   AccountViewModel({
-    @required this.signerKey,
-    @required this.funder,
-    @required this.chain,
-    @required this.detail,
-    this.active,
+    required this.signerKey,
+    required this.funder,
+    required this.chain,
+    required this.detail,
+    required this.active,
   });
 
   AccountViewModel.forAccount({
-    Account account,
-    @required AccountDetail detail,
-    @required bool active,
+    required Account account,
+    required AccountDetail detail,
+    required bool active,
   }) : this(
           signerKey: account.signerKey,
           funder: account.funder,
@@ -43,11 +41,11 @@ class AccountViewModel {
           active: active,
         );
 
-  Token get balance {
+  Token? get balance {
     return detail.lotteryPot?.balance;
   }
 
-  Token get deposit {
+  Token? get deposit {
     return detail.lotteryPot?.deposit;
   }
 
