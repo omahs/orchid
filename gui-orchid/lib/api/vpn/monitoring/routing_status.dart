@@ -1,8 +1,6 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
-
 import 'http_unix_client.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,7 +13,7 @@ class OrchidRoutingStatus {
   /// has connected to an Orchid server and is ready to send protected traffic.
   final BehaviorSubject<bool> connected = BehaviorSubject.seeded(false);
 
-  Timer _timer;
+  Timer? _timer;
 
   OrchidRoutingStatus._init();
 
@@ -74,6 +72,6 @@ class OrchidRoutingStatus {
   void dispose() {
     // silence warnings
     connected.close();
-    _timer.cancel();
+    _timer?.cancel();
   }
 }
