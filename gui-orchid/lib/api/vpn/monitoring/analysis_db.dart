@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/api/orchid_log.dart';
@@ -15,7 +14,7 @@ class AnalysisDb {
   static final String unknown = "???"; // Localize
 
   final BehaviorSubject<bool> update = BehaviorSubject();
-  Database _db;
+  late Database? _db;
 
   AnalysisDb._init();
 
@@ -23,8 +22,8 @@ class AnalysisDb {
     return _shared;
   }
 
-  Future<Database> getDb() async {
-    if (_db != null && _db.isOpen) {
+  Future<Database?> getDb() async {
+    if (_db != null && _db!.isOpen) {
       return _db;
     }
     try {
@@ -40,16 +39,16 @@ class AnalysisDb {
       return null;
     }
     try {
-      await _db.execute("PRAGMA journal_mode = wal");
-      await _db.execute("PRAGMA secure_delete = on");
-      await _db.execute("PRAGMA synchronous = full");
+      await _db!.execute("PRAGMA journal_mode = wal");
+      await _db!.execute("PRAGMA secure_delete = on");
+      await _db!.execute("PRAGMA synchronous = full");
     } catch (err) {
       log("analysis db: error in pragma: $err");
     }
     return _db;
   }
 
-  Future<List<FlowEntry>> query({String filterText}) async {
+  Future<List<FlowEntry>> query({required String filterText}) async {
     var db;
     try {
       db = await getDb();
@@ -78,12 +77,15 @@ class AnalysisDb {
       }).toList(growable: false);
     } catch (err) {
       debugPrint("Analysis db: Error in query: $err");
-      return List();
+      return [];
     }
   }
 
   Future<void> clear() async {
-    Database db = await getDb();
+    Database? db = await getDb();
+    if (db == null) {
+      throw Exception();
+    }
     await db.rawDelete('DELETE FROM flow');
     _notifyUpdate();
     return null;
@@ -113,7 +115,7 @@ class AnalysisDb {
   }
 
   void dispose() {
-    _db.close();
+    _db?.close();
   }
 
   // https://github.com/zulfahmi93/dart-libcalendar/blob/master/lib/src/calendar_converter.dart
@@ -138,13 +140,13 @@ class FlowEntry {
   final String hostname;
 
   FlowEntry(
-      {this.rowId,
-      this.start,
-      this.layer4,
-      this.protocol,
-      this.src_addr,
-      this.src_port,
-      this.dst_addr,
-      this.dst_port,
-      this.hostname});
+      {required this.rowId,
+      required this.start,
+      required this.layer4,
+      required this.protocol,
+      required this.src_addr,
+      required this.src_port,
+      required this.dst_addr,
+      required this.dst_port,
+      required this.hostname});
 }
