@@ -1,5 +1,3 @@
-// @dart=2.9
-
 /// Parse queries for the analysis db.
 class QueryParser {
   static const String UNSAFE_CHARS = r'[^\w\s-.]+';
@@ -39,7 +37,9 @@ class QueryParser {
   }
 
   String _whereAnd(Iterable<String> clauses) {
-    if (clauses.length == 0) { return ""; }
+    if (clauses.length == 0) {
+      return "";
+    }
     return " WHERE (" + clauses.join(" AND ") + ")";
   }
 
@@ -48,7 +48,7 @@ class QueryParser {
     return "(($colName >> 24) || '.' || (($colName >> 16) & 255) || '.' || (($colName >> 8) & 255) || '.' || ($colName & 255))";
   }
 
-  String _parseTerm(String text) {
+  String? _parseTerm(String text) {
     bool not = false;
     if (text.startsWith('-')) {
       if (text == '-') {
@@ -69,7 +69,7 @@ class QueryParser {
     String restrictions = "";
     if (queryText.trim().isNotEmpty) {
       var words = queryText.trim().split(RegExp(r'\s+'));
-      var clauses = words.map(_parseTerm).where((s) => s != null);
+      Iterable<String> clauses = words.map(_parseTerm).whereType<String>();
       restrictions = _whereAnd(clauses);
     }
     var orderBy = ' ORDER BY "start" DESC';

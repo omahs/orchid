@@ -25,8 +25,8 @@ class OrchidIdenticon extends StatelessWidget {
         }
         return ClipOval(
           child: useBlockies
-              ? Blockies().generate(address: address, size: 8, scale: 3)
-              : Jazzicon().generate(address: address, diameter: 24),
+              ? Blockies().generate(address: address!, size: 8, scale: 3)
+              : Jazzicon().generate(address: address!, diameter: 24),
         );
       },
     );
