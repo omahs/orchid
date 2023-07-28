@@ -32,7 +32,7 @@ class CircuitPage extends StatefulWidget {
   // Note: the add flow.
   static var iOSContactsStyleAddHopBehavior = false;
 
-  CircuitPage({Key key}) : super(key: key);
+  CircuitPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

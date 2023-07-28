@@ -33,7 +33,7 @@ import 'connect_status_panel.dart';
 
 /// The main page containing the connect button.
 class ConnectPage extends StatefulWidget {
-  ConnectPage({Key key}) : super(key: key);
+  ConnectPage({Key? key}) : super(key: key);
 
   @override
   _ConnectPageState createState() => _ConnectPageState();

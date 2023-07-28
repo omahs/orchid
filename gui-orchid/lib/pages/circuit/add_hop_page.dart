@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,7 +19,7 @@ typedef AddFlowCompletion = void Function(CircuitHop result);
 class AddHopPage extends StatefulWidget {
   final AddFlowCompletion onAddFlowComplete;
 
-  const AddHopPage({Key key, this.onAddFlowComplete}) : super(key: key);
+  const AddHopPage({Key? key, this.onAddFlowComplete}) : super(key: key);
 
   @override
   _AddHopPageState createState() => _AddHopPageState();

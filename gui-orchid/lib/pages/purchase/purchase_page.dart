@@ -37,7 +37,7 @@ class PurchasePage extends StatefulWidget {
   final bool cancellable; // show the close button instead of a back arrow
 
   const PurchasePage(
-      {Key key,
+      {Key? key,
       @required this.signerKey,
       @required this.completion,
       this.cancellable = false})

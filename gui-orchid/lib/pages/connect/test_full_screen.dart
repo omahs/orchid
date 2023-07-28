@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/util/on_off.dart';
 import 'package:orchid/orchid/test_app.dart';
@@ -8,7 +7,7 @@ void main() {
 }
 
 class _Test extends StatelessWidget {
-  const _Test({Key key}) : super(key: key);
+  const _Test({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

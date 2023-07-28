@@ -25,8 +25,8 @@ class OrchidKeySelectorMenu extends StatefulWidget {
   });
 
   OrchidKeySelectorMenu(
-      {Key key,
-      @required this.onSelection,
+      {Key? key,
+      required this.onSelection,
       this.selected,
       this.enabled = false})
       : super(key: key);
