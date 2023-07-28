@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
@@ -21,9 +20,9 @@ class OrchidVPNConfigGenerate {
   static Future<String> generateConfig({
     bool forExport = false,
   }) async {
-    Circuit circuit = UserPreferencesVPN().circuit.get();
-    List<StoredEthereumKey> keys = UserPreferencesKeys().keys.get();
-    List<CircuitHop> hops = circuit?.hops ?? [];
+    Circuit circuit = UserPreferencesVPN().circuit.get()!;
+    List<StoredEthereumKey> keys = UserPreferencesKeys().keys.get()!;
+    List<CircuitHop> hops = circuit.hops;
 
     var hopsConfig = await Future.wait(hops.map((hop) {
       return _hopToConfig(hop, keys, forExport);
@@ -39,7 +38,7 @@ class OrchidVPNConfigGenerate {
   ) async {
     // To JSON
     var hopConfigJson = hop.protocol == HopProtocol.Orchid
-        ? await _orchidHopToConfigJson(hop, keys, forExport)
+        ? await _orchidHopToConfigJson(hop as OrchidHop, keys, forExport)
         : hop.toJson();
 
     // Resolve key references
@@ -111,7 +110,7 @@ class OrchidVPNConfigGenerate {
     return json.map((String key, dynamic value) {
       // Key references are replaced with the actual key values.
       if (key == "keyRef") {
-        String secret;
+        String? secret;
         if (value != null) {
           var keyRef = StoredEthereumKeyRef(value);
           try {
