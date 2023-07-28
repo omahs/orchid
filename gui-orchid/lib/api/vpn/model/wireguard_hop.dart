@@ -1,9 +1,8 @@
-// @dart=2.9
 
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
 
 class WireGuardHop extends CircuitHop {
-  final String config;
+  final String? config;
 
   WireGuardHop({this.config}) : super(HopProtocol.WireGuard);
 

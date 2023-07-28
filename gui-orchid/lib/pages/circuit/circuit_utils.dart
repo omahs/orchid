@@ -1,8 +1,6 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
-import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
@@ -16,7 +14,7 @@ typedef HopCompletion = void Function(UniqueHop);
 
 class CircuitUtils {
   // Show the add hop flow and save the result if completed successfully.
-  static void addHop(BuildContext context, {HopCompletion onComplete}) async {
+  static void addHop(BuildContext context, {required HopCompletion onComplete}) async {
     // Create a nested navigation context for the flow. Performing a pop() from
     // this outer context at any point will properly remove the entire flow
     // (possibly multiple screens) with one appropriate animation.
@@ -65,7 +63,7 @@ class CircuitUtils {
   }
 
   static Future<void> addHopToCircuit(CircuitHop hop) async {
-    var circuit = UserPreferencesVPN().circuit.get();
+    var circuit = UserPreferencesVPN().circuit.get()!;
     circuit.hops.add(hop);
     await UserPreferencesVPN().saveCircuit(circuit);
   }
@@ -83,7 +81,7 @@ class CircuitUtils {
   /// supplied account.
   /// Returns true if a circuit was created.
   static Future<bool> defaultCircuitIfNeededFrom(Account account) async {
-    var circuit = UserPreferencesVPN().circuit.get();
+    var circuit = UserPreferencesVPN().circuit.get()!;
     if (circuit.hops.isEmpty && account != null) {
       log("circuit: creating default circuit from account: $account");
       await UserPreferencesVPN().saveCircuit(
