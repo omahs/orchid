@@ -1,11 +1,10 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:flutter/services.dart';
 
 /// A styled text field with an optional custom trailing component.
 class OrchidTextField extends StatelessWidget {
-  final String hintText;
-  final Widget trailing;
+  final String? hintText;
+  final Widget? trailing;
   final TextEditingController controller;
   final bool obscureText;
   final int maxLines;
@@ -17,19 +16,19 @@ class OrchidTextField extends StatelessWidget {
   final bool readOnly;
 
   final bool numeric;
-  final VoidCallback onClear;
-  final ValueChanged<String> onChanged;
+  final VoidCallback? onClear;
+  final ValueChanged<String>? onChanged;
   final bool border;
-  final TextStyle style;
-  final EdgeInsets contentPadding;
-  final EdgeInsets suffixIconPadding;
-  final TextAlignVertical textAlignVertical;
-  final double cursorHeight;
+  final TextStyle? style;
+  final EdgeInsets? contentPadding;
+  final EdgeInsets? suffixIconPadding;
+  final TextAlignVertical? textAlignVertical;
+  final double? cursorHeight;
 
   OrchidTextField({
+    required this.controller,
     this.hintText,
     this.trailing,
-    this.controller,
     this.obscureText = false,
     this.maxLines = 1,
     this.enabled = true,
@@ -65,7 +64,7 @@ class OrchidTextField extends StatelessWidget {
             onPressed: () {
               controller.clear();
               if (onClear != null) {
-                onClear();
+                onClear!();
               }
             },
             icon: Icon(
@@ -116,7 +115,7 @@ class OrchidTextField extends StatelessWidget {
                 : null,
           ),
         ),
-        trailing != null ? trailing : Container(),
+        trailing != null ? trailing! : Container(),
       ],
     );
   }
