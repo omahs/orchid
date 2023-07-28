@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -6,7 +5,6 @@ import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_chain_config.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/orchid/field/orchid_labeled_numeric_field.dart';
@@ -71,7 +69,8 @@ class _RpcPageState extends State<RpcPage> {
     final userConfiguredChains = UserPreferencesUI().userConfiguredChains.get();
     final chains =
         userConfiguredChains.cast<Chain>() + knownChains.cast<Chain>();
-    final config = ChainConfig.map(UserPreferencesUI().chainConfig.get());
+    // chain config will not be null
+    final config = ChainConfig.map(UserPreferencesUI().chainConfig.get()!);
 
     return ListView.builder(
         itemCount: chains.length,
@@ -97,13 +96,13 @@ class _RpcPageState extends State<RpcPage> {
 
 class _ChainItem extends StatefulWidget {
   final Chain chain;
-  final ChainConfig config;
+  final ChainConfig? config;
   final bool showEnableSwitch;
 
   const _ChainItem({
-    Key key,
-    @required this.chain,
-    @required this.config,
+    Key? key,
+    required this.chain,
+    required this.config,
     this.showEnableSwitch = true,
   }) : super(key: key);
 
@@ -114,13 +113,13 @@ class _ChainItem extends StatefulWidget {
 class _ChainItemState extends State<_ChainItem> {
   var _rpcController = TextEditingController();
   var _priceController = NumericValueFieldController();
-  bool _show;
+  late bool _show;
   List<Widget> _testResults = [];
 
   @override
   void initState() {
     super.initState();
-    _rpcController.text = widget.config?.rpcUrl;
+    _rpcController.text = widget.config?.rpcUrl ?? '';
     _show = widget.config?.enabled ?? true;
   }
 
@@ -313,9 +312,10 @@ class _ChainItemState extends State<_ChainItem> {
       enabled: _show,
       rpcUrl: text,
     );
+    // chain config will not be null
     var list = UserPreferencesUI()
         .chainConfig
-        .get()
+        .get()!
         .where((e) => e.chainId != chainId)
         .toList();
 
@@ -327,7 +327,7 @@ class _ChainItemState extends State<_ChainItem> {
   }
 
   Future<void> _confirmDelete(UserConfiguredChain userConfiguredChain) async {
-    return AppDialogs.showConfirmationDialog(
+    await AppDialogs.showConfirmationDialog(
         context: context,
         title: s.deleteChainQuestion,
         bodyText: s.deleteUserConfiguredChain + ': ' + userConfiguredChain.name,
