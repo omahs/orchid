@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/vpn/orchid_api_real.dart';
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,8 +7,8 @@ import 'package:rxdart/rxdart.dart';
 ///
 abstract class OrchidAPI {
   static bool mockAPI = const bool.hasEnvironment('mock');
-  static OrchidAPI _apiSingleton;
-  static OrchidAPI _mockAPISingleton;
+  static OrchidAPI? _apiSingleton;
+  static OrchidAPI? _mockAPISingleton;
 
   factory OrchidAPI() {
     if (mockAPI) {
@@ -21,7 +20,7 @@ abstract class OrchidAPI {
         _apiSingleton = RealOrchidAPI();
       }
     }
-    return mockAPI ? _mockAPISingleton : _apiSingleton;
+    return mockAPI ? _mockAPISingleton! : _apiSingleton!;
   }
 
   /// The system VPN extension connection status.

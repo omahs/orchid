@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -17,7 +16,7 @@ class HttpUnixClient extends BaseClient {
   final String path;
 
   // Unix socket connected to.
-  Socket _socket;
+  late Socket _socket;
 
   // Requests in process.
   final _requests = <_HttpRequest>[];
@@ -213,7 +212,7 @@ class HttpUnixClient extends BaseClient {
     return false;
   }
 
-  String _readLine() {
+  String? _readLine() {
     for (var i = 0; i < _buffer.length - 1; i++) {
       if (_buffer[i] == 13 && _buffer[i + 1] == 10) {
         var line = utf8.decode(_buffer.sublist(0, i));
@@ -247,7 +246,7 @@ class _HttpRequest {
 
   _HttpRequest(this.request);
 
-  int get contentLength {
+  int? get contentLength {
     var contentLength = headers['Content-Length'];
     if (contentLength == null) {
       return null;
