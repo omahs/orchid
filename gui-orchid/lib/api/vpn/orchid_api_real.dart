@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -114,19 +113,15 @@ class RealOrchidAPI implements OrchidAPI {
           // Trigger a refresh of the app level status which should now report down.
           OrchidRoutingStatus().invalidate();
           return OrchidVPNRoutingState.VPNNotConnected;
-          break;
         case OrchidVPNExtensionState.Connecting:
           return OrchidVPNRoutingState.VPNConnecting;
-          break;
         case OrchidVPNExtensionState.Connected:
           // This differentiates the vpn running state from the app level orchid routing state
           return (orchidConnected
               ? OrchidVPNRoutingState.OrchidConnected
               : OrchidVPNRoutingState.VPNConnected);
-          break;
         case OrchidVPNExtensionState.Disconnecting:
           return OrchidVPNRoutingState.VPNDisconnecting;
-          break;
       }
     }).listen((OrchidVPNRoutingState state) async {
       applyRoutingStatus(state);
@@ -137,7 +132,7 @@ class RealOrchidAPI implements OrchidAPI {
   // (as opposed to e.g. a change in state for traffic monitoring)
   static applyRoutingStatus(OrchidVPNRoutingState state) async {
     var publishStatus = OrchidAPI().vpnRoutingStatus;
-    var routingEnabled = await UserPreferencesVPN().routingEnabled.get();
+    var routingEnabled = UserPreferencesVPN().routingEnabled.get()!;
 
     switch (state) {
       case OrchidVPNRoutingState.VPNNotConnected:
@@ -164,8 +159,8 @@ class RealOrchidAPI implements OrchidAPI {
   }
 
   @override
-  Future<bool> requestVPNPermission() {
-    return _platform.invokeMethod('install');
+  Future<bool> requestVPNPermission() async {
+    return await _platform.invokeMethod('install');
   }
 
   Future<void> revokeVPNPermission() async {
@@ -184,11 +179,11 @@ class RealOrchidAPI implements OrchidAPI {
   }
 
   Future<String> groupContainerPath() async {
-    return _platform.invokeMethod('group_path');
+    return await _platform.invokeMethod('group_path');
   }
 
   Future<String> versionString() async {
-    return _platform.invokeMethod('version');
+    return await _platform.invokeMethod('version');
   }
 
   // Generate the portion of the VPN config managed by the GUI.  Managed config
@@ -196,7 +191,7 @@ class RealOrchidAPI implements OrchidAPI {
   // The desired format is (JavaScript, not JSON) e.g.:
   static Future<String> generateManagedConfig() async {
     // Circuit configuration
-    var managedConfig = (await UserPreferencesVPN().routingEnabled.get())
+    var managedConfig = (await UserPreferencesVPN().routingEnabled.get()!)
         ? await OrchidVPNConfigGenerate.generateConfig()
         : "";
 
@@ -208,7 +203,7 @@ class RealOrchidAPI implements OrchidAPI {
 
     // 'logdb' sets the analysis file location.
     // To disable monitoring set 'logdb' to an empty string.
-    final pathOrEmptyString = UserPreferencesVPN().monitoringEnabled.get()
+    final pathOrEmptyString = UserPreferencesVPN().monitoringEnabled.get()!
         ? AnalysisDb.defaultAnalysisFilename
         : '';
     managedConfig += '\nlogdb="$pathOrEmptyString";';
