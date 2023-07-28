@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/orchid/test_app.dart';
@@ -18,7 +17,7 @@ class _Test extends StatefulWidget {
 }
 
 class _TestState extends State<_Test> {
-  AccountDetail account;
+  late AccountDetail account;
   bool active1 = true;
 
   @override

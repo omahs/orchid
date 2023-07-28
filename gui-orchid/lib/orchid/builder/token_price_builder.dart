@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/widgets.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
@@ -12,7 +11,7 @@ class TokenPriceBuilder extends StatelessWidget {
   final Widget Function(USD price) builder;
 
   const TokenPriceBuilder({
-    Key key,
+    Key? key,
     required this.tokenType,
     this.seconds = 30,
     required this.builder,

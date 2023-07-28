@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
@@ -18,7 +17,7 @@ import 'package:orchid/api/pricing/usd.dart';
 /// Support in-app purchase of purchased access credits (PACs).
 /// @See the iOS and Android implementations of this class.
 abstract class OrchidPurchaseAPI {
-  static OrchidPurchaseAPI _shared;
+  static OrchidPurchaseAPI? _shared;
 
   factory OrchidPurchaseAPI() {
     if (_shared == null) {
@@ -30,7 +29,7 @@ abstract class OrchidPurchaseAPI {
         throw Exception('no purchase on platform');
       }
     }
-    return _shared;
+    return _shared!;
   }
 
   OrchidPurchaseAPI.internal();
@@ -120,7 +119,7 @@ abstract class OrchidPurchaseAPI {
       verifyReceipt: jsConfig.evalBoolDefault(
           'pacs.verifyReceipt', prodAPIConfig.verifyReceipt),
       testReceipt:
-          jsConfig.evalStringDefault('pacs.receipt', prodAPIConfig.testReceipt),
+          jsConfig.evalStringDefaultNullable('pacs.receipt', prodAPIConfig.testReceipt),
       debug: jsConfig.evalBoolDefault('pacs.debug', prodAPIConfig.debug),
       serverFail: jsConfig.evalBoolDefault('pacs.serverFail', prodAPIConfig.debug),
     );
@@ -154,7 +153,10 @@ abstract class OrchidPurchaseAPI {
     // Record the purchase for rate limiting
     try {
       Map<String, PAC> productMap = await OrchidPurchaseAPI().requestProducts();
-      PAC pac = productMap[productId];
+      PAC? pac = productMap[productId];
+      if (pac == null) {
+        throw Exception('no PAC for product id');
+      }
 
       PurchaseRateHistory history =
           await UserSecureStorage().getPurchaseRateHistory();
@@ -172,13 +174,13 @@ abstract class OrchidPurchaseAPI {
     if (tx != null && tx.state != PacTransactionState.Complete) {
       log("iap: Found PAC tx in progress after app startup: $tx");
       tx.state = PacTransactionState.WaitingForUserAction;
-      return tx.save();
+      await tx.save();
     }
   }
 
   static Future initPacLogListener() async {
     // Log all PAC Tx activity for now
-    PacTransaction.shared.stream().listen((PacTransaction tx) {
+    PacTransaction.shared.stream().listen((PacTransaction? tx) {
       log("iap: PAC Tx updated: ${tx == null ? '(no tx)' : tx}");
     });
   }
@@ -205,7 +207,11 @@ abstract class OrchidPurchaseAPI {
   static Future<PAC> getDollarPAC() async {
     try {
       Map<String, PAC> pacs = await OrchidPurchaseAPI().requestProducts();
-      return pacs[OrchidPurchaseAPI.pacTierDollarProductId];
+      var pac = pacs[OrchidPurchaseAPI.pacTierDollarProductId];
+      if (pac == null) {
+        throw Exception("No PAC for product id: $pacTierDollarProductId");
+      }
+      return pac;
     } catch (err) {
       log("iap: error requesting products purchase: $err");
       throw err;
@@ -261,7 +267,7 @@ class PacApiConfig {
   final bool verifyReceipt;
 
   // If configured the test receipt will be submitted with all calls.
-  final String testReceipt;
+  final String? testReceipt;
 
   /// Enable debug tracing.
   final bool debug;
@@ -270,7 +276,7 @@ class PacApiConfig {
   final bool serverFail;
 
   PacApiConfig({
-    @required this.url,
+    required this.url,
     this.enabled = true,
     this.verifyReceipt = true,
     this.testReceipt,

@@ -112,6 +112,14 @@ class JSConfig {
     }
   }
 
+  String? evalStringDefaultNullable(String expression, String? defaultValue) {
+    try {
+      return evalString(expression);
+    } catch (err) {
+      return defaultValue;
+    }
+  }
+
   String? evalStringDefaultNull(String expression) {
     try {
       return evalString(expression);

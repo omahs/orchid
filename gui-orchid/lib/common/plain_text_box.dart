@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:orchid/common/app_text.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 import 'app_colors.dart';
