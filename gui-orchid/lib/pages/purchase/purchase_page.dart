@@ -31,7 +31,7 @@ import '../../common/app_text.dart';
 typedef PurchasePageCompletion = void Function(); // TODO: return
 
 class PurchasePage extends StatefulWidget {
-  final StoredEthereumKey signerKey;
+  final StoredEthereumKey? signerKey;
   final PurchasePageCompletion completion;
   final bool cancellable; // show the close button instead of a back arrow
 

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
@@ -25,8 +24,8 @@ class ConnectPageUtils {
      */
 
 // Set connected status
-    const connected = bool.fromEnvironment('connected', defaultValue: null);
-    if (connected != null) {
+    const connected = bool.fromEnvironment('connected', defaultValue: false);
+    if (connected) {
       MockOrchidAPI.fakeVPNDelay = 0;
       UserPreferencesVPN().routingEnabled.set(connected);
     }

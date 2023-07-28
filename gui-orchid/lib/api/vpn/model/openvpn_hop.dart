@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
 
 class OpenVPNHop extends CircuitHop {
@@ -6,7 +5,10 @@ class OpenVPNHop extends CircuitHop {
   final String userPassword;
   final String ovpnConfig;
 
-  OpenVPNHop({this.userName, this.userPassword, this.ovpnConfig})
+  OpenVPNHop(
+      {required this.userName,
+      required this.userPassword,
+      required this.ovpnConfig})
       : super(HopProtocol.OpenVPN);
 
   OpenVPNHop.fromJson(Map<String, dynamic> json)
