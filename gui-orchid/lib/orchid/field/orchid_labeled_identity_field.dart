@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:browser_detector/browser_detector.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
@@ -13,14 +12,15 @@ class OrchidLabeledImportIdentityField extends StatefulWidget {
   final String label;
 
   /// Callback fires on changes with either a valid parsed account or null if the form state is invalid or incomplete.
-  final void Function(ParseOrchidIdentityOrAccountResult parsed) onChange;
-  final double spacing;
+  final void Function(ParseOrchidIdentityOrAccountResult? parsed) onChange;
+
+  // final double spacing;
 
   const OrchidLabeledImportIdentityField({
-    Key key,
-    @required this.label,
-    @required this.onChange,
-    this.spacing,
+    Key? key,
+    required this.label,
+    required this.onChange,
+    // this.spacing,
   }) : super(key: key);
 
   @override
@@ -109,10 +109,12 @@ class _OrchidLabeledImportIdentityFieldState
   // https://github.com/flutter/flutter/issues/48581
   void _pasteCode() async {
     try {
-      ClipboardData data = await Clipboard.getData('text/plain');
-      setState(() {
-        _pasteField.text = data.text;
-      });
+      ClipboardData? data = await Clipboard.getData('text/plain');
+      if (data?.text != null) {
+        setState(() {
+          _pasteField.text = data!.text!;
+        });
+      }
     } catch (err) {
       print("Can't get clipboard: $err");
     }
