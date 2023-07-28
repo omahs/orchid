@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'dart:async';
@@ -62,7 +61,7 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
   /// Gather results of an in-app purchase.
   @override
   void updatedTransactions(
-      {List<SKPaymentTransactionWrapper> transactions}) async {
+      {required List<SKPaymentTransactionWrapper> transactions}) async {
     log('iap: received (${transactions.length}) updated transactions');
     for (SKPaymentTransactionWrapper tx in transactions) {
       switch (tx.transactionState) {
@@ -115,14 +114,22 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
               log('iap: failed due to network connectivity. Expect another update.');
               // Show the transaction in progress.
               var pacTx = PacTransaction.shared.get();
-              pacTx.state = PacTransactionState.InProgress;
-              pacTx.save();
+              if (pacTx == null) {
+                log("expected pac transaction but none found.");
+              } else {
+                pacTx.state = PacTransactionState.InProgress;
+                pacTx.save();
+              }
               break;
             default:
               // Unknown error.
-              log('iap: IAP Failed, ${tx.toString()} error: type=${tx.error.runtimeType}, code=${tx.error.code}, userInfo=${tx.error.userInfo}, domain=${tx.error.domain}');
+              log('iap: IAP Failed, ${tx.toString()} error: type=${tx.error.runtimeType}, code=${tx.error?.code}, userInfo=${tx.error?.userInfo}, domain=${tx.error?.domain}');
               var pacTx = PacTransaction.shared.get();
-              pacTx.error('IAP failed, reason unknown.').save();
+              if (pacTx == null) {
+                log("expected pac transaction but none found.");
+              } else {
+                pacTx.error('IAP failed, reason unknown.').save();
+              }
               break;
           }
           break;
@@ -134,7 +141,11 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
         case SKPaymentTransactionStateWrapper.unspecified:
           log('iap: transaction in unknown state: $tx, ${tx.error}');
           var pacTx = PacTransaction.shared.get();
-          pacTx.error('iap failed: unknown state').save();
+          if (pacTx == null) {
+            log("expected pac transaction but none found.");
+          } else {
+            pacTx.error('iap failed: unknown state').save();
+          }
           break;
       }
     }
@@ -150,10 +161,11 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
     // Get the receipt
     try {
       log('iap: getting receipt');
-      var receipt = await SKReceiptManager.retrieveReceiptData();
+      String receipt = await SKReceiptManager.retrieveReceiptData();
 
       // If the receipt is null, try to refresh it.
       // (This might happen if there was a purchase in flight during an upgrade.)
+      /*
       if (receipt == null) {
         log('iap: receipt null, refreshing');
         try {
@@ -163,13 +175,16 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
         }
         receipt = await SKReceiptManager.retrieveReceiptData();
       }
+       */
 
       // If the receipt is still null there's not much we can do.
+      /*
       if (receipt == null) {
         log('iap: Completed purchase but no receipt found! Clearing transaction.');
         await PacTransaction.shared.clear();
         return;
       }
+       */
 
       // Pass the receipt to the pac system
       return OrchidPACServer()
@@ -179,7 +194,7 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
     }
   }
 
-  static Map<String, PAC> productsCached;
+  static Map<String, PAC>? productsCached;
 
   // Return a map of PAC by product id
   @override
@@ -190,7 +205,7 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
     }
     if (productsCached != null && !refresh) {
       log('iap: returning cached products');
-      return productsCached;
+      return productsCached!;
     }
 
     var productIds = OrchidPurchaseAPI.pacProductIds;
@@ -222,7 +237,7 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
 
   @override
   bool shouldAddStorePayment(
-      {SKPaymentWrapper payment, SKProductWrapper product}) {
+      {required SKPaymentWrapper payment, required SKProductWrapper product}) {
     log('iap: Should add store payment: $payment, for product: $product');
     return true;
   }
@@ -233,12 +248,12 @@ class IOSOrchidPurchaseAPI extends OrchidPurchaseAPI
   }
 
   @override
-  void removedTransactions({List<SKPaymentTransactionWrapper> transactions}) {
+  void removedTransactions({required List<SKPaymentTransactionWrapper> transactions}) {
     log('iap: removed transactions: $transactions');
   }
 
   @override
-  void restoreCompletedTransactionsFailed({SKError error}) {
+  void restoreCompletedTransactionsFailed({required SKError error}) {
     log('iap: restore failed');
   }
 }
