@@ -2,7 +2,6 @@
 import 'package:orchid/api/vpn/orchid_api_real.dart';
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:rxdart/rxdart.dart';
-import '../orchid_log.dart';
 
 ///
 /// Orchid App Channel API

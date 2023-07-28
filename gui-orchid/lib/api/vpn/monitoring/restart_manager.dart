@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
@@ -28,7 +27,7 @@ class OrchidRestartManager {
     return _shared;
   }
 
-  StreamSubscription<bool> _enableVPNListener;
+  StreamSubscription<bool>? _enableVPNListener;
   bool _initialized = false;
 
   /// Monitor user preferences and start or stop the VPN extension.
@@ -146,7 +145,7 @@ class OrchidRestartManager {
 
     var api = OrchidAPI();
     // Wait for a non-connected state before restarting.
-    StreamSubscription<OrchidVPNExtensionState> sub;
+    StreamSubscription<OrchidVPNExtensionState>? sub;
     sub = api.vpnExtensionStatus.stream
         .timeout(Duration(seconds: 10))
         .listen((state) async {
@@ -160,13 +159,13 @@ class OrchidRestartManager {
         case OrchidVPNExtensionState.NotConnected:
           await _start();
           _waitForUp();
-          sub.cancel();
+          sub?.cancel();
           break;
       }
     });
     sub.onError((err, stack) {
       log("restart_manager: Error waiting for vpn to restart (down): $err");
-      sub.cancel();
+      sub?.cancel();
       restarting.add(false);
     });
   }
@@ -181,7 +180,7 @@ class OrchidRestartManager {
     }
 
     var api = OrchidAPI();
-    StreamSubscription<OrchidVPNExtensionState> sub;
+    StreamSubscription<OrchidVPNExtensionState>? sub;
     sub = api.vpnExtensionStatus.stream
         .timeout(Duration(seconds: 10))
         .listen((state) async {
@@ -195,13 +194,13 @@ class OrchidRestartManager {
         case OrchidVPNExtensionState.Connected:
           log("restart_manager: restart complete");
           restarting.add(false);
-          sub.cancel();
+          sub?.cancel();
           break;
       }
     });
     sub.onError((err, stack) {
       log("restart_manager: Error waiting for vpn to restart (up): $err");
-      sub.cancel();
+      sub?.cancel();
       restarting.add(false);
     });
   }
@@ -261,7 +260,7 @@ class OrchidRestartManager {
    */
 
   void dispose() {
-    _enableVPNListener.cancel();
+    _enableVPNListener?.cancel();
     _enableVPNListener = null;
   }
 }
