@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/services.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -29,15 +28,15 @@ import 'package:styled_text/styled_text.dart';
 import '../app_routes.dart';
 
 class WelcomePanel extends StatefulWidget {
-  final VoidCallback onDismiss;
+  final VoidCallback? onDismiss;
   final void Function(Account account) onAccount;
   final StoredEthereumKey defaultIdentity;
 
   const WelcomePanel({
-    Key key,
-    this.onDismiss,
-    this.onAccount,
-    this.defaultIdentity,
+    Key? key,
+    required this.onDismiss,
+    required this.onAccount,
+    required this.defaultIdentity,
   }) : super(key: key);
 
   @override
@@ -45,17 +44,17 @@ class WelcomePanel extends StatefulWidget {
 }
 
 class _WelcomePanelState extends State<WelcomePanel> {
-  _State _state;
-  PAC _dollarPAC;
-  StoredEthereumKey _generatedIdentity;
-  StoredEthereumKey _importedIdentity;
+  _State? _state;
+  PAC? _dollarPAC;
+  StoredEthereumKey? _generatedIdentity;
+  StoredEthereumKey? _importedIdentity;
 
   // This could be either the imported or generated identity, depending on whether
   // the user hits the "back" button.
-  StoredEthereumKey _selectedIdentity;
+  StoredEthereumKey? _selectedIdentity;
 
-  EthereumAddress _funderAddress;
-  Chain _chain;
+  EthereumAddress? _funderAddress;
+  Chain? _chain;
 
   @override
   void initState() {
@@ -183,30 +182,25 @@ class _WelcomePanelState extends State<WelcomePanel> {
 
   Widget _buildContent() {
     switch (_state) {
+      // Null case guarded by page logic, should not be reached.
+      case null:
       case _State.welcome:
         return _buildContentWelcomeState();
-        break;
       case _State.setup_choice:
         return _buildContentSetupChoiceState();
-        break;
       case _State.setup_account:
         return _buildContentSetupAccountState();
-        break;
       case _State.backup_identity:
         return _buildContentBackupIdentityState();
-        break;
 
       case _State.confirm_purchase:
       case _State.confirm_purchase_wait:
         return _buildContentConfirmPurchaseState();
-        break;
       case _State.processing_pac:
       case _State.processing_chain:
       case _State.processing_timeout:
         return _buildContentProcessingPurchaseState();
-        break;
     }
-    throw Exception();
   }
 
   Widget _buildContentWelcomeState() {
@@ -288,10 +282,10 @@ class _WelcomePanelState extends State<WelcomePanel> {
         ).top(24).padx(24),
         OrchidLabeledImportIdentityField(
           label: s.orchidIdentity,
-          onChange: (ParseOrchidIdentityOrAccountResult result) async {
+          onChange: (ParseOrchidIdentityOrAccountResult? result) async {
             if (result != null) {
               if (result.hasMultipleAccounts) {
-                await _importMultipleAccounts(result.accounts);
+                await _importMultipleAccounts(result.accounts ?? []);
               } else {
                 await _importSingleAccount(result);
               }
@@ -308,11 +302,11 @@ class _WelcomePanelState extends State<WelcomePanel> {
 
     if (result.account != null) {
       // Populate the form even though it is not currently shown.
-      _funderAddress = result.account.funder;
-      _chain = Chains.chainFor(result.account.chainId);
+      _funderAddress = result.account!.funder;
+      _chain = Chains.chainFor(result.account!.chainId);
       // We don't have a version selector in account import yet
       // _version = result.account.version;
-      widget.onAccount(result.account);
+      widget.onAccount(result.account!);
     }
     setState(() {
       _importedIdentity = result.signer;
@@ -343,9 +337,9 @@ class _WelcomePanelState extends State<WelcomePanel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(s.yourOrchidIdentityPublicAddress + ':').body2.height(2.0).top(16),
-        _buildAddress(address: _selectedIdentity.address).top(16),
+        _buildAddress(address: _selectedIdentity!.address).top(16),
         _buildCopyIdentityButton(
-                value: _selectedIdentity.address
+                value: _selectedIdentity!.address
                     .toString(prefix: true, elide: false))
             .center
             .top(16),
@@ -397,7 +391,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
       return Container();
     }
 
-    var config = _generatedIdentity.toExportString();
+    var config = _generatedIdentity!.toExportString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -456,7 +450,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
               value: _backupComplete,
               onChanged: (value) {
                 setState(() {
-                  _backupComplete = value;
+                  _backupComplete = value ?? false;
                 });
               },
             ).bottom(8),
@@ -490,7 +484,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     ).padx(24);
   }
 
-  Row _buildAddress({@required EthereumAddress address, bool elide = false}) {
+  Row _buildAddress({required EthereumAddress address, bool elide = false}) {
     return Row(
       children: [
         OrchidCircularIdenticon(size: 22, address: address),
@@ -504,7 +498,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     );
   }
 
-  TextButton _buildCopyIdentityButton({@required String value, String label}) {
+  TextButton _buildCopyIdentityButton({required String value, String? label}) {
     return TextButton(
       child: Row(
         children: [
@@ -535,7 +529,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
             .top(32)
             // Note: styled text breaks animated size layout so we provide a height
             .height(100),
-        _buildConfirmPurchaseDetails(pac: _dollarPAC).top(40),
+        // dollar PAC null guarded by page logic
+        _buildConfirmPurchaseDetails(pac: _dollarPAC!).top(40),
         OrchidActionButton(
           enabled: _state == _State.confirm_purchase,
           text: s.confirmPurchase,
@@ -564,6 +559,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
   Widget _buildContentProcessingPurchaseState() {
     String text;
     switch (_state) {
+      // Null case guarded by page logic, should not be reached.
+      case null:
       case _State.processing_pac:
         text = s.yourPurchaseIsInProgress;
         break;
@@ -584,7 +581,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
         throw Exception();
     }
 
-    bool timeout;
+    bool timeout = false;
     bool complete = false;
     switch (_state) {
       case _State.processing_pac:
@@ -600,6 +597,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
       case _State.confirm_purchase_wait:
         timeout = true;
         break;
+      case null:
       case _State.setup_choice:
       case _State.backup_identity:
       case _State.setup_account:
@@ -647,7 +645,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
               _dismiss();
               final funderAddress = OrchidPacSeller.sellerContractAddress;
               final account = Account.fromSignerKeyRef(
-                  signerKey: _generatedIdentity.ref(),
+                  // generated identity should exist by virtue of page logic
+                  signerKey: _generatedIdentity!.ref(),
                   funder: funderAddress,
                   chainId: Chains.GNOSIS_CHAINID,
                   version: 1);
@@ -676,7 +675,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     );
   }
 
-  Widget _buildConfirmPurchaseDetails({@required PAC pac}) {
+  Widget _buildConfirmPurchaseDetails({required PAC pac}) {
     if (pac == null) {
       log("welcome panel: pac null");
       return Text("...");
@@ -755,7 +754,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     await PurchaseUtils.purchase(
       purchase: _dollarPAC,
       signerKey: _generatedIdentity,
-      onError: ({rateLimitExceeded}) async {
+      onError: ({required rateLimitExceeded}) async {
         setState(() {
           // This should really be an additional error state
           _state = _State.processing_timeout;
@@ -765,26 +764,24 @@ class _WelcomePanelState extends State<WelcomePanel> {
   }
 
   void _dismiss() {
-    widget.onDismiss();
+    if (widget.onDismiss != null) {
+      widget.onDismiss!();
+    }
   }
 
   Future<void> _importAccount() async {
-    if (_selectedIdentity == null || _funderAddress == null) {
+    if (_selectedIdentity == null || _funderAddress == null || _chain == null) {
       return;
     }
     final account = Account.fromSignerKeyRef(
-      signerKey: _selectedIdentity.ref(),
-      funder: _funderAddress,
-      chainId: _chain.chainId,
+      signerKey: _selectedIdentity!.ref(),
+      funder: _funderAddress!,
+      chainId: _chain!.chainId,
       version: 1,
     );
     await UserPreferencesVPN().addCachedDiscoveredAccounts([account]);
     log("XXX: saved account: $account");
     widget.onAccount(account);
-  }
-
-  S get s {
-    return S.of(context);
   }
 }
 
@@ -812,11 +809,11 @@ class _TitleContent {
   final String text;
   final bool showDismiss;
 
-  // @nullable the state to return to if the back button is tapped.
-  final _State backState;
+  // The state to return to if the back button is tapped.
+  final _State? backState;
 
   _TitleContent({
-    @required this.text,
+    required this.text,
     this.showDismiss = false,
     this.backState,
   });

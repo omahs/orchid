@@ -92,7 +92,7 @@ class UserPreferencesVPN {
   }
 
   /// The PAC transaction or null if there is none.
-  ObservablePreference<PacTransaction> pacTransaction = ObservablePreference(
+  ObservablePreference<PacTransaction?> pacTransaction = ObservablePreference(
       key: _UserPreferenceKeyVPN.PacTransaction,
       getValue: (key) {
         String? value = UserPreferences().getStringForKey(key);
