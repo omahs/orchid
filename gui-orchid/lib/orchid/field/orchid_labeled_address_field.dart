@@ -1,4 +1,3 @@
-// @dart=2.12
 import 'package:orchid/orchid/orchid.dart';
 import 'package:browser_detector/browser_detector.dart';
 import 'package:flutter/services.dart';

@@ -27,12 +27,14 @@ class OrchidSelectorMenu<T> extends StatefulWidget {
   // highlight the selected item in the menu
   final bool highlightSelected;
 
+  static const double DEFAULT_WIDTH = 273.0;
+
   OrchidSelectorMenu({
     Key? key,
     this.selected,
     this.onSelection,
     this.enabled = true,
-    this.width = 273.0,
+    this.width = DEFAULT_WIDTH,
     required this.titleUnselected,
     this.titleIconUnselected,
     this.titleIconOnly = false,

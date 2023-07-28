@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'orchid_text_field.dart';
@@ -7,16 +6,16 @@ import 'orchid_text_field.dart';
 class OrchidLabeledTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final Widget trailing;
-  final String hintText;
+  final Widget? trailing;
+  final String? hintText;
   final bool error;
   final bool numeric;
-  final ValueChanged<String> onChanged;
-  final VoidCallback onClear;
-  final EdgeInsets contentPadding;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback? onClear;
+  final EdgeInsets? contentPadding;
 
   const OrchidLabeledTextField({
-    Key key,
+    Key? key,
     required this.label,
     required this.controller,
     this.hintText,
