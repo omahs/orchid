@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -12,14 +11,12 @@ import 'package:orchid/orchid/menu/orchid_chain_selector_menu.dart';
 import 'package:orchid/orchid/menu/orchid_funder_selector_menu.dart';
 import 'package:orchid/orchid/menu/orchid_version_selector_menu.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
-import 'package:orchid/orchid/field/orchid_text_field.dart';
-import 'package:orchid/orchid/account/account_finder.dart';
 import 'package:orchid/orchid/menu/orchid_key_selector_menu.dart';
 
 /// Allow selection or manual entry of all components of an OrchidAccount
 class OrchidAccountEntry extends StatefulWidget {
-  final StoredEthereumKeyRef initialKeySelection;
-  final Account initialFunderSelection;
+  final StoredEthereumKeyRef? initialKeySelection;
+  final Account? initialFunderSelection;
 
   /// Callback fires on changes with either a valid account or null if the form state is invalid or
   /// incomplete. The account has not been persisted.
@@ -41,15 +38,15 @@ class OrchidAccountEntry extends StatefulWidget {
 
 class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
   // Signer key selection
-  KeySelectionItem _initialSelectedKeyItem;
-  KeySelectionItem _selectedKeyItem;
+  KeySelectionItem? _initialSelectedKeyItem;
+  KeySelectionItem? _selectedKeyItem;
 
   // Funder account selection
   var _pastedFunderField = TextEditingController();
-  Chain _pastedOrOverriddenFunderChainSelection;
-  int _overriddenFunderVersionSelection;
-  FunderSelectionItem _initialSelectedFunderItem;
-  FunderSelectionItem _selectedFunderItem;
+  Chain? _pastedOrOverriddenFunderChainSelection;
+  int? _overriddenFunderVersionSelection;
+  FunderSelectionItem? _initialSelectedFunderItem;
+  FunderSelectionItem? _selectedFunderItem;
 
   bool _updatingAccounts = false;
 

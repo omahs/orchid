@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
@@ -8,18 +7,18 @@ import 'package:orchid/api/pricing/usd.dart';
 class TokenValueWidgetRow extends StatelessWidget {
   final BuildContext context;
   final Widget child;
-  final TokenType tokenType;
+  final TokenType? tokenType;
   final Token value;
   final USD price;
   final bool enabled;
 
   // Used for the token symbol
-  final Color textColor;
+  final Color? textColor;
 
   bool get disabled => !enabled;
 
   const TokenValueWidgetRow({
-    Key key,
+    Key? key,
     required this.context,
     required this.child,
     required this.tokenType,

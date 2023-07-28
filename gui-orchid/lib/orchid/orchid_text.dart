@@ -331,7 +331,7 @@ extension OrchidTextExtensions on Text {
     );
   }
 
-  Text withColor(Color color) {
+  Text withColor(Color? color) {
     return this
         .copyWith(style: (this.style ?? TextStyle()).copyWith(color: color));
   }
