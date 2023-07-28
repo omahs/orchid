@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
@@ -101,8 +100,6 @@ class _OrchidKeySelectorMenuState extends State<OrchidKeySelectorMenu> {
 
     return items;
   }
-
-  S get s => S.of(context);
 
   @override
   void dispose() {

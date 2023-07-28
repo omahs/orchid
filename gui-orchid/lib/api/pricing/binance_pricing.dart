@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,7 +13,7 @@ class BinanceExchangeRateSource extends ExchangeRateSource {
   /// the rate consistent with that. e.g. for DAI we must use 1/USDTDAI and
   /// not DAIUSDT since DAIUSDT was delisted.
   final bool inverted;
-  final String symbolOverride;
+  final String? symbolOverride;
 
   const BinanceExchangeRateSource({this.inverted = false, this.symbolOverride});
 

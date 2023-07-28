@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 
 // TODO: Stand-in this until we have support for MacOS
