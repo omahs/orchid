@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/common/app_transitions.dart';
 import 'package:orchid/pages/circuit/wireguard_hop_page.dart';

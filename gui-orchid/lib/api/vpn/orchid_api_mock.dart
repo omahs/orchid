@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/orchid_api_real.dart';
@@ -63,7 +62,8 @@ class MockOrchidAPI implements OrchidAPI {
           applyRoutingStatus(OrchidVPNRoutingState.VPNConnected);
 
           // Mock orchid routing if routing is enabled.
-          var routing = UserPreferencesVPN().routingEnabled.get();
+          // never null
+          var routing = UserPreferencesVPN().routingEnabled.get()!;
           if (routing) {
             Future.delayed(Duration(seconds: 1), () {
               applyRoutingStatus(OrchidVPNRoutingState.OrchidConnected);
@@ -172,7 +172,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
     OrchidAPI().vpnPermissionStatus.add(false);
   }
 
-  Timer _connectFuture;
+  Timer? _connectFuture;
 
   static int fakeVPNDelay = 3000;
 
@@ -188,7 +188,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
       case OrchidVPNExtensionState.Disconnecting:
         // Cancel any pending connect or disconnect
         if (_connectFuture != null) {
-          _connectFuture.cancel();
+          _connectFuture?.cancel();
           _connectFuture = null;
         }
 
