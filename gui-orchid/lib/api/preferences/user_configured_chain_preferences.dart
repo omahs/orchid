@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
@@ -26,7 +25,10 @@ class ObservableUserConfiguredChainPreference
                 return [];
               }
             },
-            putValue: (key, List<UserConfiguredChain> list) async {
+            putValue: (key, List<UserConfiguredChain>? list) async {
+              if (list == null) {
+                return UserPreferences().putStringForKey(key, null);
+              }
               try {
                 final json = jsonEncode(list);
                 return UserPreferences().putStringForKey(key, json);
@@ -37,12 +39,12 @@ class ObservableUserConfiguredChainPreference
 
   Future<void> add(UserConfiguredChain chain) async {
     var chains = ((this.get()) ?? []) + [chain];
-    return await this.set(chains);
+    await this.set(chains);
   }
 
   Future<void> remove(UserConfiguredChain chain) async {
     var chains = this.get();
-    chains.remove(chain);
-    return await this.set(chains);
+    chains?.remove(chain);
+    await this.set(chains);
   }
 }

@@ -1,5 +1,3 @@
-// @dart=2.9
-import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -13,22 +11,22 @@ class OrchidHop extends CircuitHop {
   static const String appDefaultCurator = 'partners.orch1d.eth';
 
   /// Curator URI
-  final String curator;
+  final String? curator;
 
   /// Signer key uid
-  final StoredEthereumKeyRef keyRef;
+  final StoredEthereumKeyRef? keyRef;
 
   /// Funder address
-  final EthereumAddress funder;
+  final EthereumAddress? funder;
 
   /// The contract version: 0 for the original OXT contract.
-  final int version;
+  final int? version;
 
   /// The contract version: 1 for Ethereum for the original OXT contract.
-  final int chainId;
+  final int? chainId;
 
   // This transient field supports testing without stored keys.
-  EthereumAddress resolvedSignerAddress;
+  EthereumAddress? resolvedSignerAddress;
 
   /// The Orchid Account associated with this hop.
   // Note: This is a migration from the v0 storage and should eventually replace it.
@@ -43,11 +41,11 @@ class OrchidHop extends CircuitHop {
   }
 
   OrchidHop({
-    @required this.curator,
-    @required this.funder,
-    @required this.keyRef,
-    @required this.version,
-    @required this.chainId,
+    required this.curator,
+    required this.funder,
+    required this.keyRef,
+    required this.version,
+    required this.chainId,
     this.resolvedSignerAddress,
   }) : super(HopProtocol.Orchid);
 
@@ -62,9 +60,9 @@ class OrchidHop extends CircuitHop {
         );
 
   OrchidHop.v0({
-    @required this.curator,
-    @required this.funder,
-    @required this.keyRef,
+    required this.curator,
+    required this.funder,
+    required this.keyRef,
   })  : this.version = 0,
         this.chainId = Chains.ETH_CHAINID,
         super(HopProtocol.Orchid);
@@ -72,12 +70,12 @@ class OrchidHop extends CircuitHop {
   // Construct an Orchid Hop using an existing hop's properties as defaults.
   // The hop may be null, in which case this serves as a loose constructor.
   OrchidHop.from(
-    OrchidHop hop, {
-    String curator,
-    EthereumAddress funder,
-    StoredEthereumKeyRef keyRef,
-    int version,
-    int chainId,
+    OrchidHop? hop, {
+    String? curator,
+    EthereumAddress? funder,
+    StoredEthereumKeyRef? keyRef,
+    int? version,
+    int? chainId,
   }) : this(
           curator: curator ?? hop?.curator,
           funder: funder ?? hop?.funder,

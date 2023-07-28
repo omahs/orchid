@@ -17,26 +17,26 @@ class LinkTextSpan extends TextSpan {
 
 class LinkText extends StatelessWidget {
   final TextStyle? style;
-  final String url;
+  final String? url;
   final VoidCallback? onTapped;
   final String? text;
   final TextOverflow overflow;
 
   LinkText(this.text,
       {this.style,
-      required this.url,
+      this.url,
       this.onTapped,
       this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Text(text ?? url, style: style, overflow: overflow),
+      child: Text(text ?? url ?? '', style: style, overflow: overflow),
       onTap: onTapped ?? _openURL,
     );
   }
 
   _openURL() {
-    launch(url, forceSafariVC: false);
+    launch(url ?? '', forceSafariVC: false);
   }
 }
