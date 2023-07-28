@@ -19,8 +19,8 @@ class OrchidPopupMenuButton<T> extends StatelessWidget {
 
   const OrchidPopupMenuButton({
     Key key,
-    @required this.itemBuilder,
-    @required this.selected,
+    required this.itemBuilder,
+    required this.selected,
     this.onSelected,
     this.onCanceled,
     this.child,

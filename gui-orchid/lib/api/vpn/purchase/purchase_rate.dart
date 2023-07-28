@@ -1,21 +1,18 @@
-// @dart=2.9
 // A PAC purchase
 import 'package:orchid/api/preferences/vpn/user_secure_storage.dart';
 import 'orchid_pac.dart';
 
 class Purchase {
-  DateTime date;
-  double usdAmount;
+  final DateTime date;
+  final double usdAmount;
 
-  Purchase(PAC pac) {
-    this.date = DateTime.now();
-    this.usdAmount = pac.usdPriceExact.value;
-  }
+  Purchase(PAC pac)
+      : this.date = DateTime.now(),
+        this.usdAmount = pac.usdPriceExact.value;
 
-  Purchase.fromJson(Map<String, dynamic> json) {
-    date = DateTime.fromMillisecondsSinceEpoch(json['date']);
-    usdAmount = json['usdAmount'];
-  }
+  Purchase.fromJson(Map<String, dynamic> json)
+      : date = DateTime.fromMillisecondsSinceEpoch(json['date']),
+        usdAmount = json['usdAmount'];
 
   Map<String, dynamic> toJson() =>
       {'date': date.millisecondsSinceEpoch, 'usdAmount': usdAmount};

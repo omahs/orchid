@@ -127,7 +127,7 @@ class _ScanOrPasteIdentityDialogState extends State<ScanOrPasteIdentityDialog> {
 class OrchidCloseButton extends StatelessWidget {
   const OrchidCloseButton({
     Key key,
-    @required this.context,
+    required this.context,
   }) : super(key: key);
 
   final BuildContext context;
@@ -149,8 +149,8 @@ class OrchidCloseButton extends StatelessWidget {
 class OrchidImportButton extends StatelessWidget {
   const OrchidImportButton({
     Key key,
-    @required this.enabled,
-    @required this.onPressed,
+    required this.enabled,
+    required this.onPressed,
   }) : super(key: key);
 
   final bool enabled;

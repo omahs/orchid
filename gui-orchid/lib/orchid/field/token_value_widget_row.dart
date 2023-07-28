@@ -20,11 +20,11 @@ class TokenValueWidgetRow extends StatelessWidget {
 
   const TokenValueWidgetRow({
     Key key,
-    @required this.context,
-    @required this.child,
-    @required this.tokenType,
-    @required this.value,
-    @required this.price,
+    required this.context,
+    required this.child,
+    required this.tokenType,
+    required this.value,
+    required this.price,
     this.enabled = true,
     this.textColor,
   }) : super(key: key);

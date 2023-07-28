@@ -46,8 +46,8 @@ class HopEditor<T extends CircuitHop> extends StatefulWidget {
   final HopEditorMode mode;
 
   HopEditor(
-      {@required this.editableHop,
-      @required this.mode,
+      {required this.editableHop,
+      required this.mode,
       this.onAddFlowComplete});
 
   Widget buildSaveButton(
@@ -105,7 +105,7 @@ class UniqueHop<T extends CircuitHop> {
   final int key;
   final T hop;
 
-  UniqueHop({@required this.key, @required this.hop});
+  UniqueHop({required this.key, required this.hop});
 }
 
 class EditableHop<T extends CircuitHop> extends ValueNotifier<UniqueHop<T>> {

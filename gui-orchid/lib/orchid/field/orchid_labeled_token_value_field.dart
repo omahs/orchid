@@ -29,8 +29,8 @@ class OrchidLabeledTokenValueField extends StatelessWidget {
 
   OrchidLabeledTokenValueField({
     Key key,
-    @required this.type,
-    @required this.controller,
+    required this.type,
+    required this.controller,
     this.enabled = true,
     this.label,
     this.labelWidth,
@@ -111,7 +111,7 @@ class TypedTokenValueFieldController extends ValueFieldController<Token> {
   final TokenType type;
 
   TypedTokenValueFieldController({
-    @required this.type,
+    required this.type,
   });
 
   /// Return the value, zero if empty, or null if invalid

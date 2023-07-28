@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
@@ -38,8 +37,8 @@ class PurchasePage extends StatefulWidget {
 
   const PurchasePage(
       {Key? key,
-      @required this.signerKey,
-      @required this.completion,
+      required this.signerKey,
+      required this.completion,
       this.cancellable = false})
       : super(key: key);
 
@@ -693,8 +692,8 @@ class _PurchasePageState extends State<PurchasePage> {
 
 class PurchaseUtils {
   static Future<void> purchase({
-    @required PAC purchase,
-    @required StoredEthereumKey signerKey,
+    required PAC purchase,
+    required StoredEthereumKey signerKey,
     Future<void> Function({bool rateLimitExceeded}) onError,
   }) async {
     log("iap: calling purchase: $purchase");

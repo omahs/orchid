@@ -17,7 +17,7 @@ import '../../api/vpn/model/openvpn_hop.dart';
 /// Create / edit / view an OpenVPN Hop
 class OpenVPNHopPage extends HopEditor<OpenVPNHop> {
   OpenVPNHopPage(
-      {@required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
+      {required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
       : super(
             editableHop: editableHop,
             mode: mode,

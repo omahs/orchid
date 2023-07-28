@@ -7,8 +7,8 @@ import 'package:styled_text/styled_text.dart';
 class ExportIdentityDialog extends StatefulWidget {
   const ExportIdentityDialog({
     Key key,
-    @required this.body,
-    @required this.config,
+    required this.body,
+    required this.config,
   }) : super(key: key);
 
   final StyledText body;

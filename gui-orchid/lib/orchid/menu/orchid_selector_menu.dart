@@ -34,12 +34,12 @@ class OrchidSelectorMenu<T> extends StatefulWidget {
     this.onSelection,
     this.enabled = true,
     this.width = 273.0,
-    @required this.titleUnselected,
+    required this.titleUnselected,
     this.titleIconUnselected,
     this.titleIconOnly = false,
-    @required this.items,
+    required this.items,
     this.iconForItem,
-    @required this.titleForItem,
+    required this.titleForItem,
     this.highlightSelected = true,
   }) : super(key: key);
 

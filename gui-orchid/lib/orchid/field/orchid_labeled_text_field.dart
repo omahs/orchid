@@ -17,8 +17,8 @@ class OrchidLabeledTextField extends StatelessWidget {
 
   const OrchidLabeledTextField({
     Key key,
-    @required this.label,
-    @required this.controller,
+    required this.label,
+    required this.controller,
     this.hintText,
     this.trailing,
     this.onChanged,

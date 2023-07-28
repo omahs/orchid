@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/util/images.dart';
@@ -55,10 +54,10 @@ class ConnectWorldMap extends StatefulWidget {
   final bool showOverlay;
 
   const ConnectWorldMap({
-    @required this.locations,
-    @required LinearGradient mapGradient,
-    @required this.width,
-    @required this.height,
+    required this.locations,
+    required LinearGradient mapGradient,
+    required this.width,
+    required this.height,
     this.showOverlay = true,
   }) : _mapGradient = mapGradient;
 

@@ -29,8 +29,8 @@ class OrchidAccountEntry extends StatefulWidget {
   final void Function(List<Account> accounts) onAccountsImport;
 
   OrchidAccountEntry({
-    @required this.onAccountUpdate,
-    @required this.onAccountsImport,
+    required this.onAccountUpdate,
+    required this.onAccountsImport,
     this.initialKeySelection,
     this.initialFunderSelection,
   });

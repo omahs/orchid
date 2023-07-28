@@ -23,11 +23,11 @@ class PAC {
   }
 
   PAC({
-    @required this.productId,
-    @required this.localPrice,
-    @required this.localCurrencyCode,
-    @required this.localCurrencySymbol,
-    @required this.usdPriceExact,
+    required this.productId,
+    required this.localPrice,
+    required this.localCurrencyCode,
+    required this.localCurrencySymbol,
+    required this.usdPriceExact,
   });
 
   @override

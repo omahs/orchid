@@ -14,7 +14,7 @@ import '../../api/vpn/model/wireguard_hop.dart';
 /// Create / edit / view an WireGuard Hop
 class WireGuardHopPage extends HopEditor<WireGuardHop> {
   WireGuardHopPage(
-      {@required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
+      {required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
       : super(
             editableHop: editableHop,
             mode: mode,

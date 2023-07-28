@@ -16,7 +16,7 @@ class OrchidVersionSelectorMenu extends StatelessWidget {
   OrchidVersionSelectorMenu({
     Key key,
     this.selected,
-    @required this.onSelection,
+    required this.onSelection,
     this.enabled = true,
     this.width,
   }) : super(key: key);

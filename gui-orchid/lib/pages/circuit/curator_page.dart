@@ -9,7 +9,7 @@ import 'hop_editor.dart';
 import '../../api/vpn/model/orchid_hop.dart';
 
 class CuratorEditorPage extends HopEditor<OrchidHop> {
-  CuratorEditorPage({@required editableHop})
+  CuratorEditorPage({required editableHop})
       : super(editableHop: editableHop, mode: HopEditorMode.Edit);
 
   @override

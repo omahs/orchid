@@ -10,10 +10,10 @@ import 'package:orchid/util/format_currency.dart';
 
 class MarketStatsDialog {
   static Future<void> show({
-    @required BuildContext context,
-    @required Account account,
-    @required LotteryPot lotteryPot,
-    @required MarketConditions marketConditions,
+    required BuildContext context,
+    required Account account,
+    required LotteryPot lotteryPot,
+    required MarketConditions marketConditions,
   }) async {
     if (lotteryPot == null || marketConditions == null) {
       return;

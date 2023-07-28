@@ -22,9 +22,9 @@ class ConnectStatusPanel extends StatelessWidget {
 
   const ConnectStatusPanel({
     Key key,
-    @required this.bandwidthPrice,
-    @required this.bandwidthAvailableGB,
-    @required this.circuitHops,
+    required this.bandwidthPrice,
+    required this.bandwidthAvailableGB,
+    required this.circuitHops,
     this.minHeight = false,
   }) : super(key: key);
 

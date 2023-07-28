@@ -24,8 +24,8 @@ class OrchidFunderSelectorMenu extends StatefulWidget {
 
   OrchidFunderSelectorMenu({
     Key key,
-    @required this.signer,
-    @required this.onSelection,
+    required this.signer,
+    required this.onSelection,
     this.selected,
     bool enabled = false,
   })  : this.enabled = signer == null ? false : enabled,

@@ -1,8 +1,5 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/eth_transaction.dart';
 import 'package:orchid/api/orchid_language.dart';
@@ -50,28 +47,28 @@ class PacTransaction {
   PacTransactionState state;
   DateTime date;
   int retries;
-  String serverResponse;
+  String? serverResponse;
 
   // If this is part of a composite transaction this is the container
-  PacTransaction _parent;
+  PacTransaction? _parent;
 
   /// The shared, single, outstanding PAC transaction or null if there is none.
-  static ObservablePreference<PacTransaction> get shared {
+  static ObservablePreference<PacTransaction?> get shared {
     return UserPreferencesVPN().pacTransaction;
   }
 
   PacTransaction({
-    @required this.type,
-    @required this.state,
-    this.date,
+    required this.type,
+    required this.state,
+    DateTime? date,
     this.retries = 0,
     this.serverResponse,
-  }) {
-    date = date ?? DateTime.now();
-  }
+  }):
+    this.date = date ?? DateTime.now();
+
 
   PacTransaction.error(
-      {@required String message, @required PacTransactionType type})
+      {required String message, required PacTransactionType type})
       : this(
             type: type,
             state: PacTransactionState.Error,
@@ -92,7 +89,7 @@ class PacTransaction {
       };
 
   PacTransaction.fromJsonBase(Map<String, dynamic> json,
-      {PacTransaction parent})
+      {PacTransaction? parent})
       : type = toTransactionType(json['type']) ?? PacTransactionType.None,
         state = toTransactionState(json['state']),
         date = DateTime.parse(json['date']),
@@ -105,18 +102,13 @@ class PacTransaction {
     switch (type) {
       case PacTransactionType.None:
         return PacTransaction.fromJsonBase(json);
-        break;
       case PacTransactionType.AddBalance:
         return PacAddBalanceTransaction.fromJson(json);
-        break;
       case PacTransactionType.SubmitSellerTransaction:
         return PacSubmitSellerTransaction.fromJson(json);
-        break;
       case PacTransactionType.PurchaseTransaction:
         return PacPurchaseTransaction.fromJson(json);
-        break;
     }
-    throw Exception("Unknown transaction type: $json");
   }
 
   Future<String> userDebugString() async {
@@ -137,7 +129,7 @@ class PacTransaction {
     return this;
   }
 
-  Future<PacTransaction> save() async {
+  Future<PacTransaction?> save() async {
     return shared.set(_parent != null ? _parent : this);
   }
 
@@ -160,7 +152,7 @@ class PacAddBalanceTransaction extends PacTransaction
   ReceiptType receiptType;
 
   PacAddBalanceTransaction.pending(
-      {@required EthereumAddress signer, String productId})
+      {required EthereumAddress signer, required String productId})
       : super(
           type: PacTransactionType.AddBalance,
           state: PacTransactionState.Pending,
@@ -247,9 +239,9 @@ class PacSubmitSellerTransaction extends PacTransaction {
   BigInt escrow;
 
   PacSubmitSellerTransaction({
-    @required StoredEthereumKeyRef signerKey,
-    @required EthereumTransactionParams txParams,
-    @required BigInt escrow,
+    required StoredEthereumKeyRef signerKey,
+    required EthereumTransactionParams txParams,
+    required BigInt escrow,
   }) : super(
           state: PacTransactionState.Pending,
           type: PacTransactionType.SubmitSellerTransaction,

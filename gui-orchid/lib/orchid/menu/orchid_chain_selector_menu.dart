@@ -21,7 +21,7 @@ class OrchidChainSelectorMenu extends StatelessWidget {
   OrchidChainSelectorMenu({
     Key key,
     this.selected,
-    @required this.onSelection,
+    required this.onSelection,
     this.iconOnly = false,
     this.enabled = true,
     this.width,

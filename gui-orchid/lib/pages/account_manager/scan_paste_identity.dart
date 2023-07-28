@@ -21,8 +21,8 @@ class ScanOrPasteOrchidIdentity extends StatefulWidget {
 
   const ScanOrPasteOrchidIdentity({
     Key key,
-    @required this.onChange,
-    @required this.pasteOnly,
+    required this.onChange,
+    required this.pasteOnly,
     this.spacing,
   }) : super(key: key);
 

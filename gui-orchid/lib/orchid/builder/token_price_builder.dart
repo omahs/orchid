@@ -13,9 +13,9 @@ class TokenPriceBuilder extends StatelessWidget {
 
   const TokenPriceBuilder({
     Key key,
-    @required this.tokenType,
+    required this.tokenType,
     this.seconds = 30,
-    @required this.builder,
+    required this.builder,
   }) : super(key: key);
 
   @override

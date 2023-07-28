@@ -38,7 +38,7 @@ import '../../api/vpn/model/orchid_hop.dart';
 // editing certain elements of the hop (e.g. curator) even when in "View" mode.
 class OrchidHopPage extends HopEditor<OrchidHop> {
   OrchidHopPage(
-      {@required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
+      {required editableHop, mode = HopEditorMode.View, onAddFlowComplete})
       : super(
             editableHop: editableHop,
             mode: mode,
