@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
@@ -10,21 +9,22 @@ import 'package:orchid/orchid/orchid_colors.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 import '../common/loading.dart';
 import '../common/formatting.dart';
+import 'package:orchid/util/localization.dart';
 
 class OrchidAccountChart extends StatelessWidget {
-  final LotteryPot lotteryPot;
-  final double efficiency;
-  final List<OrchidUpdateTransactionV0> transactions;
+  final LotteryPot? lotteryPot;
+  final double? efficiency;
+  final List<OrchidUpdateTransactionV0>? transactions;
   final bool alignEnd;
 
   // Efficiency alert
   final bool alert;
 
   const OrchidAccountChart({
-    Key key,
-    @required this.lotteryPot,
-    @required this.efficiency,
-    @required this.transactions,
+    Key? key,
+    this.lotteryPot,
+    this.efficiency,
+    this.transactions,
     this.alert = false,
     this.alignEnd = false,
   }) : super(key: key);
@@ -36,23 +36,23 @@ class OrchidAccountChart extends StatelessWidget {
     }
 
     var chartModel = (lotteryPot != null && transactions != null)
-        ? AccountBalanceChartTicketModel(lotteryPot, transactions)
+        ? AccountBalanceChartTicketModel(lotteryPot!, transactions!)
         : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         pady(8),
-        OrchidCircularEfficiencyIndicators.large(efficiency),
+        OrchidCircularEfficiencyIndicators.large(efficiency!),
         pady(16),
         Text(
-            S.of(context).efficiency +
+            context.s.efficiency +
                 ": " +
                 MarketConditionsV0.efficiencyAsPercString(efficiency),
             style: alert ? OrchidText.body1.red : OrchidText.body1),
         pady(16),
         // Show the tickets available / used line
         if (chartModel != null)
-          buildTicketsAvailable(context, chartModel, efficiency, false),
+          buildTicketsAvailable(context, chartModel, efficiency!, false),
       ],
     );
   }
@@ -70,7 +70,7 @@ class OrchidAccountChart extends StatelessWidget {
         if (chartModel.availableTicketsCurrentMax > 0)
           buildTicketsAvailableLineChart(chartModel, efficiency).bottom(16),
         Text(
-          S.of(context).minTicketsAvailableTickets(
+          context.s.minTicketsAvailableTickets(
               chartModel.availableTicketsCurrentMax),
         ).caption,
       ],

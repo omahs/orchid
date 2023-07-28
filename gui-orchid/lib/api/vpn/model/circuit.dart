@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/vpn/model/wireguard_hop.dart';
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
@@ -10,7 +9,7 @@ class Circuit {
 
   Circuit(this.hops);
 
-  Set<Account> get activeOrchidAccounts => (hops ?? [])
+  Set<Account> get activeOrchidAccounts => hops
       .whereType<OrchidHop>()
       .map((hop) => hop.account)
       .toSet();

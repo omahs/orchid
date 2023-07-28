@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/eth_rpc.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/util/cacheable.dart';

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter_test/flutter_test.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/orchid_crypto.dart';

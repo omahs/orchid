@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/widgets.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
@@ -35,7 +34,7 @@ class USD extends ScalarValue<double> {
   }
 
   String formatCurrency(
-      {@required Locale locale,
+      {required Locale locale,
         int precision = 2,
         bool showPrefix = true,
         showSuffix = false}) {
@@ -46,9 +45,9 @@ class USD extends ScalarValue<double> {
 
   /// convert a token amount and price to string
   static String formatUSDValue({
-    BuildContext context,
-    Token tokenAmount,
-    USD price,
+    required BuildContext context,
+    Token? tokenAmount,
+    USD? price,
     bool showSuffix = true,
   }) {
     return ((price ?? USD.zero) * (tokenAmount ?? Tokens.TOK.zero).floatValue)

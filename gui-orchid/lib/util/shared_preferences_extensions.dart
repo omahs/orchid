@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +9,9 @@ extension SharedPreferencesUtil on SharedPreferences {
     for (var key in keys) {
       var value = prefs.get(key);
       log("XXX: key = $key, type = ${value.runtimeType}, value = $value");
-      map[key] = prefs.get(key);
+      if (value != null) {
+        map[key] = value;
+      }
     }
     return map;
   }

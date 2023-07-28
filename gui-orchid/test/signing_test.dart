@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
@@ -75,8 +74,8 @@ void main() {
       List<int> payload = hex.decode(messageHash);
       print("payload = ${hex.encode(payload)}");
       // Use sign(), not credentials.sign() which does a keccak256 on payload.
-      MsgSignature sig = await sign(payload, credentials.privateKey);
-      print("\nr=${sig.r},\ns=${sig.s},\nv=${sig.v}");
+      // MsgSignature sig = sign(payload, credentials.privateKey);
+      // print("\nr=${sig.r},\ns=${sig.s},\nv=${sig.v}");
     });
 
     // 'sig': '0xacceaf5934ee993f5b36c319e24b1391dab532b964091ce8496797fcadded22a614cd43390398acb9016571c1d3212299ad7427af78178b6a2d254c8d919a4711b'
