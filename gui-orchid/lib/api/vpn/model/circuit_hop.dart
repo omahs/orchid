@@ -58,14 +58,14 @@ class CircuitHop {
 /// A Hop with a locally unique identifier used for display purposes.
 /// Note: If we can guarantee uniqueness of a hash later we can drop this.
 class UniqueHop {
-  final int key;
+  final int? key;
   final CircuitHop hop;
 
   UniqueHop({required this.key, required this.hop});
 
   // Create a UniqueHop preserving any key from a previous UniqueHop.
-  UniqueHop.from(UniqueHop uniqueHop, {required CircuitHop hop})
-      : this(key: uniqueHop.key, hop: hop);
+  UniqueHop.from(UniqueHop? uniqueHop, {required CircuitHop hop})
+      : this(key: uniqueHop?.key, hop: hop);
 
   // Wrap the hops with a locally unique id for the UI
   static List<UniqueHop> wrap(List<CircuitHop> hops, int keyBase) {

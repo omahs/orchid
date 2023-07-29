@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:convert';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -26,8 +25,7 @@ class OrchidVPNConfigImport {
     if (match == null) {
       return [];
     }
-    var secrets = match
-        .group(1)
+    var secrets = (match.group(1) ?? '')
         .split(',')
         .map((e) => e.trim())
         .where((e) => e.isNotEmpty);
@@ -52,9 +50,13 @@ class OrchidVPNConfigImport {
     // hops = [{curator: "partners.orch1d.eth",...
     // This regex matches 'hops = [ ... }];\n' and legal variations on that including
     // just the semicolon or just the newline.
-    RegExp exp = RegExp(r'\s*[Hh][Oo][Pp][Ss]\s*=\s*(\[.*?}\s*\])\s*([;\n])', dotAll: true);
+    RegExp exp = RegExp(r'\s*[Hh][Oo][Pp][Ss]\s*=\s*(\[.*?}\s*\])\s*([;\n])',
+        dotAll: true);
     var match = exp.firstMatch(js);
-    var hopsString = match.group(1);
+    var hopsString = match?.group(1);
+    if (hopsString == null) {
+      throw Exception("missing hops");
+    }
 
     // Quote keys JSON style:
     //  [{curator: "partners.orch1d.eth",...  => [{"curator": "partners.orch1d.eth",...
@@ -63,7 +65,7 @@ class OrchidVPNConfigImport {
     // Decode the JSON
     // Wrap the top level JSON with a 'hops' key:
     // {"hops": [...]}
-    Map<String, dynamic> json = { 'hops': jsonDecode(hopsString) };
+    Map<String, dynamic> json = {'hops': jsonDecode(hopsString)};
 
     // For Orchid hops:
     // Resolve imported secrets to existing stored keys or new temporary keys
@@ -119,7 +121,7 @@ class OrchidVPNConfigImport {
   /// Import a new configuration file, replacing any existing configuration.
   /// Existing signer keys are unaffected.
   static Future<bool> importConfig(String config) async {
-    var existingKeys = UserPreferencesKeys().keys.get();
+    var existingKeys = UserPreferencesKeys().keys.get()!;
     var parsedCircuit = parseCircuit(config, existingKeys);
 
     // Save any newly imported keys found in the circuit
@@ -135,7 +137,7 @@ class OrchidVPNConfigImport {
 
     // Parse the optional imported keys list.
     // First update the existing keys with any just imported above.
-    existingKeys = UserPreferencesKeys().keys.get();
+    existingKeys = UserPreferencesKeys().keys.get()!;
     var newKeys = parseImportedKeysList(config, existingKeys);
     if (newKeys.isNotEmpty) {
       log("Imported keys list added ${newKeys.length} new keys.");
@@ -152,7 +154,7 @@ typedef OrchidConfigValidator = bool Function(String config);
 class OrchidVPNConfigValidationV0 {
   /// Validate the orchid configuration.
   /// @See OrchidConfigValidator.
-  static bool configValid(String config) {
+  static bool configValid(String? config) {
     if (config == null || config == "") {
       return false;
     }
@@ -169,7 +171,7 @@ class OrchidVPNConfigValidationV0 {
 
   // A few sanity checks
   static bool _isValidCircuitForImport(Circuit circuit) {
-    return circuit.hops != null &&
+    return //circuit.hops != null &&
         circuit.hops.length > 0 &&
         circuit.hops.every(_isValidHopForImport);
   }
@@ -190,5 +192,5 @@ class ParseCircuitResult {
   final Circuit circuit;
   final List<StoredEthereumKey> newKeys;
 
-  ParseCircuitResult({this.circuit, this.newKeys});
+  ParseCircuitResult({required this.circuit, required this.newKeys});
 }

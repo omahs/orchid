@@ -9,7 +9,7 @@ import 'orchid_hop_page.dart';
 
 enum HopEditorMode { Create, Edit, View }
 
-class EditableHop extends ValueNotifier<UniqueHop> {
+class EditableHop extends ValueNotifier<UniqueHop?> {
   EditableHop(UniqueHop value) : super(value);
 
   EditableHop.empty() : super(null);

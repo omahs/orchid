@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/config_text.dart';
@@ -39,10 +38,10 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     // Disable rotation until we update the screen design
     ScreenOrientation.portrait();
 
-    OpenVPNHop hop = widget.editableHop.value?.hop;
-    _userName.text = hop?.userName;
-    _userPassword.text = hop?.userPassword;
-    _ovpnConfig.text = hop?.ovpnConfig;
+    OpenVPNHop hop = widget.editableHop.value.hop as OpenVPNHop;
+    _userName.text = hop.userName;
+    _userPassword.text = hop.userPassword;
+    _ovpnConfig.text = hop.ovpnConfig;
     setState(() {}); // Setstate to update the hop for any defaulted values.
 
     _userName.addListener(_updateHop);

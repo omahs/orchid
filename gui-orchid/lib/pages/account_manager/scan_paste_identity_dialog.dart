@@ -1,8 +1,6 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/orchid_platform.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/orchid/field/orchid_labeled_identity_field.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_colors.dart';
@@ -18,13 +16,13 @@ class ScanOrPasteIdentityDialog extends StatefulWidget {
   final ImportAccountCompletion onImportAccount;
 
   const ScanOrPasteIdentityDialog({
-    Key key,
-    this.onImportAccount,
+    Key? key,
+    required this.onImportAccount,
   }) : super(key: key);
 
   static Future<void> show({
-    BuildContext context,
-    ImportAccountCompletion onImport,
+    required BuildContext context,
+    required ImportAccountCompletion onImport,
   }) {
     return showDialog(
         context: context,
@@ -41,11 +39,10 @@ class ScanOrPasteIdentityDialog extends StatefulWidget {
 }
 
 class _ScanOrPasteIdentityDialogState extends State<ScanOrPasteIdentityDialog> {
-  ParseOrchidIdentityOrAccountResult _parsed;
+  ParseOrchidIdentityOrAccountResult? _parsed;
 
   @override
   Widget build(BuildContext context) {
-    S s = S.of(context);
     final pasteOnly = OrchidPlatform.doesNotSupportScanning;
     var bodyText = pasteOnly
         ? s.pasteAnOrchidKeyFromTheClipboardToImportAll
@@ -119,14 +116,14 @@ class _ScanOrPasteIdentityDialogState extends State<ScanOrPasteIdentityDialog> {
     if (_parsed == null) {
       return;
     }
-    widget.onImportAccount(_parsed);
+    widget.onImportAccount(_parsed!);
     Navigator.of(context).pop();
   }
 }
 
 class OrchidCloseButton extends StatelessWidget {
   const OrchidCloseButton({
-    Key key,
+    Key? key,
     required this.context,
   }) : super(key: key);
 
@@ -148,7 +145,7 @@ class OrchidCloseButton extends StatelessWidget {
 
 class OrchidImportButton extends StatelessWidget {
   const OrchidImportButton({
-    Key key,
+    Key? key,
     required this.enabled,
     required this.onPressed,
   }) : super(key: key);
