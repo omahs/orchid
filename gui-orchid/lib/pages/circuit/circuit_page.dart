@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ import '../../api/vpn/model/circuit.dart';
 import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import '../../api/vpn/model/orchid_hop.dart';
 import 'package:orchid/util/collections.dart';
+import 'package:orchid/util/localization.dart';
 
 /// The multi-hop circuit builder page.
 class CircuitPage extends StatefulWidget {
@@ -43,11 +43,11 @@ class CircuitPage extends StatefulWidget {
 class CircuitPageState extends State<CircuitPage>
     with TickerProviderStateMixin {
   List<StreamSubscription> _rxSubs = [];
-  List<UniqueHop> _hops;
+  List<UniqueHop> _hops = [];
 
   bool _dialogInProgress = false; // ?
 
-  AccountDetailStore _accountDetailStore;
+  late AccountDetailStore _accountDetailStore;
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class CircuitPageState extends State<CircuitPage>
   }
 
   void _updateCircuit() async {
-    var circuit = await UserPreferencesVPN().circuit.get();
+    var circuit = UserPreferencesVPN().circuit.get()!; // never null
     if (mounted) {
       setState(() {
         var keyBase = DateTime.now().millisecondsSinceEpoch;
@@ -86,7 +86,7 @@ class CircuitPageState extends State<CircuitPage>
   Widget build(BuildContext context) {
     return TitledPage(
       title: s.circuitBuilder,
-      decoration: BoxDecoration(),
+      // decoration: BoxDecoration(),
       child: _buildBody(),
     );
   }
@@ -106,7 +106,7 @@ class CircuitPageState extends State<CircuitPage>
 
   Widget _buildHopList() {
     // Wrap the children for the reorderable list view
-    var children = (_hops ?? []).mapIndexed((uniqueHop, i) {
+    var children = _hops.mapIndexed((uniqueHop, i) {
       return ReorderableDelayedDragStartListener(
         key: Key(uniqueHop.key.toString()),
         index: i,
@@ -235,7 +235,7 @@ class CircuitPageState extends State<CircuitPage>
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              S.of(context).delete,
+              S.of(context)!.delete,
               style: TextStyle(color: Colors.white),
             ),
           )),
@@ -286,13 +286,10 @@ class CircuitPageState extends State<CircuitPage>
           accountDetail: accountDetail,
           minHeight: true,
         );
-        break;
       case HopProtocol.OpenVPN:
       case HopProtocol.WireGuard:
         return _buildOtherHopTile(uniqueHop);
-        break;
     }
-    throw Exception();
   }
 
   // Note: We should integrate this into AccountCard
@@ -392,7 +389,7 @@ class CircuitPageState extends State<CircuitPage>
   }
 
   // Callback for swipe to delete
-  Future<bool> _confirmDeleteHop(dismissDirection) async {
+  Future<bool?> _confirmDeleteHop(dismissDirection) async {
     var result = await AppDialogs.showConfirmationDialog(
       context: context,
       title: s.confirmDelete,
@@ -403,8 +400,8 @@ class CircuitPageState extends State<CircuitPage>
 
   // Callback for swipe to delete
   void _deleteHop(UniqueHop uniqueHop) async {
-    var index = _hops.indexOf(uniqueHop);
-    var removedHop = _hops.removeAt(index);
+    // var index = _hops.indexOf(uniqueHop);
+    // var removedHop = _hops.removeAt(index);
     setState(() {});
     _saveCircuit();
   }
@@ -436,7 +433,6 @@ class CircuitPageState extends State<CircuitPage>
       case OrchidVPNRoutingState.OrchidConnected:
         return true;
     }
-    throw Exception();
   }
 
   /// Called upon a change to Orchid connection state
@@ -452,17 +448,13 @@ class CircuitPageState extends State<CircuitPage>
   ///
 
   bool _hasHops() {
-    return _hops != null && _hops.length > 0;
+    return _hops.length > 0;
   }
 
   void _accountDetailChanged() {
     if (mounted) {
       setState(() {}); // Trigger a UI refresh
     }
-  }
-
-  S get s {
-    return S.of(context);
   }
 
   @override
