@@ -137,7 +137,7 @@ class FlowEntry {
   final int src_port;
   final String dst_addr;
   final int dst_port;
-  final String hostname;
+  final String? hostname;
 
   FlowEntry(
       {required this.rowId,
