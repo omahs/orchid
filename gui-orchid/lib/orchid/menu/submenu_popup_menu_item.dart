@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 
 /// A PopupMenuItem that builds its child with a builder accepting an expanded flag.
@@ -7,9 +6,9 @@ class SubmenuPopopMenuItemBuilder<T> extends PopupMenuItem<T> {
   final Widget Function(bool expanded) builder;
 
   SubmenuPopopMenuItemBuilder({
-    Key key,
-    this.builder,
-    VoidCallback onTap,
+    Key? key,
+    required this.builder,
+    required VoidCallback onTap,
   }) : super(key: key, onTap: onTap, child: Container());
 
   @override
