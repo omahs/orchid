@@ -694,7 +694,7 @@ class PurchaseUtils {
   static Future<void> purchase({
     required PAC purchase,
     required StoredEthereumKey signerKey,
-    Future<void> Function({bool rateLimitExceeded}) onError,
+    required Future<void> Function({required bool rateLimitExceeded}) onError,
   }) async {
     log("iap: calling purchase: $purchase");
 

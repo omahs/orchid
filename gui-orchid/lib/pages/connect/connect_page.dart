@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:orchid/api/preferences/vpn/release_version.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
@@ -48,21 +49,21 @@ class _ConnectPageState extends State<ConnectPage>
   OrchidVPNExtensionState _vpnState = OrchidVPNExtensionState.Invalid;
 
   // Routing and monitoring status
-  bool _routingEnabled;
-  bool _monitoringEnabled;
+  late bool _routingEnabled;
+  late bool _monitoringEnabled;
   bool _restarting = false;
 
-  Timer _updateStatsTimer;
+  late Timer _updateStatsTimer;
 
   // Circuit configuration
-  Circuit _circuit;
+  Circuit? _circuit;
 
   // Key that increments on changes to the circuit
   int _circuitKey = 0;
 
   // Circuit hop count or zero when no circuit or not loaded
   int get _circuitHops {
-    return _circuit?.hops?.length ?? 0;
+    return _circuit?.hops.length ?? 0;
   }
 
   // There is a valid circuit and it has one or more hops
@@ -74,15 +75,15 @@ class _ConnectPageState extends State<ConnectPage>
   int _selectedIndex = 0;
 
   // The selected hop on the account card or null
-  CircuitHop get _selectedHop {
+  CircuitHop? get _selectedHop {
     if (!_circuitHasHops) {
       return null;
     }
-    return _circuit.hops[_selectedIndex];
+    return _circuit!.hops[_selectedIndex];
   }
 
   // The account associated with the selected hop on the account card or null.
-  Account get _selectedAccount {
+  Account? get _selectedAccount {
     if (_selectedHop != null && _selectedHop is OrchidHop) {
       return (_selectedHop as OrchidHop).account;
     } else {
@@ -90,35 +91,35 @@ class _ConnectPageState extends State<ConnectPage>
     }
   }
 
-  AccountDetailPoller _selectedAccountPoller;
+  AccountDetailPoller? _selectedAccountPoller;
 
   // V1 status data
-  USD _bandwidthPrice;
-  double _bandwidthAvailableGB; // GB
+  USD? _bandwidthPrice;
+  double? _bandwidthAvailableGB; // GB
 
-  NeonOrchidLogoController _logoController;
+  late NeonOrchidLogoController _logoController;
 
   // True if there are cached accounts for any identity. Initially null.
-  bool _hasAccounts;
+  bool? _hasAccounts;
 
   // True if the user has one or more identities (keys).  Initially null.
   // bool _hasIdentity;
 
   // The user's keys (null until initialized).
-  List<StoredEthereumKey> _keys;
+  List<StoredEthereumKey>? _keys;
 
   // The most recently generated or imported key or null if there are none.
-  StoredEthereumKey get _latestKey {
+  StoredEthereumKey? get _latestKey {
     return (_keys ?? []).isEmpty
         ? null
-        : _keys.reduce((a, b) => a.time.isAfter(b.time) ? a : b);
+        : _keys!.reduce((a, b) => a.time.isAfter(b.time) ? a : b);
   }
 
   // May be empty but not null once loaded.
   bool get _initialized => _hasAccounts != null && _keys != null;
 
   // Show the welcome pane if the user has not created any accounts.
-  bool get _showWelcomePane => _initialized && !_hasAccounts;
+  bool get _showWelcomePane => _initialized && !(_hasAccounts ?? false);
 
   // User toggle for display of the panel
   bool _showWelcomePaneMinimized = false;
@@ -163,10 +164,10 @@ class _ConnectPageState extends State<ConnectPage>
     // update bandwidth available estimate
     if (_selectedAccount != null) {
       try {
-        LotteryPot pot = await _selectedAccount.getLotteryPot();
+        LotteryPot pot = await _selectedAccount!.getLotteryPot();
         var tokenToUsd = await OrchidPricing().tokenToUsdRate(pot.balance.type);
         _bandwidthAvailableGB =
-            pot.balance.floatValue * tokenToUsd / _bandwidthPrice.value;
+            pot.balance.floatValue * tokenToUsd / _bandwidthPrice!.value;
       } catch (err) {
         _bandwidthAvailableGB = null;
         log("error calculating bandwidth available: $err");
@@ -261,7 +262,7 @@ class _ConnectPageState extends State<ConnectPage>
             alignment: Alignment.topCenter,
             child: AnimatedBuilder(
                 animation: _logoController.listenable,
-                builder: (BuildContext context, Widget child) {
+                builder: (BuildContext context, Widget? child) {
                   return NeonOrchidLogo(
                     light: _logoController.value,
                     offset: _logoController.offset,
@@ -534,20 +535,20 @@ class _ConnectPageState extends State<ConnectPage>
   // Allow override of the last viewed release notes version for testing.
   // e.g. set to 0 to see all release notes, or high to hide them.
   Future<ReleaseVersion> _getReleaseVersionWithOverride() async {
-    var version = UserPreferencesVPN().releaseVersion.get();
+    var version = UserPreferencesVPN().releaseVersion.get()!;
 
     const release_version = 'release_version';
     // From user config
     var jsConfig = OrchidUserConfig().getUserConfigJS();
-    int overrideVersion = jsConfig.evalIntDefault(release_version, null);
+    int? overrideVersion = jsConfig.evalIntDefaultNull(release_version);
     if (overrideVersion != null) {
       version = ReleaseVersion(overrideVersion);
     }
 
     // From command line
     overrideVersion =
-        const int.fromEnvironment(release_version, defaultValue: null);
-    if (overrideVersion != null) {
+        const int.fromEnvironment(release_version, defaultValue: -1);
+    if (overrideVersion != -1) {
       version = ReleaseVersion(overrideVersion);
     }
 

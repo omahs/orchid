@@ -30,13 +30,13 @@ import '../app_routes.dart';
 class WelcomePanel extends StatefulWidget {
   final VoidCallback? onDismiss;
   final void Function(Account account) onAccount;
-  final StoredEthereumKey defaultIdentity;
+  final StoredEthereumKey? defaultIdentity;
 
   const WelcomePanel({
     Key? key,
     required this.onDismiss,
     required this.onAccount,
-    required this.defaultIdentity,
+    this.defaultIdentity,
   }) : super(key: key);
 
   @override
@@ -140,6 +140,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
   // merge this with _buildContent
   _TitleContent _getTitleContent() {
     switch (_state) {
+      // null should not be possible here due to page logic.
+      case null:
       case _State.welcome:
         return _TitleContent(text: s.welcomeToOrchid);
       case _State.setup_choice:
@@ -177,7 +179,6 @@ class _WelcomePanelState extends State<WelcomePanel> {
       case _State.processing_chain:
         return _TitleContent(text: s.purchaseComplete, showDismiss: false);
     }
-    throw Exception();
   }
 
   Widget _buildContent() {
@@ -529,8 +530,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
             .top(32)
             // Note: styled text breaks animated size layout so we provide a height
             .height(100),
-        // dollar PAC null guarded by page logic
-        _buildConfirmPurchaseDetails(pac: _dollarPAC!).top(40),
+
+        _buildConfirmPurchaseDetails(pac: _dollarPAC).top(40),
         OrchidActionButton(
           enabled: _state == _State.confirm_purchase,
           text: s.confirmPurchase,
@@ -675,7 +676,7 @@ class _WelcomePanelState extends State<WelcomePanel> {
     );
   }
 
-  Widget _buildConfirmPurchaseDetails({required PAC pac}) {
+  Widget _buildConfirmPurchaseDetails({required PAC? pac}) {
     if (pac == null) {
       log("welcome panel: pac null");
       return Text("...");
@@ -752,8 +753,8 @@ class _WelcomePanelState extends State<WelcomePanel> {
       _state = _State.confirm_purchase_wait;
     });
     await PurchaseUtils.purchase(
-      purchase: _dollarPAC,
-      signerKey: _generatedIdentity,
+      purchase: _dollarPAC!,
+      signerKey: _generatedIdentity!,
       onError: ({required rateLimitExceeded}) async {
         setState(() {
           // This should really be an additional error state

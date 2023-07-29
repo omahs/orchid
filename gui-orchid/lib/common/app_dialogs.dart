@@ -14,7 +14,6 @@ class AppDialogs {
     bool showActions = true,
     EdgeInsets? contentPadding,
   }) {
-    S s = S.of(context)!;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -33,7 +32,7 @@ class AppDialogs {
           actions: <Widget>[
             if (linkSettings)
               FlatButtonDeprecated(
-                child: Text(s.settingsButtonTitle, style: AppText.dialogButton),
+                child: Text(context.s.settingsButtonTitle, style: AppText.dialogButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/settings');
@@ -41,7 +40,7 @@ class AppDialogs {
               ),
             if (showActions)
               FlatButtonDeprecated(
-                child: Text(s.ok,
+                child: Text(context.s.ok,
                     style: OrchidText.button
                         .copyWith(color: OrchidColors.purple_bright)),
                 onPressed: () {

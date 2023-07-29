@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ import 'package:orchid/util/collections.dart';
 /// Displays the account info for each hop in the Circuit and offers
 /// the "manage accounts" button used on the connect page.
 class ManageAccountsCard extends StatefulWidget {
-  final Circuit circuit;
+  final Circuit? circuit;
 
   final int initiallySelectedIndex;
 
@@ -30,13 +29,13 @@ class ManageAccountsCard extends StatefulWidget {
   // (This is a small adjustment used when the screen is short.)
   final bool minHeight;
 
-  final VoidCallback onManageAccountsPressed;
+  final VoidCallback? onManageAccountsPressed;
 
-  final Function(int selectedIndex) onSelectIndex;
+  final Function(int selectedIndex)? onSelectIndex;
 
   const ManageAccountsCard({
-    Key key,
-    this.circuit,
+    Key? key,
+    required this.circuit,
     this.initiallySelectedIndex = 0,
     this.minHeight = false,
     this.onManageAccountsPressed,
@@ -48,21 +47,21 @@ class ManageAccountsCard extends StatefulWidget {
 }
 
 class _ManageAccountsCardState extends State<ManageAccountsCard> {
-  AccountDetailStore _accountDetailStore;
+  late AccountDetailStore _accountDetailStore;
 
   // The selected hop account index
-  int _selectedIndex;
+  late int _selectedIndex;
 
   void _setSelectedIndex(int i) {
     setState(() {
       _selectedIndex = i;
     });
     if (widget.onSelectIndex != null) {
-      widget.onSelectIndex(i);
+      widget.onSelectIndex!(i);
     }
   }
 
-  CircuitHop get _selectedHop {
+  CircuitHop? get _selectedHop {
     if (_hopCount <= _selectedIndex) {
       return null;
     }
@@ -211,7 +210,6 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
           ),
           fade: selected ? 1.0 : fade,
         );
-        break;
       case HopProtocol.WireGuard:
         return OrchidCircularIdenticon(
           image: Padding(
@@ -220,9 +218,7 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
           ),
           fade: selected ? 1.0 : fade,
         );
-        break;
     }
-    throw Exception();
   }
 
   SizedBox _buildCardBody() {
@@ -234,7 +230,7 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
                 child: Padding(
           padding: const EdgeInsets.only(top: 17.0),
           child: _selectedHop != null
-              ? _buildCardContentForHop(_selectedHop)
+              ? _buildCardContentForHop(_selectedHop!)
               : _buildOrchidHopCardContent(null),
         ))));
   }
@@ -243,7 +239,6 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
     switch (hop.protocol) {
       case HopProtocol.Orchid:
         return _buildOrchidHopCardContent(hop as OrchidHop);
-        break;
       case HopProtocol.OpenVPN:
         // Note: duplicated in manage accounts card
         return Padding(
@@ -256,12 +251,10 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
           padding: const EdgeInsets.only(bottom: 17.0),
           child: Text(s.wireguardHop).title,
         );
-        break;
     }
-    throw Exception();
   }
 
-  Widget _buildOrchidHopCardContent(OrchidHop orchidHop) {
+  Widget _buildOrchidHopCardContent(OrchidHop? orchidHop) {
     final _selectedAccount =
         orchidHop != null ? _accountDetailStore.get(orchidHop.account) : null;
     final signerAddress = _selectedAccount?.signerAddress;

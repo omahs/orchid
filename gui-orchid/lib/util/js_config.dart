@@ -69,6 +69,14 @@ class JSConfig {
       return defaultValue;
     }
   }
+  int? evalIntDefaultNull(String expression) {
+    try {
+      return evalInt(expression);
+    } catch (err) {
+      //log("evalIntDefault: $err");
+      return null;
+    }
+  }
 
   int evalInt(String expression) {
     JsObject val = _eval(expression);
