@@ -1,14 +1,12 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/orchid/orchid_text.dart';
+import 'package:orchid/util/localization.dart';
 
 class TrafficEmptyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    S s = S.of(context);
     return OrientationBuilder(
       builder: (BuildContext context, Orientation orientation) {
         return Center(
@@ -23,7 +21,7 @@ class TrafficEmptyView extends StatelessWidget {
                           if (snapshot.data == null) {
                             return Container();
                           }
-                          bool monitoring = snapshot.data;
+                          bool monitoring = snapshot.data!;
                           return AnimatedSwitcher(
                             duration: Duration(milliseconds: 300),
                             child: Column(
@@ -38,21 +36,21 @@ class TrafficEmptyView extends StatelessWidget {
                                 Spacer(flex: 1),
                                 Text(
                                     monitoring
-                                        ? s.analyzingYourConnections
-                                        : s.analyzeYourConnections,
+                                        ? context.s.analyzingYourConnections
+                                        : context.s.analyzeYourConnections,
                                     textAlign: TextAlign.center,
                                     style: OrchidText.medium_24_050),
                                 SizedBox(height: 20),
                                 Text(
                                   !monitoring
-                                      ? s.networkAnalysisUsesYourDevicesVpnFacilityToCapturePackets +
+                                      ? context.s.networkAnalysisUsesYourDevicesVpnFacilityToCapturePackets +
                                           '  ' +
-                                          s.networkAnalysisRequiresVpnPermissionsButDoesNotByItself +
+                                          context.s.networkAnalysisRequiresVpnPermissionsButDoesNotByItself +
                                           '  ' +
-                                          s.toGetTheBenefitsOfNetworkPrivacyYouMustConfigure +
+                                          context.s.toGetTheBenefitsOfNetworkPrivacyYouMustConfigure +
                                           '\n\n' +
-                                          s.turningOnThisFeatureWillIncreaseTheBatteryUsageOf
-                                      : s.nothingToDisplayYet,
+                                          context.s.turningOnThisFeatureWillIncreaseTheBatteryUsageOf
+                                      : context.s.nothingToDisplayYet,
                                   textAlign: TextAlign.center,
                                   style: OrchidText.body1.copyWith(height: 1.5),
                                 ),
