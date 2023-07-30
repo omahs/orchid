@@ -148,7 +148,7 @@ class PacAddBalanceTransaction extends PacTransaction
     implements ReceiptTransaction {
   EthereumAddress signer;
   String productId;
-  String receipt;
+  String? receipt;
   ReceiptType receiptType;
 
   PacAddBalanceTransaction.pending(

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_log.dart';
 import '../orchid_api.dart';
 import 'orchid_pac.dart';
@@ -8,6 +7,9 @@ import 'orchid_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 
 class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
+
+  late BillingClient _billingClient;
+
   AndroidOrchidPurchaseAPI() : super.internal();
 
   /// Default prod service endpoint configuration.
@@ -26,13 +28,12 @@ class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
     return OrchidPurchaseAPI.apiConfigWithOverrides(prodAPIConfig);
   }
 
-  BillingClient _billingClient;
 
   @override
   Future<void> initStoreListenerImpl() async {
     try {
       _billingClient = BillingClient(_onPurchaseResult);
-      _billingClient.enablePendingPurchases();
+      // _billingClient.enablePendingPurchases();
       var billingResult = await _billingClient.startConnection(
           onBillingServiceDisconnected: () {
         log('iap: billing client disconnected');
@@ -66,7 +67,7 @@ class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
     if (purchasesResult.responseCode != BillingResponse.ok) {
       log('iap: Error: purchase result response code: ${purchasesResult.responseCode}');
       (PacTransaction.shared.get())
-          .error('iap failed 1: responseCode = ${purchasesResult.responseCode}')
+          ?.error('iap failed 1: responseCode = ${purchasesResult.responseCode}')
           .save();
       return;
     }
@@ -74,7 +75,7 @@ class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
     var purchases = purchasesResult.purchasesList;
     if (purchases.length > 1) {
       log('iap: unexpected multiple purchases. Clearing: $purchases');
-      (PacTransaction.shared.get()).error('iap failed 2').save();
+      (PacTransaction.shared.get())?.error('iap failed 2').save();
       for (PurchaseWrapper purchase in purchases) {
         if (purchase.purchaseState != PurchaseStateWrapper.purchased) {
           await _billingClient.consumeAsync(purchase.purchaseToken);
@@ -84,7 +85,7 @@ class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
     }
     if (purchases.isEmpty) {
       log('iap: unexpected purchase empty.');
-      (PacTransaction.shared.get()).error('iap failed 3').save();
+      (PacTransaction.shared.get())?.error('iap failed 3').save();
       return;
     }
     var purchase = purchases.first;
@@ -102,7 +103,7 @@ class AndroidOrchidPurchaseAPI extends OrchidPurchaseAPI {
           .advancePACTransactionsWithReceipt(receipt, ReceiptType.android);
     } else {
       log('iap: consumeAsync returned error: ${result.responseCode}');
-      (PacTransaction.shared.get()).error('iap failed 4').save();
+      (PacTransaction.shared.get())?.error('iap failed 4').save();
     }
   }
 

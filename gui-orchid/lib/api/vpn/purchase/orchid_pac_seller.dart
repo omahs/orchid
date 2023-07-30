@@ -1,8 +1,5 @@
-// @dart=2.9
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/abi_encode.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -35,9 +32,9 @@ class OrchidPacSeller {
   /// in USD among balance, deposit, and gas.  This method chooses a
   /// conservative gas price and exchange rate for the native currency.
   static Future<PacSubmitSellerTransaction> defaultFundingTransactionParams({
-    Chain chain,
-    StoredEthereumKey signerKey,
-    USD totalUsdValue,
+    required Chain chain,
+    required StoredEthereumKey signerKey,
+    required USD totalUsdValue,
   }) async {
     final currency = chain.nativeCurrency;
     final signer = signerKey.address;
@@ -91,14 +88,14 @@ class OrchidPacSeller {
   /// Construct a seller edit transaction for the specified tx params
   /// including the inner signature arg covering the edit parameters.
   static EthereumTransaction sellerEditTransaction({
-    @required StoredEthereumKey signerKey,
-    @required EthereumTransactionParams params,
-    @required int l2Nonce, // The tx nonce
-    @required int l3Nonce, // The signed edit call nonce
-    @required BigInt adjust,
-    BigInt warn,
-    BigInt refill,
-    BigInt retrieve,
+    required StoredEthereumKey signerKey,
+    required EthereumTransactionParams params,
+    required int l2Nonce, // The tx nonce
+    required int l3Nonce, // The signed edit call nonce
+    required BigInt adjust,
+    BigInt? warn,
+    BigInt? refill,
+    BigInt? retrieve,
   }) {
     // defaults
     warn = warn ?? BigInt.zero;
@@ -117,7 +114,8 @@ class OrchidPacSeller {
       retrieve: retrieve,
       refill: refill,
     ));
-    var sig = Web3DartUtils.web3Sign(keccak256(packedEditParams), signerKey);
+    var sig = Web3DartUtils.web3Sign(
+        keccak256(Uint8List.fromList(packedEditParams)), signerKey);
 
     // The abi encoded seller edit call tx data
     var encodedSellerEditCall = abiEncodeSellerEdit(
@@ -151,7 +149,8 @@ class OrchidPacSeller {
     log('pac: signTransactionString: msg = $msg');
 
     var encoded = utf8.encode(msg);
-    return Web3DartUtils.web3Sign(keccak256(encoded), signerKey);
+    Uint8List uint8list = Uint8List.fromList(encoded);
+    return Web3DartUtils.web3Sign(keccak256(uint8list), signerKey);
   }
 
   /*
@@ -161,13 +160,13 @@ class OrchidPacSeller {
       uint64 nonce, int256 adjust, int256 warn, uint256 retrieve, uint256 refill) external payable {
    */
   static String abiEncodeSellerEdit({
-    @required EthereumAddress signer,
-    @required MsgSignature signature,
-    @required int l3Nonce,
-    @required BigInt adjust,
-    @required BigInt warn,
-    BigInt retrieve,
-    BigInt refill,
+    required EthereumAddress signer,
+    required MsgSignature signature,
+    required int l3Nonce,
+    required BigInt adjust,
+    required BigInt warn,
+    BigInt? retrieve,
+    BigInt? refill,
   }) {
     log("pac: return '0x' +"
             "editMethodHash = $editMethodHash" +
@@ -222,14 +221,14 @@ class OrchidPacSeller {
   /// and sign them with the specified key.  These are signed and the sig is
   /// included in edit call.
   static String packedAbiEncodedEditParams({
-    @required int chainId,
-    @required int l3Nonce,
-    EthereumAddress token,
-    @required BigInt amount,
-    @required BigInt adjust,
-    @required BigInt warn,
-    @required BigInt retrieve,
-    @required BigInt refill,
+    required int chainId,
+    required int l3Nonce,
+    EthereumAddress? token,
+    required BigInt amount,
+    required BigInt adjust,
+    required BigInt warn,
+    required BigInt retrieve,
+    required BigInt refill,
   }) {
     log("pac: packedAbiEncodedEditParams:\n"
             "AbiEncodePacked.bytes1(0x19) = ${AbiEncodePacked.bytes1(0x19)}\n" +
@@ -261,7 +260,7 @@ class OrchidPacSeller {
 
   // acstat = seller.functions.read(acct.address).call()
   // l3nonce = int(('0'*16+hex(acstat)[2:])[-16:], 16)
-  static Future<int> getL3Nonce({Chain chain, EthereumAddress signer}) async {
+  static Future<int> getL3Nonce({required Chain chain, required EthereumAddress signer}) async {
     var params = [
       {
         'to': '$sellerContractAddress',

@@ -1,9 +1,5 @@
-// @dart=2.9
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -41,12 +37,12 @@ class OrchidPACServer {
     // Allow override of receipts with the test receipt.
     var apiConfig = await OrchidPurchaseAPI().apiConfig();
     if (apiConfig.testReceipt != null) {
-      log('iap: Using test receipt: ${apiConfig.testReceipt.prefix(8)}');
+      log('iap: Using test receipt: ${apiConfig.testReceipt!.prefix(8)}');
     }
     var receipt = apiConfig.testReceipt ?? receiptIn;
 
     //  Get the current transaction
-    var tx = await PacTransaction.shared.get();
+    var tx = PacTransaction.shared.get();
     if (tx == null) {
       log('iap: receipt with no corresponding pac tx.');
       // TODO: We'd like to salvage the receipt but what identity should we use?
@@ -69,7 +65,7 @@ class OrchidPACServer {
   Future<void> advancePACTransactions() async {
     log('iap: advance pac transactions');
 
-    var tx = await PacTransaction.shared.get();
+    var tx = PacTransaction.shared.get();
     if (tx == null) {
       log('iap: pac tx null, return');
       return;
@@ -85,7 +81,6 @@ class OrchidPACServer {
         // Nothing to be done.
         log('iap: Nothing to do: ${tx.state}');
         return;
-        break;
       case PacTransactionState.WaitingForRetry:
         // Assume it's retry time.
         log('iap: timed retry');
@@ -113,15 +108,15 @@ class OrchidPACServer {
           case PacTransactionType.None:
             log('iap: Unknown transaction type.');
             return;
-            break;
           case PacTransactionType.AddBalance:
-            response = await _callAddBalance(tx);
+            response = await _callAddBalance(tx as PacAddBalanceTransaction);
             break;
           case PacTransactionType.SubmitSellerTransaction:
-            response = await _callSubmitSellerTx(tx);
+            response =
+                await _callSubmitSellerTx(tx as PacSubmitSellerTransaction);
             break;
           case PacTransactionType.PurchaseTransaction:
-            response = await _callPurchase(tx);
+            response = await _callPurchase(tx as PacPurchaseTransaction);
             break;
         }
 
@@ -205,6 +200,9 @@ class OrchidPACServer {
     var signer = signerKey.address;
 
     var l2Nonce = (await getPacAccount(signer: signer)).nonces[tx.chainId];
+    if (l2Nonce == null) {
+      throw Exception('iap: l2 nonce is null');
+    }
     var l3Nonce =
         await OrchidPacSeller.getL3Nonce(chain: chain, signer: signer);
 
@@ -255,8 +253,8 @@ class OrchidPACServer {
 
   /// Get the PAC server USD balance for the account
   Future<PacAccount> getPacAccount({
-    @required EthereumAddress signer,
-    PacApiConfig apiConfig, // optional override
+    required EthereumAddress signer,
+    PacApiConfig? apiConfig, // optional override
   }) async {
     var params = {'account_id': signer.toString(prefix: true)};
     var result = await _postJson(
@@ -269,12 +267,15 @@ class OrchidPACServer {
       {'receipt': 'MIIT0wYJ..', 'account_id': '0x00A0844371B32aF220548DCE332989404Fda2EeF'}
    */
   Future<String> addBalance({
-    @required EthereumAddress signer,
-    @required String productId,
-    @required String receipt,
-    @required ReceiptType receiptType,
-    PacApiConfig apiConfig, // optional override
+    required EthereumAddress signer,
+    required String productId,
+    required String? receipt,
+    required ReceiptType receiptType,
+    PacApiConfig? apiConfig, // optional override
   }) async {
+    if (receipt == null) {
+      throw Exception('iap: null receipt');
+    }
     var params = {
       'account_id': signer.toString(prefix: true),
       'product_id': productId,
@@ -297,18 +298,18 @@ class OrchidPACServer {
   }
 
   Future<String> submitSellerTransaction({
-    @required StoredEthereumKey signerKey,
-    @required int chainId,
-    @required int l2Nonce,
-    @required int l3Nonce,
-    @required EthereumTransactionParams txParams,
+    required StoredEthereumKey signerKey,
+    required int chainId,
+    required int l2Nonce,
+    required int l3Nonce,
+    required EthereumTransactionParams txParams,
 
     // This is required here in order to sign the edit parameters (inner signature).
     // The corresponding balance is inferred from the tx total value.
-    @required BigInt escrowParam,
+    required BigInt escrowParam,
 
     // optional override supports testing
-    PacApiConfig apiConfig,
+    PacApiConfig? apiConfig,
   }) async {
     log('iap: submit seller transaction with key and params');
 
@@ -351,7 +352,8 @@ class OrchidPACServer {
   Future<PACStoreStatus> storeStatus() async {
     log('iap: check PAC server status');
 
-    bool overrideDown = (await OrchidUserConfig().getUserConfigJS())
+    bool overrideDown = OrchidUserConfig()
+        .getUserConfigJS()
         .evalBoolDefault('pacs.storeDown', false);
     if (overrideDown) {
       log('iap: override server status');
@@ -373,8 +375,8 @@ class OrchidPACServer {
 
     // parse store message
     var jsonMessage = Json.trimStringOrNull(responseJson['message']);
-    String message = (await OrchidUserConfig().getUserConfigJS())
-        .evalStringDefault('pacs.storeMessage', jsonMessage);
+    String message = (OrchidUserConfig().getUserConfigJS())
+        .evalStringDefault('pacs.storeMessage', jsonMessage ?? '');
 
     // parse the seller address map
     // TODO: ...
@@ -388,9 +390,9 @@ class OrchidPACServer {
 
   /// Post json to our PAC server
   Future<dynamic> _postJson({
-    @required String method,
-    @required Map<String, dynamic> paramsIn,
-    PacApiConfig apiConfig, // optional override
+    required String method,
+    required Map<String, dynamic> paramsIn,
+    PacApiConfig? apiConfig, // optional override
   }) async {
     apiConfig = apiConfig ?? await OrchidPurchaseAPI().apiConfig();
     var url = '${apiConfig.url}/$method';
@@ -412,8 +414,8 @@ class OrchidPACServer {
 
   /// Post json to our PAC server
   Future<dynamic> _postJsonToUrl({
-    @required String url,
-    @required Map<String, dynamic> paramsIn,
+    required String url,
+    required Map<String, dynamic> paramsIn,
   }) async {
     var clientVersion = await OrchidAPI().versionString();
     var clientLocale = OrchidLanguage.staticLocale.toLanguageTag();
@@ -462,12 +464,12 @@ class PACStoreStatus {
   // product status
   //Map<String, bool> product;
 
-  PACStoreStatus({this.message, this.open});
+  PACStoreStatus({required this.message, required this.open});
 }
 
 class PacAccount {
-  USD balance;
-  Map<int, int> nonces;
+  late USD balance;
+  late Map<int, int> nonces;
 
   // get balance result = {account_id: 0x92cFa426Cb13Df5151aD1eC8865c5C6841546603,
   //  nonces: {100: 3}, balance: 156.955389285125}
