@@ -8,8 +8,8 @@ class TokenValueWidgetRow extends StatelessWidget {
   final BuildContext context;
   final Widget child;
   final TokenType? tokenType;
-  final Token value;
-  final USD price;
+  final Token? value;
+  final USD? price;
   final bool enabled;
 
   // Used for the token symbol
@@ -22,7 +22,7 @@ class TokenValueWidgetRow extends StatelessWidget {
     required this.context,
     required this.child,
     required this.tokenType,
-    required this.value,
+    this.value,
     required this.price,
     this.enabled = true,
     this.textColor,

@@ -176,7 +176,7 @@ class MockAccount extends Account {
     required EthereumAddress funder,
     required this.mockLotteryPot,
   }) : super.base(
-          signerKeyUid: signerKey?.uid,
+          signerKeyUid: signerKey.uid,
           resolvedSignerAddress: resolvedSignerAddress,
           version: version,
           chainId: chain.chainId,

@@ -44,7 +44,7 @@ class UserPreferencesUI {
   // Note: Now that we have fully user-configurable chains we should probably
   // Note: fold this into that structure.
   ChainConfig? chainConfigFor(int chainId) {
-    return ChainConfig.map(chainConfig.get())[chainId];
+    return ChainConfig.map(chainConfig.get()!)[chainId];
   }
 
   /// Fully user configured chains.

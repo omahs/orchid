@@ -130,7 +130,7 @@ class AccountDetailPoller extends ChangeNotifier implements AccountDetail {
       try {
         if (account.version == 0) {
           _transactions = await OrchidEthereumV0()
-              .getUpdateTransactions(funder: funder, signer: signerAddress);
+              .getUpdateTransactions(funder: funder, signer: signerAddress!);
         } else {
           // _transactions = await OrchidEthereumV1()
           //     .getUpdateTransactions(funder: funder, signer: resolvedSigner);

@@ -81,7 +81,7 @@ class OrchidLabeledTokenValueField extends StatelessWidget {
                         controller: controller.textController,
                         numeric: true,
                         readOnly: readOnly ?? false,
-                        enabled: enabled ?? true,
+                        enabled: enabled,
                         onClear: onClear,
                         border: false,
                         cursorHeight: 16,

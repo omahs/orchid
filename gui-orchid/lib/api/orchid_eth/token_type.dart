@@ -221,7 +221,7 @@ class Token {
 
   void assertType(TokenType type) {
     if (this.type != type) {
-      throw AssertionError('Token ${this} is not ${type}');
+      throw AssertionError('Token $this is not $type');
     }
   }
 

@@ -246,7 +246,7 @@ class Chains {
   static Map<int, Chain> get userConfiguredChains {
     return UserPreferencesUI()
         .userConfiguredChains
-        .get()
+        .get()!
         .toMap(withKey: (e) => e.chainId, withValue: (e) => e);
   }
 
@@ -255,7 +255,7 @@ class Chains {
     // Remove disabled chains
     final Iterable<int> disabled = UserPreferencesUI()
         .chainConfig
-        .get()
+        .get()!
         .where((e) => !e.enabled)
         .map((e) => e.chainId);
     Map<int, Chain> map = Map.of(knownChains);
