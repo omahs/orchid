@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/config_text.dart';
@@ -34,7 +33,7 @@ class _WireGuardHopPageState extends State<WireGuardHopPage> {
     // Disable rotation until we update the screen design
     ScreenOrientation.portrait();
 
-    WireGuardHop hop = widget.editableHop.value?.hop;
+    WireGuardHop hop = widget.editableHop.value.hop as WireGuardHop;
     setState(() {
       _config.text = hop?.config;
     }); // Setstate to update the hop for any defaulted values.

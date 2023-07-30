@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:badges/badges.dart' as badge;
@@ -49,18 +48,18 @@ class OrchidHopPage extends HopEditor<OrchidHop> {
 }
 
 class _OrchidHopPageState extends State<OrchidHopPage> {
-  Account _selectedAccount;
+  Account? _selectedAccount;
   var _curatorField = TextEditingController();
 
   bool _showBalance = false;
-  LotteryPot _lotteryPot; // initially null
-  MarketConditions _marketConditions;
-  List<OrchidUpdateTransactionV0> _transactions;
-  DateTime _lotteryPotLastUpdate;
-  Timer _balanceTimer;
+  LotteryPot? _lotteryPot; // initially null
+  MarketConditions? _marketConditions;
+  List<OrchidUpdateTransactionV0>? _transactions;
+  DateTime? _lotteryPotLastUpdate;
+  Timer? _balanceTimer;
   bool _balancePollInProgress = false;
   bool _showMarketStatsAlert = false;
-  StreamSubscription<Set<Account>> _accountListener;
+  late StreamSubscription<Set<Account>> _accountListener;
 
   @override
   void initState() {
@@ -89,8 +88,10 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       _pollBalanceAndAccountDetails(); // kick one off immediately
     }
 
-    _accountListener =
-        UserPreferencesVPN().cachedDiscoveredAccounts.stream().listen((accounts) {
+    _accountListener = UserPreferencesVPN()
+        .cachedDiscoveredAccounts
+        .stream()
+        .listen((accounts) {
       // guard changes in accounts availability
       if (!accounts.contains(_selectedAccount)) {
         setState(() {
@@ -556,8 +557,10 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
 
   /// Copy the wallet address to the clipboard
   void _onCopyButton() async {
-    StoredEthereumKey key = _selectedKeyItem.keyRef.get();
-    Clipboard.setData(ClipboardData(text: key.get().address.toString()));
+    StoredEthereumKey? key = _selectedKeyItem.keyRef?.get();
+    if (key != null) {
+      Clipboard.setData(ClipboardData(text: key.get().address.toString()));
+    }
   }
 
   // Participate in the save operation and then delegate to the on complete handler.
@@ -568,11 +571,11 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
   }
 
   OrchidHop get _hop {
-    return widget.editableHop.value?.hop;
+    return widget.editableHop.value.hop as OrchidHop;
   }
 
   Account get _account {
-    return _hop?.account;
+    return _hop.account;
   }
 
   Widget _divider() {
@@ -597,7 +600,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     }
     _balancePollInProgress = true;
     try {
-      Account account = _hop?.account;
+      Account account = _hop.account;
       if (account == null) {
         throw Exception("No account to poll");
       }
