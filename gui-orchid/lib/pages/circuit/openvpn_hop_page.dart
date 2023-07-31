@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:orchid/api/orchid_log.dart';
+import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'package:orchid/common/config_text.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/common/instructions_view.dart';
@@ -38,10 +40,17 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     // Disable rotation until we update the screen design
     ScreenOrientation.portrait();
 
-    OpenVPNHop hop = widget.editableHop.value?.hop as OpenVPNHop;
-    _userName.text = hop.userName;
-    _userPassword.text = hop.userPassword;
-    _ovpnConfig.text = hop.ovpnConfig;
+    CircuitHop? circuitHop = widget.editableHop.value?.hop;
+    if (circuitHop == null) {
+      log("XXX: OpenVPNHopPage: circuitHop is null");
+    }
+    OpenVPNHop? openVPNHop = circuitHop as OpenVPNHop;
+    if (openVPNHop == null) {
+      log("XXX: OpenVPNHopPage: openVPNHop is null");
+    }
+    _userName.text = openVPNHop.userName;
+    _userPassword.text = openVPNHop.userPassword;
+    _ovpnConfig.text = openVPNHop.ovpnConfig;
     setState(() {}); // Setstate to update the hop for any defaulted values.
 
     _userName.addListener(_updateHop);

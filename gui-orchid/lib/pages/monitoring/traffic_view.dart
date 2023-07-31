@@ -293,7 +293,7 @@ class _TrafficViewState extends State<TrafficView>
   }
 
   Widget _buildListTile(FlowEntry flow) {
-    var hostname = (flow.hostname == null || flow.hostname.isEmpty)
+    var hostname = (flow.hostname == null || flow.hostname!.isEmpty)
         ? flow.dst_addr
         : flow.hostname;
     var date =
@@ -470,7 +470,7 @@ class _TrafficViewState extends State<TrafficView>
       var scrollController = _scrollController;
 
       // Maintain position
-      if (scrollController != null && scrollController.hasClients) {
+      if (scrollController.hasClients) {
         scrollController
             .jumpTo(scrollController.offset + delta * _renderedRowHeight);
 

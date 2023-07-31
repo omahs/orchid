@@ -13,7 +13,7 @@ class AnalysisDb {
   static AnalysisDb _shared = AnalysisDb._init();
   static final String unknown = "???"; // Localize
 
-  final BehaviorSubject<bool> update = BehaviorSubject();
+  final BehaviorSubject<bool?> update = BehaviorSubject();
   late Database? _db;
 
   AnalysisDb._init();
@@ -107,7 +107,7 @@ class AnalysisDb {
     return "$a1.$a2.$a3.$a4";
   }
 
-  String _fromProtocol(int number) {
+  String _fromProtocol(int? number) {
     if (number == null) {
       return unknown;
     }

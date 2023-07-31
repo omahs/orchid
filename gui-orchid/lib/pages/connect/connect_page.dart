@@ -403,9 +403,6 @@ class _ConnectPageState extends State<ConnectPage>
   }
 
   Widget _buildManageAccountsCard() {
-    if (_selectedAccount == null) {
-      return Container();
-    }
     return ManageAccountsCard(
       key: Key(_circuitKey.toString()),
       circuit: _circuit,
@@ -417,7 +414,7 @@ class _ConnectPageState extends State<ConnectPage>
         });
       },
       onManageAccountsPressed: () async {
-        await AccountManagerPage.showAccount(context, _selectedAccount!);
+        await AccountManagerPage.showAccount(context, _selectedAccount);
         _updateStats(null);
       },
     );

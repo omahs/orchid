@@ -499,8 +499,10 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       position: badge.BadgePosition.topEnd(top: 9, end: 55),
       badgeContent:
           Text('!', style: TextStyle(color: Colors.white, fontSize: 12)),
-      padding: EdgeInsets.all(8),
-      toAnimate: false,
+      badgeStyle: badge.BadgeStyle(
+        padding: EdgeInsets.all(8),
+      ),
+      // toAnimate: false,
       child: SizedBox(
         // fill the stack that Badge creates
         width: double.infinity,

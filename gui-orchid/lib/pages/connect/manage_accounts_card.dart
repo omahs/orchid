@@ -13,6 +13,7 @@ import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'package:orchid/api/vpn/model/orchid_hop.dart';
 import 'package:orchid/util/localization.dart';
 import 'package:orchid/util/format_currency.dart';
+import 'package:orchid/util/on_off.dart';
 import '../../orchid/orchid_circular_identicon.dart';
 import '../../orchid/orchid_panel.dart';
 import '../../orchid/orchid_text.dart';
@@ -315,10 +316,12 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
       onTap: widget.onManageAccountsPressed,
       child: badge.Badge(
         showBadge: showBadge,
-        elevation: 0,
+        badgeStyle: badge.BadgeStyle(
+          elevation: 0,
+          padding: EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 8),
+        ),
         badgeContent: Text('!', style: OrchidText.caption),
-        padding: EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 8),
-        toAnimate: false,
+        // toAnimate: false,
         position: badge.BadgePosition.topEnd(top: -8, end: -34),
         child: SizedBox(
           height: 16,

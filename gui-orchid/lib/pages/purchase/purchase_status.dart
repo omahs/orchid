@@ -239,7 +239,7 @@ class _PurchaseStatusState extends State<PurchaseStatus> {
   }
 
   // Respond to updates of the PAC transaction status
-  void _pacTransactionUpdated(PacTransaction tx) async {
+  void _pacTransactionUpdated(PacTransaction? tx) async {
     if (tx == null) {
       _hide();
       return;

@@ -91,8 +91,7 @@ class _AccountCardState extends State<AccountCard>
     return widget.minHeight;
   }
 
-  double? get efficiency =>
-      widget.accountDetail?.marketConditions?.efficiency;
+  double? get efficiency => widget.accountDetail?.marketConditions?.efficiency;
 
   LotteryPot? get pot {
     // return AccountMock.account1xdaiLocked.mockLotteryPot;
@@ -250,13 +249,15 @@ class _AccountCardState extends State<AccountCard>
                 ? badge.Badge(
                     // ignorePointer: true,
                     showBadge: showBadge,
-                    elevation: 0,
+                    badgeStyle: badge.BadgeStyle(
+                      elevation: 0,
+                      padding: EdgeInsets.zero,
+                    ),
                     badgeContent: Text('!', style: OrchidText.caption)
                         .padx(8)
                         .top(8)
                         .bottom(5),
-                    padding: EdgeInsets.zero,
-                    toAnimate: false,
+                    // toAnimate: false,
                     position: badge.BadgePosition.topEnd(top: -5, end: -30),
                     child: Text(balanceText, style: OrchidText.highlight),
                   )
@@ -347,7 +348,7 @@ class _AccountCardState extends State<AccountCard>
   }
 
   // tokenValue may be null yielding zero
-  String _usdValueText(USD price, Token tokenAmount, {bool showSuffix = true}) {
+  String _usdValueText(USD price, Token tokenAmount, /*{bool showSuffix = true}*/) {
     return USD.formatUSDValue(
         context: context, tokenAmount: tokenAmount, price: price);
   }

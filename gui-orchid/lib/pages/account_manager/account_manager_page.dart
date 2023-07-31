@@ -49,7 +49,7 @@ class AccountManagerPage extends StatefulWidget {
     this.openToAccount,
   }) : super(key: key);
 
-  static Future<void> showAccount(BuildContext context, Account account) {
+  static Future<void> showAccount(BuildContext context, Account? account) {
     return Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return AccountManagerPage(openToAccount: account);

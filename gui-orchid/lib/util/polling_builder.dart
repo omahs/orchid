@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:uuid/uuid.dart';
 
 /// A builder widget that polls an async resource requiring disposal.
 class PollingBuilder<T> extends StatefulWidget {
