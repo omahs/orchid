@@ -91,8 +91,8 @@ class _AccountCardState extends State<AccountCard>
     return widget.minHeight;
   }
 
-  double get efficiency =>
-      widget.accountDetail?.marketConditions?.efficiency ?? 0;
+  double? get efficiency =>
+      widget.accountDetail?.marketConditions?.efficiency;
 
   LotteryPot? get pot {
     // return AccountMock.account1xdaiLocked.mockLotteryPot;
@@ -352,7 +352,7 @@ class _AccountCardState extends State<AccountCard>
         context: context, tokenAmount: tokenAmount, price: price);
   }
 
-  String _balanceText() {
+  String? _balanceText() {
     return widget.accountDetail == null
         ? formatCurrency(0.0, locale: context.locale, precision: 2)
         : (pot?.balance?.formatCurrency(locale: context.locale, precision: 2));
@@ -365,7 +365,7 @@ class _AccountCardState extends State<AccountCard>
         ? AccountBalanceChartTicketModel(
             pot!, widget.accountDetail?.transactions ?? [])
         : null;
-    final version = widget.accountDetail?.account?.version;
+    final version = widget.accountDetail?.account.version;
     final versionText = version != null ? 'V$version' : '';
 
     final showDeposit =
@@ -498,7 +498,7 @@ class _AccountCardState extends State<AccountCard>
   }
 
   // display token value and symbol on a row with usd price in a row below
-  Widget _buildTokenValueTextRow({Token value, USD price, Color textColor}) {
+  Widget _buildTokenValueTextRow({Token? value, USD? price, Color? textColor}) {
     final valueText = ((value ?? (tokenType ?? Tokens.TOK).zero).formatCurrency(
       locale: context.locale,
       minPrecision: 1,
@@ -549,12 +549,13 @@ class _AccountCardState extends State<AccountCard>
   }
 
   Widget _buildUnlockInfoImpl(USD price) {
-    if (pot == null || !pot.isWarned) {
+    var _pot = pot;
+    if (_pot == null || !_pot.isWarned) {
       return Container();
     }
     final color = OrchidColors.status_yellow;
 
-    final icon = Icon(pot.isUnlocked ? Icons.lock_open : Icons.lock,
+    final icon = Icon(_pot.isUnlocked ? Icons.lock_open : Icons.lock,
         color: color, size: 20);
 
     return Column(
@@ -564,7 +565,7 @@ class _AccountCardState extends State<AccountCard>
           titleWidget: Row(
             children: [
               icon,
-              Text(pot.isUnlocked ? "Unlocked deposit" : "Unlocking deposit")
+              Text(_pot.isUnlocked ? "Unlocked deposit" : "Unlocking deposit")
                   .body2
                   .withColor(color)
                   .left(8)
@@ -572,16 +573,16 @@ class _AccountCardState extends State<AccountCard>
             ],
           ),
           child: _buildTokenValueTextRow(
-            value: pot.isUnlocked ? pot.unlockedAmount : pot.warned,
+            value: _pot.isUnlocked ? _pot.unlockedAmount : _pot.warned,
             price: price,
             textColor: color,
           ).top(4),
         ),
-        if (pot.isUnlocking)
+        if (_pot.isUnlocking)
           _labeledRow(
             title: s.unlockTime,
             child:
-                Text(pot.unlockInString()).extra_large.withColor(color).top(4),
+                Text(_pot.unlockInString()).extra_large.withColor(color).top(4),
             textColor: color,
           ).top(4)
       ],
@@ -605,7 +606,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildToggleButton({bool checked}) {
+  Widget _buildToggleButton({required bool checked}) {
     return GestureDetector(
       onTap: () {
         if (widget.active ?? false) {
@@ -613,7 +614,7 @@ class _AccountCardState extends State<AccountCard>
           _gradientAnim.forward();
         }
         if (widget.onSelected != null) {
-          widget.onSelected();
+          widget.onSelected!();
         }
       },
       child: GradientBorder(

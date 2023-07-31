@@ -9,7 +9,7 @@ String toFixedLocalized(num value,
 
 /// Format a currency to default precision with an optional suffix and null behavior.
 String formatCurrency(
-  num value, {
+  num? value, {
   String? suffix,
 
   /// The exact number of digits, possibly zero padded, to display after the decimal.
@@ -40,7 +40,7 @@ String formatCurrency(
         "#0." + "0" * minPrecision + "#" * (maxPrecision - minPrecision);
 
     final restricted =
-        NumberFormat(format, locale?.toLanguageTag()).format(value);
+        NumberFormat(format, locale.toLanguageTag()).format(value);
 
     var precisionIndicator = '';
     if (showPrecisionIndicator) {
@@ -56,7 +56,7 @@ String formatCurrency(
   // fixed precision
   else {
     final format = "#0." + "0" * precision;
-    return NumberFormat(format, locale?.toLanguageTag()).format(value) +
+    return NumberFormat(format, locale.toLanguageTag()).format(value) +
         suffixPadded;
   }
 }

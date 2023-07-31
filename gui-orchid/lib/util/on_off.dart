@@ -62,7 +62,7 @@ extension DebugExtension on Widget {
 }
 
 class DebugColor extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final Color color;
 
   const DebugColor({Key? key, this.child, this.color = Colors.orange})

@@ -17,7 +17,7 @@ abstract class AccountDetail {
   EthereumAddress? signerAddress;
 
   // The funder from the account
-  EthereumAddress get funder {
+  EthereumAddress? get funder {
     return account.funder;
   }
 

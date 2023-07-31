@@ -37,7 +37,7 @@ class PollingBuilder<T> extends StatefulWidget {
 }
 
 class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
-  late String _name;
+  // late String _name;
   late Timer _timer;
   late T _currentValue;
 
@@ -46,7 +46,7 @@ class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
     super.initState();
     _timer = Timer.periodic(widget.duration, _update);
     _update(null); // invoke immediately
-    _name = Uuid().v4();
+    // _name = Uuid().v4();
   }
 
   void _update(_) async {

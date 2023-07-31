@@ -579,7 +579,7 @@ class _ConnectPageState extends State<ConnectPage>
   // The selected account has changed, update or remove the account detail poller.
   // Manage the selected account (the account that is forefront on the manage accoutns
   // card).
-  Future _selectedAccountChanged(Account account) async {
+  Future _selectedAccountChanged(Account? account) async {
     _selectedAccountPoller?.cancel();
     if (account != null) {
       _selectedAccountPoller = AccountDetailPoller(account: account);

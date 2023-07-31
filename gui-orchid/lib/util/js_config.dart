@@ -55,7 +55,7 @@ class JSConfig {
 
   bool evalBool(String expression) {
     JsObject val = _eval(expression);
-    if (val?.valueOf is bool) {
+    if (val.valueOf is bool) {
       return val.valueOf;
     }
     throw Exception("Expression not a boolean: $val");
@@ -106,7 +106,7 @@ class JSConfig {
 
   double evalDouble(String expression) {
     JsObject val = _eval(expression);
-    if (val?.valueOf is double) {
+    if (val.valueOf is double) {
       return val.valueOf;
     }
     throw Exception("Expression not double: $val");
@@ -138,7 +138,7 @@ class JSConfig {
 
   String evalString(String expression) {
     JsObject val = _eval(expression);
-    if (val?.valueOf is String) {
+    if (val.valueOf is String) {
       return val.valueOf;
     }
     throw Exception("Expression not a string: $val");

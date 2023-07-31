@@ -21,7 +21,7 @@ class TokenValueWidgetRow extends StatelessWidget {
     Key? key,
     required this.context,
     required this.child,
-    required this.tokenType,
+    this.tokenType,
     this.value,
     required this.price,
     this.enabled = true,
