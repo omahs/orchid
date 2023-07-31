@@ -157,7 +157,10 @@ class _AccountCardState extends State<AccountCard>
   Widget _buildCardContent(BuildContext context) {
     return TokenPriceBuilder(
         tokenType: tokenType ?? Tokens.TOK,
-        builder: (USD price) {
+        builder: (USD? price) {
+          if (price == null) {
+            return Container();
+          }
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -348,7 +351,11 @@ class _AccountCardState extends State<AccountCard>
   }
 
   // tokenValue may be null yielding zero
-  String _usdValueText(USD price, Token tokenAmount, /*{bool showSuffix = true}*/) {
+  String _usdValueText(
+    USD price,
+    Token tokenAmount,
+    /*{bool showSuffix = true}*/
+  ) {
     return USD.formatUSDValue(
         context: context, tokenAmount: tokenAmount, price: price);
   }

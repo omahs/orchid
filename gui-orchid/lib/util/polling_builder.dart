@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class PollingBuilder<T> extends StatefulWidget {
   final Duration duration;
   final Future<T> Function() poll;
-  final Widget Function(T arg) builder;
+  final Widget Function(T? arg) builder;
 
   PollingBuilder({
     Key? key,
@@ -23,7 +23,7 @@ class PollingBuilder<T> extends StatefulWidget {
     int? seconds,
     int? millis,
     required Future<T> Function() poll,
-    required Widget Function(T arg) builder,
+    required Widget Function(T? arg) builder,
   }) : this(
             key: key,
             duration:
@@ -36,9 +36,9 @@ class PollingBuilder<T> extends StatefulWidget {
 }
 
 class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
-  // late String _name;
-  late Timer _timer;
-  late T _currentValue;
+  // String _name;
+  Timer? _timer;
+  T? _currentValue;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _PollingBuilderState<T> extends State<PollingBuilder<T>> {
   @override
   void dispose() {
     // log("XXX: polling builder ($_name) dispose");
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 }

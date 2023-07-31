@@ -41,16 +41,11 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     ScreenOrientation.portrait();
 
     CircuitHop? circuitHop = widget.editableHop.value?.hop;
-    if (circuitHop == null) {
-      log("XXX: OpenVPNHopPage: circuitHop is null");
-    }
     OpenVPNHop? openVPNHop = circuitHop as OpenVPNHop;
-    if (openVPNHop == null) {
-      log("XXX: OpenVPNHopPage: openVPNHop is null");
-    }
-    _userName.text = openVPNHop.userName;
-    _userPassword.text = openVPNHop.userPassword;
-    _ovpnConfig.text = openVPNHop.ovpnConfig;
+    // TODO: Definitely can be null here... Why is Intellij flagging this as redundant?
+    _userName.text = openVPNHop?.userName ?? '';
+    _userPassword.text = openVPNHop?.userPassword ?? '';
+    _ovpnConfig.text = openVPNHop?.ovpnConfig ?? '';
     setState(() {}); // Setstate to update the hop for any defaulted values.
 
     _userName.addListener(_updateHop);

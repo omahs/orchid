@@ -13,7 +13,6 @@ import 'package:orchid/api/vpn/model/circuit_hop.dart';
 import 'package:orchid/api/vpn/model/orchid_hop.dart';
 import 'package:orchid/util/localization.dart';
 import 'package:orchid/util/format_currency.dart';
-import 'package:orchid/util/on_off.dart';
 import '../../orchid/orchid_circular_identicon.dart';
 import '../../orchid/orchid_panel.dart';
 import '../../orchid/orchid_text.dart';

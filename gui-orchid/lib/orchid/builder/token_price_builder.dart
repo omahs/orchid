@@ -8,7 +8,7 @@ import 'package:orchid/api/pricing/usd.dart';
 class TokenPriceBuilder extends StatelessWidget {
   final TokenType tokenType;
   final int seconds;
-  final Widget Function(USD price) builder;
+  final Widget Function(USD? price) builder;
 
   const TokenPriceBuilder({
     Key? key,
@@ -19,16 +19,19 @@ class TokenPriceBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PollingBuilder<USD>.interval(
-      key: Key(tokenType?.toString() ?? 'null'),
+    return PollingBuilder.interval(
+      key: Key(tokenType.toString()),
       seconds: seconds,
       poll: () async {
         return USD(await OrchidPricing().usdPrice(tokenType));
       },
+
+      // builder: builder,
       // must cast to dynamic here
       builder: (dynamic arg) {
         return builder(arg);
       },
+
     );
   }
 }
