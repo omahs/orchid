@@ -2,7 +2,7 @@ import 'package:orchid/orchid/orchid.dart';
 
 /// Support a background color for individual menu items
 class ColorPopupMenuItem<T> extends PopupMenuItem<T> {
-  final Color color;
+  final Color? color;
   final double height;
   final VoidCallback onTap;
   final EdgeInsets padding;
@@ -12,7 +12,7 @@ class ColorPopupMenuItem<T> extends PopupMenuItem<T> {
     T? value,
     bool enabled = true,
     Widget? child,
-    required this.color,
+    this.color,
     required this.height,
     required this.onTap,
     required this.padding,

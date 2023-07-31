@@ -3,7 +3,6 @@ import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_market_v0.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
 import 'package:orchid/orchid/orchid_colors.dart';
 import 'package:orchid/orchid/orchid_text.dart';
@@ -47,12 +46,12 @@ class OrchidAccountChart extends StatelessWidget {
         Text(
             context.s.efficiency +
                 ": " +
-                MarketConditionsV0.efficiencyAsPercString(efficiency),
+                MarketConditionsV0.efficiencyAsPercString(efficiency ?? 0),
             style: alert ? OrchidText.body1.red : OrchidText.body1),
         pady(16),
         // Show the tickets available / used line
         if (chartModel != null)
-          buildTicketsAvailable(context, chartModel, efficiency!, false),
+          buildTicketsAvailable(context, chartModel, efficiency, false),
       ],
     );
   }
@@ -60,7 +59,7 @@ class OrchidAccountChart extends StatelessWidget {
   static Widget buildTicketsAvailable(
     BuildContext context,
     AccountBalanceChartTicketModel chartModel,
-    double efficiency,
+    double? efficiency,
     bool alignEnd,
   ) {
     return Column(
@@ -82,7 +81,7 @@ class OrchidAccountChart extends StatelessWidget {
   // This consists of "dashed" segments indicating the number of tickets available
   // at the last high-water mark with a subset colored to indicate currently available.
   static Widget buildTicketsAvailableLineChart(
-      AccountBalanceChartTicketModel chartModel, double efficiency) {
+      AccountBalanceChartTicketModel chartModel, double? efficiency) {
     return SizedBox(
       width: 100,
       height: 4,
@@ -112,10 +111,10 @@ class OrchidAccountChart extends StatelessWidget {
     var totalCount = chartModel.availableTicketsHighWatermarkMax;
     var currentCount = chartModel.availableTicketsCurrentMax;
 
-    double margin = totalCount < 10 ? 8 : 2;
-    if (totalCount > 20) {
-      margin = 0;
-    }
+    // double margin = totalCount < 10 ? 8 : 2;
+    // if (totalCount > 20) {
+    //   margin = 0;
+    // }
     var colorFor = (int i) => i < currentCount ? color : Color(0xff766D86);
     return Padding(
       // padding: const EdgeInsets.only(left: 8, right: 8),

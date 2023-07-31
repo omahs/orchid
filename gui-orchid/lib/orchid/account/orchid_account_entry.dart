@@ -20,7 +20,7 @@ class OrchidAccountEntry extends StatefulWidget {
 
   /// Callback fires on changes with either a valid account or null if the form state is invalid or
   /// incomplete. The account has not been persisted.
-  final void Function(Account account) onAccountUpdate;
+  final void Function(Account? account) onAccountUpdate;
 
   /// Callback fires on import of multiple accounts via config pasted into the identity import field.
   final void Function(List<Account> accounts) onAccountsImport;
@@ -181,16 +181,16 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
     final keyItem = _selectedKeyItem ?? _initialSelectedKeyItem;
     final text = keyItem?.keyRef == null
         ? null
-        : keyItem.address.toString(prefix: true, elide: false); // or null
+        : keyItem!.address!.toString(prefix: true, elide: false); // or null
     return CopyTextButton(copyText: text);
   }
 
-  void _parsedValueChanged(ParseOrchidIdentityOrAccountResult result) async {
+  void _parsedValueChanged(ParseOrchidIdentityOrAccountResult? result) async {
     log("XXX: import identity = $result");
 
     if (result != null) {
       if (result.hasMultipleAccounts) {
-        widget.onAccountsImport(result.accounts);
+        widget.onAccountsImport(result.accounts!);
       } else {
         final keyRef = TransientEthereumKeyRef(result.signer);
         setState(() {
@@ -285,11 +285,11 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
     fireUpdate();
   }
 
-  void _onKeySelected(KeySelectionItem key) {
+  void _onKeySelected(KeySelectionItem? key) {
     setState(() {
       _selectedKeyItem = key;
       _selectedFunderItem = null;
-      _pastedFunderField.text = null;
+      _pastedFunderField.text = '';
       _pastedOrOverriddenFunderChainSelection = null;
       _overriddenFunderVersionSelection = null;
     });
@@ -301,7 +301,7 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
     log("XXX: onFunderSelected: $funder");
     setState(() {
       _selectedFunderItem = funder;
-      _pastedFunderField.text = null;
+      _pastedFunderField.text = '';
       _pastedOrOverriddenFunderChainSelection = null;
       _overriddenFunderVersionSelection = null;
     });
@@ -310,8 +310,8 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
   }
 
   void _onPasteFunderAddressButton() async {
-    ClipboardData data = await Clipboard.getData('text/plain');
-    _pastedFunderField.text = data.text;
+    ClipboardData? data = await Clipboard.getData('text/plain');
+    _pastedFunderField.text = data?.text ?? '';
     fireUpdate();
   }
 
@@ -330,7 +330,7 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
       return false;
     }
     // key value selected
-    if (_selectedKeyItem.keyRef != null) {
+    if (_selectedKeyItem!.keyRef != null) {
       return true;
     }
     return false;
@@ -338,7 +338,7 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
 
   bool get _funderValid {
     return (_selectedFunderItem != null &&
-            _selectedFunderItem.option !=
+            _selectedFunderItem!.option !=
                 OrchidFunderSelectorMenu.pasteAddressOption) ||
         _pastedFunderAndChainValid;
   }
@@ -360,11 +360,12 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
     }
 
     // Signer
-    final signerKeyRef = _selectedKeyItem.keyRef;
+    // null guarded by _formValid
+    final EthereumKeyRef signerKeyRef = _selectedKeyItem!.keyRef!;
 
     // Funder, chain, contract
     EthereumAddress funderAddress;
-    int chainId;
+    int? chainId;
     int version;
     try {
       var funderAccount = _selectedFunderItem?.account;
@@ -376,7 +377,7 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
 
       version = _overriddenFunderVersionSelection ??
           funderAccount?.version ??
-          (_pastedOrOverriddenFunderChainSelection.isEthereum ? 0 : 1);
+          (_pastedOrOverriddenFunderChainSelection!.isEthereum ? 0 : 1);
     } catch (err) {
       // e.g. invalid pasted address
       return widget.onAccountUpdate(null);
