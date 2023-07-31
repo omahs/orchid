@@ -29,7 +29,7 @@ class AccountSelector extends StatefulWidget {
 }
 
 class _AccountSelectorState extends State<AccountSelector> {
-  AccountDetailStore? _accountDetailStore;
+  late AccountDetailStore _accountDetailStore;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _AccountSelectorState extends State<AccountSelector> {
 
   @override
   void dispose() {
-    _accountDetailStore?.dispose();
+    _accountDetailStore.dispose();
     super.dispose();
   }
 
@@ -61,7 +61,7 @@ class _AccountSelectorState extends State<AccountSelector> {
           signerKey: account.signerKey,
           funder: account.funder,
           active: widget.selectedAccounts.contains(account),
-          detail: _accountDetailStore?.get(account));
+          detail: _accountDetailStore.get(account));
     }).toList();
 
     // final footer = () {
