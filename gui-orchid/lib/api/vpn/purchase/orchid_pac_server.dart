@@ -270,10 +270,10 @@ class OrchidPACServer {
     required EthereumAddress signer,
     required String productId,
     required String? receipt,
-    required ReceiptType receiptType,
+    required ReceiptType? receiptType,
     PacApiConfig? apiConfig, // optional override
   }) async {
-    if (receipt == null) {
+    if (receipt == null || receiptType == null) {
       throw Exception('iap: null receipt');
     }
     var params = {

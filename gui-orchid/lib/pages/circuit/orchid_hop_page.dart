@@ -114,24 +114,24 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
   }
 
   // Migrating to OrchidAccountEntry
-  KeySelectionItem get _initialSelectedKeyItem {
-    return _hop?.keyRef != null ? KeySelectionItem(keyRef: _hop.keyRef) : null;
+  KeySelectionItem? get _initialSelectedKeyItem {
+    return _hop?.keyRef != null ? KeySelectionItem(keyRef: _hop!.keyRef) : null;
   }
 
   // Migrating to OrchidAccountEntry
-  KeySelectionItem get _selectedKeyItem {
+  KeySelectionItem? get _selectedKeyItem {
     return _initialSelectedKeyItem;
   }
 
   // Migrating to OrchidAccountEntry
-  FunderSelectionItem get _initialSelectedFunderItem {
+  FunderSelectionItem? get _initialSelectedFunderItem {
     return _hop?.funder != null
-        ? FunderSelectionItem(funderAccount: _hop.account)
+        ? FunderSelectionItem(funderAccount: _hop!.account)
         : null;
   }
 
   // Migrating to OrchidAccountEntry
-  FunderSelectionItem get _selectedFunderItem {
+  FunderSelectionItem? get _selectedFunderItem {
     return _initialSelectedFunderItem;
   }
 
@@ -152,7 +152,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
             ),
           ),
         ),
-        decoration: BoxDecoration(),
+        // decoration: BoxDecoration(),
       ),
     );
   }
@@ -165,7 +165,6 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       case HopEditorMode.View:
         return _buildViewOrEditModeContent();
     }
-    throw Exception();
   }
 
   Widget _buildCreateModeContent() {
@@ -200,7 +199,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
                   return Container();
                 }
                 return AccountSelectorDialog(
-                  accounts: accounts.toList(),
+                  accounts: accounts!.toList(),
                   singleSelection: true,
                   selectedAccounts: Set.from([_selectedAccount]),
                   selectedAccountsChanged: (Set<Account> selected) {
@@ -248,7 +247,8 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     );
   }
 
-  Widget _buildSection({String title, Widget child, VoidCallback onDetail}) {
+  Widget _buildSection(
+      {required String title, required Widget child, VoidCallback? onDetail}) {
     return Column(
       children: <Widget>[
         Text(title, style: OrchidText.title),
@@ -344,7 +344,8 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
 
   Widget _buildTransactionListV0() {
     const String bullet = "• ";
-    var txRows = _transactions.map((utx) {
+    // null guarded by page logic
+    var txRows = _transactions!.map((utx) {
       return Row(
         children: [
           Text(bullet, style: TextStyle(fontSize: 20)),
@@ -452,9 +453,9 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
 
   Widget _buildAccountBalance() {
     var balanceText =
-        _lotteryPot?.balance?.formatCurrency(locale: context.locale) ?? '...';
+        _lotteryPot?.balance.formatCurrency(locale: context.locale) ?? '...';
     var depositText =
-        _lotteryPot?.effectiveDeposit?.formatCurrency(locale: context.locale) ??
+        _lotteryPot?.effectiveDeposit.formatCurrency(locale: context.locale) ??
             '...';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -513,9 +514,12 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
   }
 
   Future<void> _showMarketStats() async {
+    if (_account == null) {
+      return;
+    }
     MarketStatsDialog.show(
       context: context,
-      account: _account,
+      account: _account!,
       lotteryPot: _lotteryPot,
       marketConditions: _marketConditions,
     );
@@ -526,7 +530,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
         builder: (context) =>
             CuratorEditorPage(editableHop: widget.editableHop));
     await Navigator.push(context, route);
-    _curatorField.text = _hop?.curator;
+    _curatorField.text = _hop?.curator ?? '';
   }
 
   bool _formValid() {
@@ -546,36 +550,40 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     // or import options.  In those cases the key will be filled in upon save.
     widget.editableHop.update(
       OrchidHop.from(
-        widget.editableHop.value?.hop,
-        keyRef: _selectedAccount.signerKeyRef,
-        funder: _selectedAccount.funder,
-        chainId: _selectedAccount.chainId,
-        version: _selectedAccount.version,
+        widget.editableHop.value?.hop as OrchidHop,
+        keyRef: _selectedAccount?.signerKeyRef,
+        funder: _selectedAccount?.funder,
+        chainId: _selectedAccount?.chainId,
+        version: _selectedAccount?.version,
       ),
     );
   }
 
   /// Copy the wallet address to the clipboard
   void _onCopyButton() async {
-    StoredEthereumKey? key = _selectedKeyItem.keyRef?.get();
+    StoredEthereumKey? key = _selectedKeyItem?.keyRef?.get();
     if (key != null) {
       Clipboard.setData(ClipboardData(text: key.get().address.toString()));
     }
   }
 
   // Participate in the save operation and then delegate to the on complete handler.
-  void _onSave(CircuitHop result) async {
-    await UserPreferencesVPN().ensureSaved(_selectedAccount);
+  void _onSave(CircuitHop? result) async {
+    if (_selectedAccount != null) {
+      await UserPreferencesVPN().ensureSaved(_selectedAccount!);
+    }
     // Pass on the updated hop
-    widget.onAddFlowComplete(widget.editableHop.value.hop);
+    if (widget.onAddFlowComplete != null) {
+      widget.onAddFlowComplete!(widget.editableHop.value?.hop);
+    }
   }
 
-  OrchidHop get _hop {
-    return widget.editableHop.value.hop as OrchidHop;
+  OrchidHop? get _hop {
+    return widget.editableHop.value?.hop as OrchidHop;
   }
 
-  Account get _account {
-    return _hop.account;
+  Account? get _account {
+    return _hop?.account;
   }
 
   Widget _divider() {
@@ -590,7 +598,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     super.dispose();
     ScreenOrientation.reset();
     _balanceTimer?.cancel();
-    _accountListener?.cancel();
+    _accountListener.cancel();
   }
 
   // TODO: Use AccountDetailPoller?
@@ -600,7 +608,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
     }
     _balancePollInProgress = true;
     try {
-      Account account = _hop.account;
+      Account? account = _hop?.account;
       if (account == null) {
         throw Exception("No account to poll");
       }
@@ -639,7 +647,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
       if (_account?.isV0 ?? false) {
         try {
           transactions = await OrchidEthereumV0().getUpdateTransactions(
-              funder: account.funder, signer: await account.signerAddress);
+              funder: account.funder, signer: account.signerAddress);
         } catch (err) {
           log('Error fetching account update transactions: $err');
         }
@@ -656,7 +664,7 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
 
       // Allow a stale balance for a period of time.
       if (_lotteryPotLastUpdate != null &&
-          _lotteryPotLastUpdate.difference(DateTime.now()) >
+          _lotteryPotLastUpdate!.difference(DateTime.now()) >
               Duration(hours: 1)) {
         if (mounted) {
           setState(() {
@@ -675,12 +683,8 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
         textColor: Colors.black,
         onPressed: () {
           if (_account != null) {
-            AccountManagerPage.showAccount(context, _account);
+            AccountManagerPage.showAccount(context, _account!);
           }
         });
-  }
-
-  S get s {
-    return S.of(context);
   }
 }

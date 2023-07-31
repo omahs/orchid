@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/common/config_text.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/common/instructions_view.dart';
@@ -12,6 +11,7 @@ import '../../common/app_sizes.dart';
 import '../../common/app_text.dart';
 import 'hop_editor.dart';
 import '../../api/vpn/model/openvpn_hop.dart';
+import 'package:orchid/util/localization.dart';
 
 /// Create / edit / view an OpenVPN Hop
 class OpenVPNHopPage extends HopEditor<OpenVPNHop> {
@@ -38,7 +38,7 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     // Disable rotation until we update the screen design
     ScreenOrientation.portrait();
 
-    OpenVPNHop hop = widget.editableHop.value.hop as OpenVPNHop;
+    OpenVPNHop hop = widget.editableHop.value?.hop as OpenVPNHop;
     _userName.text = hop.userName;
     _userPassword.text = hop.userPassword;
     _ovpnConfig.text = hop.ovpnConfig;
@@ -61,7 +61,7 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     return TapClearsFocus(
       child: TitledPage(
         title: s.openVPNHop,
-        decoration: BoxDecoration(),
+        // decoration: BoxDecoration(),
         actions: widget.mode == HopEditorMode.Create
             ? [widget.buildSaveButton(context, widget.onAddFlowComplete)]
             : [],
@@ -74,7 +74,8 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
                   constraints: BoxConstraints(maxWidth: 700),
                   child: Column(
                     children: <Widget>[
-                      if (AppSize(context).tallerThan(AppSize.iphone_12_pro_max))
+                      if (AppSize(context)
+                          .tallerThan(AppSize.iphone_12_pro_max))
                         pady(64),
                       _buildUserName(),
                       _buildPassword(),
@@ -117,9 +118,7 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
         Text(s.password + ':',
             style: AppText.textLabelStyle.copyWith(fontSize: 20).white),
         pady(8),
-        OrchidTextField(
-            hintText: s.password,
-            controller: _userPassword)
+        OrchidTextField(hintText: s.password, controller: _userPassword)
       ],
     );
   }
@@ -132,9 +131,7 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
         Text(s.username + ':',
             style: AppText.textLabelStyle.copyWith(fontSize: 20).white),
         pady(8),
-        OrchidTextField(
-            hintText: s.username,
-            controller: _userName)
+        OrchidTextField(hintText: s.username, controller: _userName)
       ],
     );
   }
@@ -157,9 +154,4 @@ class _OpenVPNHopPageState extends State<OpenVPNHopPage> {
     _userPassword.removeListener(_updateHop);
     _ovpnConfig.removeListener(_updateHop);
   }
-
-  S get s {
-    return S.of(context);
-  }
 }
-

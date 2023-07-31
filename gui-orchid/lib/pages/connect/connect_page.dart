@@ -403,6 +403,9 @@ class _ConnectPageState extends State<ConnectPage>
   }
 
   Widget _buildManageAccountsCard() {
+    if (_selectedAccount == null) {
+      return Container();
+    }
     return ManageAccountsCard(
       key: Key(_circuitKey.toString()),
       circuit: _circuit,
@@ -414,7 +417,7 @@ class _ConnectPageState extends State<ConnectPage>
         });
       },
       onManageAccountsPressed: () async {
-        await AccountManagerPage.showAccount(context, _selectedAccount);
+        await AccountManagerPage.showAccount(context, _selectedAccount!);
         _updateStats(null);
       },
     );
@@ -584,7 +587,7 @@ class _ConnectPageState extends State<ConnectPage>
     if (account != null) {
       _selectedAccountPoller = AccountDetailPoller(account: account);
       try {
-        await _selectedAccountPoller.pollOnce(); // poll once
+        await _selectedAccountPoller!.pollOnce(); // poll once
       } catch (err) {
         log("Error: $err");
       }
@@ -610,9 +613,5 @@ class _ConnectPageState extends State<ConnectPage>
     // AccountFinder.shared?.dispose();
     _updateStatsTimer.cancel();
     _subs.dispose();
-  }
-
-  S get s {
-    return S.of(context);
   }
 }

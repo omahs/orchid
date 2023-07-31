@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
+import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
@@ -15,7 +16,6 @@ import 'package:orchid/util/format_currency.dart';
 import '../../orchid/orchid_circular_identicon.dart';
 import '../../orchid/orchid_panel.dart';
 import '../../orchid/orchid_text.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/util/collections.dart';
 
 /// Displays the account info for each hop in the Circuit and offers
@@ -65,11 +65,11 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
     if (_hopCount <= _selectedIndex) {
       return null;
     }
-    return widget.circuit.hops[_selectedIndex];
+    return widget.circuit?.hops[_selectedIndex];
   }
 
   int get _hopCount {
-    return widget.circuit.hops.length;
+    return widget.circuit?.hops.length ?? 0;
   }
 
   @override
@@ -124,8 +124,9 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
           padx(212),
           TextButton(
             onPressed: () {
+              // null guarded by page logic
               _setSelectedIndex(
-                  min(_selectedIndex + 1, widget.circuit.hops.length - 1));
+                  min(_selectedIndex + 1, widget.circuit!.hops.length - 1));
             },
             child: Icon(
               Icons.chevron_right,
@@ -142,7 +143,8 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
       return OrchidCircularIdenticon(address: null);
     }
     // map the hops to icons
-    var icons = widget.circuit.hops
+    // null guarded by _hopsCount above
+    var icons = widget.circuit!.hops
         .mapIndexed((hop, i) {
           final selected = i == _selectedIndex;
           final afterSelected = i - 1 == _selectedIndex;
@@ -201,7 +203,6 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
           address: account.signerAddress,
           fade: selected ? 1.0 : fade,
         );
-        break;
       case HopProtocol.OpenVPN:
         return OrchidCircularIdenticon(
           image: Padding(
@@ -255,7 +256,7 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
   }
 
   Widget _buildOrchidHopCardContent(OrchidHop? orchidHop) {
-    final _selectedAccount =
+    final AccountDetailPoller? _selectedAccount =
         orchidHop != null ? _accountDetailStore.get(orchidHop.account) : null;
     final signerAddress = _selectedAccount?.signerAddress;
     final text = signerAddress == null
@@ -264,8 +265,8 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
     final textWidth = signerAddress == null ? null : 120.0;
     final balanceText = signerAddress == null
         ? formatCurrency(0.0, locale: context.locale, precision: 2)
-        : (_selectedAccount.lotteryPot?.balance
-                ?.formatCurrency(precision: 2, locale: context.locale) ??
+        : (_selectedAccount?.lotteryPot?.balance
+                .formatCurrency(precision: 2, locale: context.locale) ??
             "...");
     final efficiency = _selectedAccount?.marketConditions?.efficiency;
     var showBadge = (_selectedAccount?.marketConditions?.efficiency ?? 1.0) <
@@ -333,10 +334,6 @@ class _ManageAccountsCardState extends State<ManageAccountsCard> {
 
   void _accountDetailChanged() {
     setState(() {}); // Trigger a UI refresh
-  }
-
-  S get s {
-    return S.of(context);
   }
 
   @override

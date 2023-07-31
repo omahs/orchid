@@ -68,9 +68,9 @@ class PacTransaction {
   PacTransaction.error(
       {required String message, required PacTransactionType type})
       : this(
-      type: type,
-      state: PacTransactionState.Error,
-      serverResponse: message);
+            type: type,
+            state: PacTransactionState.Error,
+            serverResponse: message);
 
   PacTransaction error(String message) {
     this.state = PacTransactionState.Error;
@@ -78,8 +78,7 @@ class PacTransaction {
     return this;
   }
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'type': type.name,
         'state': state.name,
         'date': date.toIso8601String(),
@@ -90,7 +89,7 @@ class PacTransaction {
   PacTransaction.fromJsonBase(Map<String, dynamic> json,
       {PacTransaction? parent})
       :
-  // type = toTransactionType(json['type']) ?? PacTransactionType.None,
+        // type = toTransactionType(json['type']) ?? PacTransactionType.None,
         type = toTransactionType(json['type']),
         state = toTransactionState(json['state']),
         date = DateTime.parse(json['date']),
@@ -148,25 +147,27 @@ class PacTransaction {
 
 class PacAddBalanceTransaction extends PacTransaction
     implements ReceiptTransaction {
-  EthereumAddress? signer;
-  String? productId;
+  EthereumAddress signer;
+  String productId;
   String? receipt;
   ReceiptType? receiptType;
 
   PacAddBalanceTransaction.pending(
       {required EthereumAddress signer, required String productId})
-      :
-        this.signer = signer,
+      : this.signer = signer,
         this.productId = productId,
-
-        super(type: PacTransactionType.AddBalance,
-        state: PacTransactionState.Pending,);
+        super(
+          type: PacTransactionType.AddBalance,
+          state: PacTransactionState.Pending,
+        );
 
   PacAddBalanceTransaction.error(String message)
-      : super.error(
-    message: message,
-    type: PacTransactionType.AddBalance,
-  );
+      : this.productId = '',
+        this.signer = EthereumAddress.zero,
+        super.error(
+          message: message,
+          type: PacTransactionType.AddBalance,
+        );
 
   /// Add the receipt and advance the state to ready
   PacTransaction addReceipt(String receipt, ReceiptType receiptType) {
@@ -179,21 +180,20 @@ class PacAddBalanceTransaction extends PacTransaction
   @override
   PacAddBalanceTransaction.fromJson(Map<String, dynamic> json,
       {PacTransaction? parent})
-      : super.fromJsonBase(json, parent: parent) {
-    signer = EthereumAddress.fromNullable(json['signer']);
-    productId = json['productId'];
-    receipt = json['receipt'];
-    receiptType = ReceiptType.values.byName(json['receiptType']);
-  }
+      : signer = EthereumAddress.fromNullable(json['signer']),
+        productId = json['productId'],
+        receipt = json['receipt'],
+        receiptType = ReceiptType.values.byName(json['receiptType']),
+        super.fromJsonBase(json, parent: parent);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is PacAddBalanceTransaction &&
-              runtimeType == other.runtimeType &&
-              signer == other.signer &&
-              productId == other.productId &&
-              receipt == other.receipt;
+      other is PacAddBalanceTransaction &&
+          runtimeType == other.runtimeType &&
+          signer == other.signer &&
+          productId == other.productId &&
+          receipt == other.receipt;
 
   @override
   int get hashCode => signer.hashCode ^ productId.hashCode ^ receipt.hashCode;
@@ -246,9 +246,9 @@ class PacSubmitSellerTransaction extends PacTransaction {
     required this.txParams,
     required this.escrow,
   }) : super(
-    state: PacTransactionState.Pending,
-    type: PacTransactionType.SubmitSellerTransaction,
-  );
+          state: PacTransactionState.Pending,
+          type: PacTransactionType.SubmitSellerTransaction,
+        );
 
   @override
   PacSubmitSellerTransaction.fromJson(Map<String, dynamic> json,
@@ -277,10 +277,10 @@ class PacSubmitSellerTransaction extends PacTransaction {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is PacSubmitSellerTransaction &&
-              runtimeType == other.runtimeType &&
-              signerKey == other.signerKey &&
-              txParams == other.txParams;
+      other is PacSubmitSellerTransaction &&
+          runtimeType == other.runtimeType &&
+          signerKey == other.signerKey &&
+          txParams == other.txParams;
 
   @override
   int get hashCode => signerKey.hashCode ^ txParams.hashCode;
@@ -294,9 +294,9 @@ class PacPurchaseTransaction extends PacTransaction
 
   PacPurchaseTransaction(this.addBalance, this.submitRaw)
       : super(
-    type: PacTransactionType.PurchaseTransaction,
-    state: PacTransactionState.Pending,
-  );
+          type: PacTransactionType.PurchaseTransaction,
+          state: PacTransactionState.Pending,
+        );
 
   @override
   String? get receipt {

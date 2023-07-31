@@ -67,9 +67,9 @@ class ConnectWorldMap extends StatefulWidget {
 
 class _ConnectWorldMapState extends State<ConnectWorldMap>
     with SingleTickerProviderStateMixin {
-  AnimationController _masterAnimController;
-  Animation<double> _drawRouteAnimation;
-  ui.Image pinImage;
+  late AnimationController _masterAnimController;
+  late Animation<double> _drawRouteAnimation;
+  ui.Image? pinImage;
 
   @override
   void initState() {
@@ -141,7 +141,7 @@ class _ConnectWorldMapOverlayPainter extends CustomPainter {
   final double strokeWidth;
   final Color color;
   final bool dashed;
-  final ui.Image pinImage;
+  final ui.Image? pinImage;
   final double fraction;
   final WorldMapImage map = ConnectWorldMap.worldMapImage;
 
@@ -225,7 +225,7 @@ class _ConnectWorldMapOverlayPainter extends CustomPainter {
     // Note: dashing each subpath first renders better for some reason.
     if (dashed) {
       path = PathDash.dash(path,
-          dashArray: CircularIntervalList([5 * scale, 3 * scale]));
+          dashArray: CircularIntervalList([5 * scale, 3 * scale])) ?? path;
     }
     return path;
   }
@@ -236,7 +236,7 @@ class _ConnectWorldMapOverlayPainter extends CustomPainter {
       var pinPaint = Paint();
       pinPaint.isAntiAlias = true;
       var srcRect = ui.Rect.fromLTWH(
-          0, 0, pinImage.width.toDouble(), pinImage.height.toDouble());
+          0, 0, pinImage!.width.toDouble(), pinImage!.height.toDouble());
       // Scale the pins up at half the rate the map grows.
       var pinScale = 1 + (scale - 1) * 0.5;
       var pinSize = Size(24 * pinScale, 24 * pinScale);
@@ -244,7 +244,7 @@ class _ConnectWorldMapOverlayPainter extends CustomPainter {
           center: pinPoint - Offset(1, pinSize.height / 2 - 1),
           width: pinSize.width,
           height: pinSize.height);
-      canvas.drawImageRect(pinImage, srcRect, dstRect, pinPaint);
+      canvas.drawImageRect(pinImage!, srcRect, dstRect, pinPaint);
     }
   }
 
