@@ -66,7 +66,7 @@ class _RpcPageState extends State<RpcPage> {
     knownChains.remove(Chains.Ethereum);
     knownChains.insert(0, Chains.Ethereum);
 
-    final userConfiguredChains = UserPreferencesUI().userConfiguredChains.get();
+    final userConfiguredChains = UserPreferencesUI().userConfiguredChains.get()!;
     final chains =
         userConfiguredChains.cast<Chain>() + knownChains.cast<Chain>();
     // chain config will not be null
@@ -200,7 +200,7 @@ class _ChainItemState extends State<_ChainItem> {
                     width: 110,
                     text: s.test.toUpperCase(),
                     onPressed: _testRpc,
-                    enabled: _rpcController.text == null ||
+                    enabled: _rpcController.text == '' ||
                         _rpcController.text.isEmpty ||
                         _rpcIsValid(),
                   ).top(20).bottom(8),

@@ -64,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final height = 56.0;
     return TitledPage(
       title: context.s.settings,
-      decoration: BoxDecoration(),
+      // decoration: BoxDecoration(),
       child: SafeArea(
         child: SingleChildScrollView(
           child: Column(

@@ -46,7 +46,7 @@ class HttpUnixClient extends BaseClient {
       message += 'Content-Length: ${request.contentLength}\r\n';
     }
     request.headers.forEach((name, value) {
-      message += '${name}: ${value}\r\n';
+      message += '$name: ${value}\r\n';
     });
     message += '\r\n';
     _socket.write(message);
@@ -129,7 +129,7 @@ class HttpUnixClient extends BaseClient {
       if (transferEncoding == 'chunked') {
         _parserState = _HttpParserState.chunkHeader;
       } else {
-        _chunkLength = request.contentLength;
+        _chunkLength = request.contentLength ?? 0;
         _chunkRead = 0;
         _parserState = _HttpParserState.content;
       }
@@ -146,7 +146,7 @@ class HttpUnixClient extends BaseClient {
 
   bool _processContent(_HttpRequest request) {
     int length;
-    if (_chunkLength == null) {
+    if (_chunkLength == -1) {
       length = _buffer.length;
     } else {
       length = min(_chunkLength - _chunkRead, _buffer.length);
