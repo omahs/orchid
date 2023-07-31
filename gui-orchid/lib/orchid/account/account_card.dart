@@ -158,9 +158,7 @@ class _AccountCardState extends State<AccountCard>
     return TokenPriceBuilder(
         tokenType: tokenType ?? Tokens.TOK,
         builder: (USD? price) {
-          if (price == null) {
-            return Container();
-          }
+          // if (price == null) { return Container(); }
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -192,7 +190,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildHeader(USD price) {
+  Widget _buildHeader(USD? price) {
     return Column(
       children: [
         // user identicon funder/signer
@@ -220,7 +218,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildBalanceColumn(USD price) {
+  Widget _buildBalanceColumn(USD? price) {
     if (widget.accountDetail == null) {
       return Text("No account").caption.inactive;
     }
@@ -352,7 +350,7 @@ class _AccountCardState extends State<AccountCard>
 
   // tokenValue may be null yielding zero
   String _usdValueText(
-    USD price,
+    USD? price,
     Token tokenAmount,
     /*{bool showSuffix = true}*/
   ) {
@@ -366,7 +364,7 @@ class _AccountCardState extends State<AccountCard>
         : (pot?.balance.formatCurrency(locale: context.locale, precision: 2));
   }
 
-  Widget _buildExpandedContent(USD price) {
+  Widget _buildExpandedContent(USD? price) {
     final efficiency =
         widget.accountDetail?.marketConditions?.efficiency; // or null
     final chartModel = pot != null
@@ -547,7 +545,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildUnlockInfo(USD price) {
+  Widget _buildUnlockInfo(USD? price) {
     return TimedBuilder.interval(
       seconds: 1,
       builder: (context) {
@@ -556,7 +554,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildUnlockInfoImpl(USD price) {
+  Widget _buildUnlockInfoImpl(USD? price) {
     var _pot = pot;
     if (_pot == null || !_pot.isWarned) {
       return Container();
