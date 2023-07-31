@@ -375,6 +375,10 @@ class _OrchidAccountEntryState extends State<OrchidAccountEntry> {
       chainId = _pastedOrOverriddenFunderChainSelection?.chainId ??
           funderAccount?.chainId;
 
+      if (chainId == null) {
+        throw Exception("Chain ID not found");
+      }
+
       version = _overriddenFunderVersionSelection ??
           funderAccount?.version ??
           (_pastedOrOverriddenFunderChainSelection!.isEthereum ? 0 : 1);

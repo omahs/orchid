@@ -235,9 +235,9 @@ class _AccountCardState extends State<AccountCard>
         // active / inactive label
         if (!minHeight && widget.active != null)
           Text(
-            widget.active ? s.active : s.inactive,
+            widget.active! ? s.active : s.inactive,
             style: OrchidText.caption.copyWith(
-              color: widget.active ? activeColor : inactiveColor,
+              color: widget.active! ? activeColor : inactiveColor,
             ),
           ).bottom(2),
         // if (!minHeight) pady(8),
@@ -269,7 +269,7 @@ class _AccountCardState extends State<AccountCard>
 
         // price
         if (pot?.balance != null)
-          Text(_usdValueText(price, pot?.balance)).caption.new_purple_bright,
+          Text(_usdValueText(price, pot!.balance)).caption.new_purple_bright,
       ],
     );
   }
@@ -341,7 +341,7 @@ class _AccountCardState extends State<AccountCard>
       alignment: Alignment.center,
       children: [
         _buildEfficiencyMeter(48),
-        if (tokenType != null) _buildTokenIcon(tokenType, 24),
+        if (tokenType != null) _buildTokenIcon(tokenType!, 24),
       ],
     );
   }
@@ -363,7 +363,7 @@ class _AccountCardState extends State<AccountCard>
         widget.accountDetail?.marketConditions?.efficiency; // or null
     final chartModel = pot != null
         ? AccountBalanceChartTicketModel(
-            pot, widget.accountDetail.transactions ?? [])
+            pot!, widget.accountDetail?.transactions ?? [])
         : null;
     final version = widget.accountDetail?.account?.version;
     final versionText = version != null ? 'V$version' : '';
@@ -372,7 +372,7 @@ class _AccountCardState extends State<AccountCard>
         // not yet loaded (placeholder)
         pot?.effectiveDeposit == null ||
             // has net deposit
-            pot.effectiveDeposit.gtZero() ||
+            pot!.effectiveDeposit.gtZero() ||
             // no warned amount
             !_potIsWarned;
 
@@ -520,17 +520,17 @@ class _AccountCardState extends State<AccountCard>
 
   // label row with child row below
   Widget _labeledRow({
-    String title,
-    Widget titleWidget,
-    @required Widget child,
-    Color textColor,
+    String? title,
+    Widget? titleWidget,
+    required Widget child,
+    Color? textColor,
   }) {
     assert(title != null || titleWidget != null);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         (titleWidget ??
-                Text(title, style: OrchidText.body2)
+                Text(title!, style: OrchidText.body2)
                     .withColor(textColor ?? Colors.white)
                     .top(5))
             .height(24),
