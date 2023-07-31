@@ -212,7 +212,6 @@ class CircuitPageState extends State<CircuitPage>
   Widget _buildDismissableHopTile(UniqueHop uniqueHop, int index) {
     bool confirmDismiss =
         uniqueHop.hop is OpenVPNHop || uniqueHop.hop is WireGuardHop;
-    log("XXX: _buildDismissableHopTile: confirmDismiss=$confirmDismiss");
     return Padding(
       key: Key(uniqueHop.key.toString()),
       padding: const EdgeInsets.only(bottom: 28.0),
@@ -355,7 +354,6 @@ class CircuitPageState extends State<CircuitPage>
   }
 
   void _saveCircuit() async {
-    log("XXX: save circuit");
     var circuit = Circuit(_hops.map((uniqueHop) => uniqueHop.hop).toList());
     UserPreferencesVPN().saveCircuit(circuit);
     _showConfigurationChangedDialog();
@@ -405,7 +403,6 @@ class CircuitPageState extends State<CircuitPage>
 
   // Callback for swipe to delete
   void _deleteHop(UniqueHop uniqueHop) async {
-    log("XXX: delete hop");
     var index = _hops.indexOf(uniqueHop);
     _hops.removeAt(index);
     setState(() {});
