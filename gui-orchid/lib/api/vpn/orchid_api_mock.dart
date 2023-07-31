@@ -206,7 +206,7 @@ INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostn
       case OrchidVPNExtensionState.Connected:
         // Cancel any pending connect or disconnect
         if (_connectFuture != null) {
-          _connectFuture.cancel();
+          _connectFuture?.cancel();
           _connectFuture = null;
         }
         if (enabled) {

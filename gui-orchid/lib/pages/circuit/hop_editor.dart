@@ -21,7 +21,7 @@ class EditableHop extends ValueNotifier<UniqueHop?> {
   /// Create a new editor instance for this editable hop
   HopEditor editor() {
     HopEditor editor;
-    switch (value.hop.protocol) {
+    switch (value?.hop.protocol) {
       case HopProtocol.Orchid:
         editor = OrchidHopPage(editableHop: this, mode: HopEditorMode.View);
         break;
@@ -31,6 +31,8 @@ class EditableHop extends ValueNotifier<UniqueHop?> {
       case HopProtocol.WireGuard:
         editor = WireGuardHopPage(editableHop: this, mode: HopEditorMode.Edit);
         break;
+      case null:
+        throw Exception("EditableHop null");
     }
     return editor;
   }
@@ -38,7 +40,7 @@ class EditableHop extends ValueNotifier<UniqueHop?> {
 
 class HopEditor<T extends CircuitHop> extends StatefulWidget {
   final EditableHop editableHop;
-  final AddFlowCompletion onAddFlowComplete;
+  final AddFlowCompletion? onAddFlowComplete;
 
   // In create mode the editor offers a "save" button that pops the view and
   // returns the value on the context.  If the user navigates back without
@@ -56,7 +58,7 @@ class HopEditor<T extends CircuitHop> extends StatefulWidget {
     return SaveActionButton(
         isValid: isValid,
         onPressed: () {
-          onAddFlowComplete(this.editableHop.value.hop);
+          onAddFlowComplete(this.editableHop.value?.hop);
         });
   }
 
@@ -72,7 +74,6 @@ class HopEditor<T extends CircuitHop> extends StatefulWidget {
     return mode == HopEditorMode.Create;
   }
 
-  @override
   Widget build(BuildContext context) {
     throw Exception("implement in subclass");
   }

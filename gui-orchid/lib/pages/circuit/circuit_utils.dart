@@ -20,7 +20,7 @@ class CircuitUtils {
     // (possibly multiple screens) with one appropriate animation.
     Navigator addFlow = Navigator(
       onGenerateRoute: (RouteSettings settings) {
-        var addFlowCompletion = (CircuitHop result) {
+        var addFlowCompletion = (CircuitHop? result) {
           Navigator.pop(context, result);
         };
         var editor = AddHopPage(onAddFlowComplete: addFlowCompletion);

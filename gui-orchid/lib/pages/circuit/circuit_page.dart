@@ -381,9 +381,12 @@ class CircuitPageState extends State<CircuitPage>
     // TODO: avoid saving if the hop was not edited.
     // Save the hop if it was edited.
     var index = _hops.indexOf(uniqueHop);
+    if (editableHop.value == null) {
+      throw Exception("EditableHop.value should not be null");
+    }
     setState(() {
       _hops.removeAt(index);
-      _hops.insert(index, editableHop.value);
+      _hops.insert(index, editableHop.value!);
     });
     _saveCircuit();
   }

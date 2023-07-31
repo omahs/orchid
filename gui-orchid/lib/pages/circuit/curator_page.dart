@@ -21,7 +21,7 @@ class _CuratorEditorState extends State<CuratorEditorPage> {
   @override
   void initState() {
     super.initState();
-    OrchidHop? hop = widget.editableHop.value.hop as OrchidHop;
+    OrchidHop? hop = widget.editableHop.value?.hop as OrchidHop;
     _curatorField.text = hop.curator ?? '';
     _curatorField.addListener(_updateHop);
   }
@@ -62,7 +62,7 @@ class _CuratorEditorState extends State<CuratorEditorPage> {
 
   void _updateHop() {
     widget.editableHop.update(OrchidHop.from(
-        widget.editableHop.value.hop as OrchidHop,
+        widget.editableHop.value?.hop as OrchidHop,
         curator: _curatorField.text));
     setState(() {});
   }
