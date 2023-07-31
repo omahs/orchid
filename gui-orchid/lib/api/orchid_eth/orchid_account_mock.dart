@@ -242,5 +242,5 @@ class MockAccountDetail extends AccountDetail {
 class MockMarketConditions extends MarketConditions {
   MockMarketConditions({
     required double efficiency,
-  }) : super(null, null, efficiency, false);
+  }) : super(Tokens.OXT.zero, Tokens.OXT.zero, efficiency, false);
 }

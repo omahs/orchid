@@ -63,16 +63,14 @@ class PacTransaction {
     DateTime? date,
     this.retries = 0,
     this.serverResponse,
-  }):
-    this.date = date ?? DateTime.now();
-
+  }) : this.date = date ?? DateTime.now();
 
   PacTransaction.error(
       {required String message, required PacTransactionType type})
       : this(
-            type: type,
-            state: PacTransactionState.Error,
-            serverResponse: message);
+      type: type,
+      state: PacTransactionState.Error,
+      serverResponse: message);
 
   PacTransaction error(String message) {
     this.state = PacTransactionState.Error;
@@ -80,7 +78,8 @@ class PacTransaction {
     return this;
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'type': type.name,
         'state': state.name,
         'date': date.toIso8601String(),
@@ -90,7 +89,9 @@ class PacTransaction {
 
   PacTransaction.fromJsonBase(Map<String, dynamic> json,
       {PacTransaction? parent})
-      : type = toTransactionType(json['type']) ?? PacTransactionType.None,
+      :
+  // type = toTransactionType(json['type']) ?? PacTransactionType.None,
+        type = toTransactionType(json['type']),
         state = toTransactionState(json['state']),
         date = DateTime.parse(json['date']),
         retries = int.parse(json['retries'] ?? "0"),
@@ -98,7 +99,8 @@ class PacTransaction {
         _parent = parent;
 
   static PacTransaction fromJson(Map<String, dynamic> json) {
-    var type = toTransactionType(json['type']) ?? PacTransactionType.None;
+    // var type = toTransactionType(json['type']) ?? PacTransactionType.None;
+    var type = toTransactionType(json['type']);
     switch (type) {
       case PacTransactionType.None:
         return PacTransaction.fromJsonBase(json);
@@ -146,26 +148,25 @@ class PacTransaction {
 
 class PacAddBalanceTransaction extends PacTransaction
     implements ReceiptTransaction {
-  EthereumAddress signer;
-  String productId;
+  EthereumAddress? signer;
+  String? productId;
   String? receipt;
-  ReceiptType receiptType;
+  ReceiptType? receiptType;
 
   PacAddBalanceTransaction.pending(
       {required EthereumAddress signer, required String productId})
-      : super(
-          type: PacTransactionType.AddBalance,
-          state: PacTransactionState.Pending,
-        ) {
-    this.signer = signer;
-    this.productId = productId;
-  }
+      :
+        this.signer = signer,
+        this.productId = productId,
+
+        super(type: PacTransactionType.AddBalance,
+        state: PacTransactionState.Pending,);
 
   PacAddBalanceTransaction.error(String message)
       : super.error(
-          message: message,
-          type: PacTransactionType.AddBalance,
-        );
+    message: message,
+    type: PacTransactionType.AddBalance,
+  );
 
   /// Add the receipt and advance the state to ready
   PacTransaction addReceipt(String receipt, ReceiptType receiptType) {
@@ -177,7 +178,7 @@ class PacAddBalanceTransaction extends PacTransaction
 
   @override
   PacAddBalanceTransaction.fromJson(Map<String, dynamic> json,
-      {PacTransaction parent})
+      {PacTransaction? parent})
       : super.fromJsonBase(json, parent: parent) {
     signer = EthereumAddress.fromNullable(json['signer']);
     productId = json['productId'];
@@ -188,11 +189,11 @@ class PacAddBalanceTransaction extends PacTransaction
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PacAddBalanceTransaction &&
-          runtimeType == other.runtimeType &&
-          signer == other.signer &&
-          productId == other.productId &&
-          receipt == other.receipt;
+          other is PacAddBalanceTransaction &&
+              runtimeType == other.runtimeType &&
+              signer == other.signer &&
+              productId == other.productId &&
+              receipt == other.receipt;
 
   @override
   int get hashCode => signer.hashCode ^ productId.hashCode ^ receipt.hashCode;
@@ -204,7 +205,7 @@ class PacAddBalanceTransaction extends PacTransaction
       'signer': signer?.toString() ?? null,
       'productId': productId,
       'receipt': receipt,
-      'receiptType': receiptType != null ? receiptType.name : null,
+      'receiptType': receiptType != null ? receiptType!.name : null,
     });
     return json;
   }
@@ -219,9 +220,11 @@ enum ReceiptType {
 
 // Interface
 abstract class ReceiptTransaction extends PacTransaction {
-  String get receipt;
+  ReceiptTransaction({required super.type, required super.state});
 
-  ReceiptType get receiptType;
+  String? get receipt;
+
+  ReceiptType? get receiptType;
 
   PacTransaction addReceipt(String receipt, ReceiptType receiptType);
 }
@@ -239,26 +242,21 @@ class PacSubmitSellerTransaction extends PacTransaction {
   BigInt escrow;
 
   PacSubmitSellerTransaction({
-    required StoredEthereumKeyRef signerKey,
-    required EthereumTransactionParams txParams,
-    required BigInt escrow,
+    required this.signerKey,
+    required this.txParams,
+    required this.escrow,
   }) : super(
-          state: PacTransactionState.Pending,
-          type: PacTransactionType.SubmitSellerTransaction,
-        ) {
-    this.signerKey = signerKey;
-    this.txParams = txParams;
-    this.escrow = escrow;
-  }
+    state: PacTransactionState.Pending,
+    type: PacTransactionType.SubmitSellerTransaction,
+  );
 
   @override
   PacSubmitSellerTransaction.fromJson(Map<String, dynamic> json,
-      {PacTransaction parent})
-      : super.fromJsonBase(json, parent: parent) {
-    txParams = EthereumTransactionParams.fromJson(json['txParams']);
-    signerKey = StoredEthereumKeyRef(json['signerKeyUid']);
-    escrow = BigInt.parse(json['escrow']);
-  }
+      {PacTransaction? parent})
+      : txParams = EthereumTransactionParams.fromJson(json['txParams']),
+        signerKey = StoredEthereumKeyRef(json['signerKeyUid']),
+        escrow = BigInt.parse(json['escrow']),
+        super.fromJsonBase(json, parent: parent);
 
   @override
   Map<String, dynamic> toJson() {
@@ -279,10 +277,10 @@ class PacSubmitSellerTransaction extends PacTransaction {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PacSubmitSellerTransaction &&
-          runtimeType == other.runtimeType &&
-          signerKey == other.signerKey &&
-          txParams == other.txParams;
+          other is PacSubmitSellerTransaction &&
+              runtimeType == other.runtimeType &&
+              signerKey == other.signerKey &&
+              txParams == other.txParams;
 
   @override
   int get hashCode => signerKey.hashCode ^ txParams.hashCode;
@@ -291,22 +289,22 @@ class PacSubmitSellerTransaction extends PacTransaction {
 /// Combines a add balance and a submit raw transaction to fund an account.
 class PacPurchaseTransaction extends PacTransaction
     implements ReceiptTransaction {
-  PacAddBalanceTransaction addBalance;
-  PacSubmitSellerTransaction submitRaw;
+  late PacAddBalanceTransaction addBalance;
+  late PacSubmitSellerTransaction submitRaw;
 
   PacPurchaseTransaction(this.addBalance, this.submitRaw)
       : super(
-          type: PacTransactionType.PurchaseTransaction,
-          state: PacTransactionState.Pending,
-        );
+    type: PacTransactionType.PurchaseTransaction,
+    state: PacTransactionState.Pending,
+  );
 
   @override
-  String get receipt {
+  String? get receipt {
     return addBalance.receipt;
   }
 
   @override
-  ReceiptType get receiptType {
+  ReceiptType? get receiptType {
     return addBalance.receiptType;
   }
 

@@ -26,8 +26,8 @@ class BinanceExchangeRateSource extends ExchangeRateSource {
 
   /// Return the price, USD/Token: Tokens * Rate = USD
   Future<double> tokenToUsdRate(TokenType tokenType) async {
-    var rate = await _getPrice(tokenType);
-    return inverted ? invert(rate) : rate;
+    double rate = await _getPrice(tokenType);
+    return inverted ? await invert(rate) : rate;
   }
 
   Future<double> _getPrice(TokenType tokenType) async {

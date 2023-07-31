@@ -180,13 +180,13 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildTokenIcon(TokenType tokenType, double size) {
+  Widget _buildTokenIcon(TokenType? tokenType, double size) {
     return _fade(
       SizedBox(
           key: Key(tokenType?.toString() ?? 'empty'),
           width: size,
           height: size,
-          child: tokenType?.chain?.icon ?? Container()),
+          child: tokenType?.chain.icon ?? Container()),
     );
   }
 
@@ -355,7 +355,7 @@ class _AccountCardState extends State<AccountCard>
   String? _balanceText() {
     return widget.accountDetail == null
         ? formatCurrency(0.0, locale: context.locale, precision: 2)
-        : (pot?.balance?.formatCurrency(locale: context.locale, precision: 2));
+        : (pot?.balance.formatCurrency(locale: context.locale, precision: 2));
   }
 
   Widget _buildExpandedContent(USD price) {
@@ -448,7 +448,7 @@ class _AccountCardState extends State<AccountCard>
    */
 
   Widget _buildTicketsRow(
-      AccountBalanceChartTicketModel chartModel, double efficiency) {
+      AccountBalanceChartTicketModel chartModel, double? efficiency) {
     return _labeledRow(
       titleWidget: Row(
         children: [
@@ -466,7 +466,7 @@ class _AccountCardState extends State<AccountCard>
     );
   }
 
-  Widget _buildEfficiencyRow(double efficiency) {
+  Widget _buildEfficiencyRow(double? efficiency) {
     return _labeledRow(
       title: s.efficiency,
       child: Row(
@@ -488,8 +488,8 @@ class _AccountCardState extends State<AccountCard>
 
   Widget _buildLabeledTokenValueRow(
     String title,
-    Token value,
-    USD price,
+    Token? value,
+    USD? price,
   ) {
     return _labeledRow(
       title: title,

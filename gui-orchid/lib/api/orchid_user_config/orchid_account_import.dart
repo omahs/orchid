@@ -10,7 +10,7 @@ import 'package:orchid/util/js_config.dart';
 class OrchidAccountImport {
   static ParseOrchidIdentityOrAccountResult parse(String config,
       {List<StoredEthereumKey>? keys}) {
-    final existingKeys = keys ?? UserPreferencesKeys().keys.get();
+    final existingKeys = keys ?? UserPreferencesKeys().keys.get()!;
 
     // Try multiple full accounts
     try {

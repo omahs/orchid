@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:orchid/util/collections.dart';
 import 'package:orchid/util/localization.dart';
 
@@ -42,9 +41,6 @@ class CircuitHop {
     }
     return HopProtocol.values.firstWhere(
       (e) => e.toString().toLowerCase() == ("$HopProtocol." + s).toLowerCase(),
-      orElse: () {
-        return null;
-      },
     ); // ug
   }
 

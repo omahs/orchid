@@ -33,8 +33,8 @@ abstract class OrchidEthereumV1 {
   // Future<double> getUniswapPrice(String poolAddress, int token0Decimals, int token1Decimals);
 
   Future<List<Account>> discoverAccounts(
-      {Chain chain, StoredEthereumKey signer});
+      {required Chain chain, required StoredEthereumKey signer});
 
   Future<LotteryPot> getLotteryPot(
-      {Chain chain, EthereumAddress funder, EthereumAddress signer});
+      {required Chain chain, required EthereumAddress funder, required EthereumAddress signer});
 }

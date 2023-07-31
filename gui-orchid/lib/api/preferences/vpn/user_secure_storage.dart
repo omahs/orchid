@@ -8,18 +8,17 @@ import '../../orchid_log.dart';
 
 // TODO: Stand-in until we have support for MacOS
 class NonSecureStorage {
-  Future<String> read({String key}) async {
-    return (UserPreferences().sharedPreferences())
-        .getString(key.toString());
+  Future<String?> read({required String key}) async {
+    return (UserPreferences().sharedPreferences()).getString(key.toString());
   }
 
   // This method accepts null for property removal.
-  Future<void> write({String key, String value}) async {
+  Future<void> write({required String key, String? value}) async {
     var shared = UserPreferences().sharedPreferences();
     if (value == null) {
-      return await shared.remove(key);
+      await shared.remove(key);
     }
-    return await shared.setString(key, value);
+    await shared.setString(key, value!);
   }
 }
 
@@ -53,8 +52,7 @@ class UserSecureStorage {
   }
 
   Future<void> setPurchaseRateHistory(PurchaseRateHistory history) async {
-    log(
-        'iap: saving rate history, ${history.purchases.length} items totalling: ${history.sum()}');
+    log('iap: saving rate history, ${history.purchases.length} items totalling: ${history.sum()}');
     // TODO: Stand-in until we have support for MacOS
     // final storage = FlutterSecureStorage();
     final storage = NonSecureStorage();

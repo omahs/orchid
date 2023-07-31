@@ -24,20 +24,20 @@ abstract class OrchidAPI {
   }
 
   /// The system VPN extension connection status.
-  final BehaviorSubject<OrchidVPNExtensionState> vpnExtensionStatus;
+  abstract final BehaviorSubject<OrchidVPNExtensionState> vpnExtensionStatus;
 
   /// The Orchid routing state, which is a superset of the vpn extension status
   /// but only reflects how routing is affected.
-  final BehaviorSubject<OrchidVPNRoutingState> vpnRoutingStatus;
+  abstract final BehaviorSubject<OrchidVPNRoutingState> vpnRoutingStatus;
 
   /// Publishes a status of true if the user has granted any necessary OS level permissions to allow
   /// installation and activation of the Orchid VPN networking extension.
   /// Note: On iOS this corresponds to having successfully saved the Orchid VPN configuration via the
   /// NEVPNManager API.
-  final BehaviorSubject<bool> vpnPermissionStatus;
+  abstract final BehaviorSubject<bool> vpnPermissionStatus;
 
   /// Publish notifications that the circuit hop configuration has changed.
-  final BehaviorSubject<void> circuitConfigurationChanged;
+  abstract final BehaviorSubject<void> circuitConfigurationChanged;
 
   /// The Flutter application uses this method to indicate to the native channel code
   /// that the UI has finished launching and all listeners have been established.

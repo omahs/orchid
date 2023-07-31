@@ -80,7 +80,7 @@ class CircuitUtils {
   /// If the circuit is empty create a default single hop circuit using the
   /// supplied account.
   /// Returns true if a circuit was created.
-  static Future<bool> defaultCircuitIfNeededFrom(Account account) async {
+  static Future<bool> defaultCircuitIfNeededFrom(Account? account) async {
     var circuit = UserPreferencesVPN().circuit.get()!;
     if (circuit.hops.isEmpty && account != null) {
       log("circuit: creating default circuit from account: $account");

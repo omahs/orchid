@@ -155,7 +155,7 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
     // log("getUniswapPrice via rpc");
     // construct the abi encoded eth_call
     var params = [
-      {"to": "${poolAddress}", "data": "0x${UniswapV3Contract.slot0Hash}"},
+      {"to": "$poolAddress", "data": "0x${UniswapV3Contract.slot0Hash}"},
       "latest"
     ];
 

@@ -31,11 +31,14 @@ class OrchidHop extends CircuitHop {
   /// The Orchid Account associated with this hop.
   // Note: This is a migration from the v0 storage and should eventually replace it.
   Account get account {
+    if (funder == null || version == null || chainId == null) {
+      throw Exception('Missing required fields for Orchid Account');
+    }
     return Account.base(
       signerKeyUid: keyRef?.keyUid,
-      funder: funder,
-      version: version,
-      chainId: chainId,
+      funder: funder!,
+      version: version!,
+      chainId: chainId!,
       resolvedSignerAddress: resolvedSignerAddress,
     );
   }
@@ -99,7 +102,7 @@ class OrchidHop extends CircuitHop {
         'curator': curator,
         'protocol': CircuitHop.protocolToString(protocol),
         // Always render funder with the hex prefix as required by the config.
-        'funder': funder.toString(prefix: true),
+        'funder': funder?.toString(prefix: true),
         'keyRef': keyRef.toString(),
         'version': version,
         'chainId': chainId,
@@ -108,12 +111,15 @@ class OrchidHop extends CircuitHop {
   /// Return key uids for configured hops
   static Future<List<String>> getInUseKeyUids() async {
     // Get the active hop keys
-    var activeHops = UserPreferencesVPN().circuit.get().hops;
+    var activeHops = UserPreferencesVPN().circuit.get()!.hops;
     List<OrchidHop> activeOrchidHops =
         activeHops.where((h) => h is OrchidHop).cast<OrchidHop>().toList();
-    List<StoredEthereumKeyRef> activeKeys = activeOrchidHops.map((h) {
-      return h.keyRef;
-    }).toList();
+    List<StoredEthereumKeyRef> activeKeys = activeOrchidHops
+        .map((h) {
+          return h.keyRef;
+        })
+        .whereType<StoredEthereumKeyRef>()
+        .toList();
     List<String> activeKeyUids = activeKeys.map((e) => e.keyUid).toList();
     log("account: activeKeyUuids = $activeKeyUids");
     return activeKeyUids;

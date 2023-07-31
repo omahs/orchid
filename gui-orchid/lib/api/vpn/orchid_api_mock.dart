@@ -119,7 +119,7 @@ class MockOrchidAPI implements OrchidAPI {
     }
     insertedMockTrafficData = true;
     log("mock: insertMockTrafficData");
-    var db = await AnalysisDb().getDb();
+    Database db = (await AnalysisDb().getDb())!;
     var inserts = """
 -- INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostname) VALUES (2458712.3656754512,6,168230915,62133,-1395063294,443,'TCP','test.really.long.item.foo.g.blah.gee.gah.net');
 INSERT INTO flow(start,layer4,src_addr,src_port,dst_addr,dst_port,protocol,hostname) VALUES (2458712.365221146,1,168230915,0,134744072,0,'ICMP',NULL);

@@ -3,8 +3,8 @@ import 'chains.dart';
 import 'token_type.dart';
 
 class MarketConditions {
-  final Token? maxFaceValue;
-  final Token? costToRedeem;
+  final Token maxFaceValue;
+  final Token costToRedeem;
   final double? efficiency;
   final bool limitedByBalance;
 

@@ -221,7 +221,8 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
           if (item.isIdentity) {
             _setSelectedIdentity(item.identity);
           } else {
-            item.action();
+            // null checked by init logic
+            item.action!();
           }
         },
         itemBuilder: (BuildContext context) {
@@ -344,7 +345,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
               body: Column(
                 children: [
                   OrchidAccountEntry(
-                    onAccountUpdate: (Account account) {
+                    onAccountUpdate: (Account? account) {
                       setState(() {
                         log('XXX: onChange = $account');
                         _accountToImport = account;
@@ -608,6 +609,9 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
   Widget _buildAccountList(Set<Account> activeAccounts) {
     var signerKey = _selectedIdentity;
+    if (signerKey == null) {
+      return Container();
+    }
     List<AccountViewModel> accounts = (_accountStore?.accounts ?? {})
         // accounts may be for identity selection only, remove those
         // .where((a) => a.funder != null)
@@ -627,8 +631,8 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
 
     // Sort by efficiency descending
     accounts.sort((AccountViewModel a, AccountViewModel b) {
-      return -((a.detail?.marketConditions?.efficiency ?? 0)
-          .compareTo((b.detail?.marketConditions?.efficiency ?? 0)));
+      return -((a.detail.marketConditions?.efficiency ?? 0)
+          .compareTo((b.detail.marketConditions?.efficiency ?? 0)));
     });
 
     Widget footer() {
@@ -686,7 +690,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
     _accountDetailStore.refresh();
 
     // Look for new accounts
-    return _accountStore.refresh(); // Return the load future
+    await _accountStore?.refresh(); // Return the load future
 
     // return _accountStore.refresh().then((value) async {
     //   final accounts = _accountStore.accounts;
@@ -709,7 +713,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
   }
 
   Widget _buildAddFundsButton() {
-    return StreamBuilder<PacTransaction>(
+    return StreamBuilder<PacTransaction?>(
         stream: PacTransaction.shared.stream(),
         builder: (context, snapshot) {
           var tx = snapshot.data;
@@ -727,7 +731,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
     if (signerKey == null) {
       throw Exception('iap: no signer!');
     }
-    return Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
           fullscreenDialog: true,
@@ -751,14 +755,10 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
   void dispose() {
     _subs.dispose();
     if (_accountStore != null) {
-      _accountStore.removeListener(_accountsUpdated);
+      _accountStore!.removeListener(_accountsUpdated);
     }
     _accountDetailStore.dispose();
     super.dispose();
-  }
-
-  S get s {
-    return S.of(context);
   }
 }
 
@@ -793,19 +793,21 @@ class AccountManagerPageUtil {
 
 class _IdentitySelectorMenuItem {
   /// Either an identity...
-  final StoredEthereumKey identity;
+  final StoredEthereumKey? identity;
 
   /// ...or an action with label
-  final Function() action;
+  final Function()? action;
 
-  _IdentitySelectorMenuItem({this.identity, this.action});
+  _IdentitySelectorMenuItem({this.identity, this.action}) {
+    assert(identity != null || action != null);
+  }
 
   bool get isIdentity {
     return identity != null;
   }
 
   String formatIdentity() {
-    return identity?.address?.toString()?.prefix(12) ?? '???';
+    return identity?.address.toString().prefix(12) ?? '???';
   }
 
   @override
