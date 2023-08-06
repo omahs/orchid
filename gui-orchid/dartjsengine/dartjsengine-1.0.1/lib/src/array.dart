@@ -5,7 +5,7 @@ import 'JSEngine.dart';
 import 'util.dart';
 
 class JsArray extends JsObject {
-  final List<JsObject> valueOf = [];
+  final List<JsObject?> valueOf = [];
 
   JsArray() {
     typeof = 'array';

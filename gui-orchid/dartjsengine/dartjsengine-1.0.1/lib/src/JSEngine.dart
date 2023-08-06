@@ -98,7 +98,7 @@ class JSEngine {
           symbol = scope.assign(decl.name.value, value);
         }
 
-        if (value is JsFunction && value.isAnonymous && symbol != null) {
+        if (value is JsFunction && value.isAnonymous) {
           value.properties['name'] = new JsString(symbol.name);
         }
       }
@@ -198,11 +198,11 @@ class JSEngine {
         childScope = childScope.createChild(values: {'arguments': arguments});
         childScope.context = target.context ?? scope.context;
 
-        JsObject result;
+        JsObject? result;
 
         if (target.declaration != null) {
-          callStack.push(target.declaration.filename, target.declaration.line,
-              target.name);
+          callStack.push(target.declaration?.filename, target.declaration?.line ?? 0,
+              target.name ?? '');
         }
 
         if (node.isNew && target is! JsConstructor) {
@@ -246,7 +246,7 @@ class JSEngine {
     if (node is BinaryExpression) {
       var left = visitExpression(node.left, ctx);
       var right = visitExpression(node.right, ctx);
-      return performBinaryOperation(node.operator, left, right, ctx);
+      return performBinaryOperation(node.operator, left!, right!, ctx);
     }
 
     if (node is AssignmentExpression) {
@@ -264,27 +264,27 @@ class JSEngine {
                 l.name.value,
                 performNumericalBinaryOperation(
                   trimmedOp,
-                  visitExpression(l, ctx),
-                  visitExpression(node.right, ctx),
+                  visitExpression(l, ctx)!,
+                  visitExpression(node.right, ctx)!,
                   ctx,
                 ),
               )
               .value;
         }
       } else if (l is MemberExpression) {
-        var left = visitExpression(l.object, ctx);
+        var left = visitExpression(l.object, ctx)!;
 
         if (node.operator == '=') {
           return left.setProperty(
-              l.property.value, visitExpression(node.right, ctx));
+              l.property.value, visitExpression(node.right, ctx)!);
         } else {
           var trimmedOp = node.operator.substring(0, node.operator.length - 1);
           return left.setProperty(
             l.property.value,
             performNumericalBinaryOperation(
               trimmedOp,
-              left.getProperty(l.property.value, this, ctx),
-              visitExpression(node.right, ctx),
+              left.getProperty(l.property.value, this, ctx)!,
+              visitExpression(node.right, ctx)!,
               ctx,
             ),
           );
@@ -315,14 +315,14 @@ class JSEngine {
               l.valueOf[idx.toInt()] = new JsEmptyItem();
             }
           } else if (l is! JsBuiltinObject) {
-            return new JsBoolean(l.removeProperty(property, this, ctx));
+            return new JsBoolean(l!.removeProperty(property, this, ctx));
           }
         } else if (left is MemberExpression) {
           var l = visitExpression(left.object, ctx);
 
           if (l is! JsBuiltinObject) {
             return new JsBoolean(
-                l.removeProperty(left.property.value, this, ctx));
+                l!.removeProperty(left.property.value, this, ctx));
           }
         }
 
@@ -344,7 +344,7 @@ class JSEngine {
         case '-':
           var value = coerceToNumber(expr, this, ctx);
 
-          if (value == null || value.isNaN) {
+          if (value.isNaN) {
             return new JsNumber(double.nan);
           } else if (!value.isFinite) {
             return new JsNumber(
@@ -353,7 +353,6 @@ class JSEngine {
             return new JsNumber(-1.0 * value);
           }
 
-          break;
         case 'typeof':
           return new JsString(expr?.typeof ?? 'undefined');
         case 'void':
@@ -376,9 +375,9 @@ class JSEngine {
       // TODO: Override operator
       return new JsBoolean(left == right);
     } else if (op == '&&') {
-      return (left?.isTruthy != true) ? left : right;
+      return (left.isTruthy != true) ? left : right;
     } else if (op == '||') {
-      return (left?.isTruthy == true) ? left : right;
+      return (left.isTruthy == true) ? left : right;
     } else if (op == '<') {
       return safeBooleanOperation(left, right, this, ctx, (l, r) => l < r);
     } else if (op == '<=') {
@@ -436,14 +435,14 @@ class JSEngine {
   }
 
   JsObject visitFunctionNode(FunctionNode node, JSContext ctx) {
-    JsFunction function;
+    JsFunction? function;
     function = new JsFunction(ctx.scope.context, (samurai, arguments, ctx) {
       for (double i = 0.0; i < node.params.length; i++) {
         ctx.scope.create(node.params[i.toInt()].value,
             value: arguments.properties[i]);
       }
 
-      return visitStatement(node.body, ctx, function.name);
+      return visitStatement(node.body, ctx, function?.name ?? '');
     });
     function.declaration = node;
     function.properties['length'] = new JsNumber(node.params.length);
@@ -451,15 +450,15 @@ class JSEngine {
 
     // TODO: What about hoisting???
     if (node.name != null) {
-      ctx.scope.create(node.name.value, value: function, constant: true);
+      ctx.scope.create(node.name!.value, value: function, constant: true);
     }
 
     function.closureScope = ctx.scope.fork();
-    function.closureScope.context = ctx.scope.context;
+    function.closureScope?.context = ctx.scope.context;
     return function;
   }
 
-  JsObject invoke(JsFunction target, List<JsObject?> args, JSContext ctx) {
+  JsObject? invoke(JsFunction target, List<JsObject?> args, JSContext ctx) {
     var scope = ctx.scope, callStack = ctx.callStack;
     var childScope = (target.closureScope ?? scope);
     var arguments = new JsArguments(args, target);
@@ -467,11 +466,11 @@ class JSEngine {
     childScope.context = target.context ?? scope.context;
     print('${target.context} => ${childScope.context}');
 
-    JsObject result;
+    JsObject? result;
 
     if (target.declaration != null) {
       callStack.push(
-          target.declaration.filename, target.declaration.line, target.name);
+          target.declaration?.filename, target.declaration?.line ?? 0, target.name ?? '');
     }
 
     result =

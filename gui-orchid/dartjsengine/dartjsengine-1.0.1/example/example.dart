@@ -21,7 +21,7 @@ Car.prototype.info = function(i) {
 
   jsengine.visitProgram(program);
 
-  for(var i =0 ; i< 100000; i++){
+  for(var i =0 ; i< 10; i++){
     var result = jsengine.visitProgram(program2);
     print('$i ${result?.valueOf}');
   }

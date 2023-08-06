@@ -51,7 +51,7 @@ String coerceToString(JsObject? object, JSEngine samurai, JSContext ctx) {
   }
 }
 
-JsObject? coerceToFunction(JsObject? obj, JsObject Function(JsFunction) f) {
+JsObject? coerceToFunction(JsObject? obj, JsObject? Function(JsFunction) f) {
   if (obj is! JsFunction) {
     return null;
   } else {

@@ -84,6 +84,7 @@ void loadMiscObjects(JSEngine jsengine) {
     global,
         (jsengine, arguments, scope) {
       arguments.valueOf.forEach(print);
+      return null;
     },
   );
 
