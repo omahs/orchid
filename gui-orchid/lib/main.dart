@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/vpn/purchase/orchid_purchase.dart';
 import 'orchid/orchid.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
