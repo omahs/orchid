@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
@@ -14,17 +13,17 @@ import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/util/localization.dart';
 
 class WithdrawFundsPaneV0 extends StatefulWidget {
-  final OrchidWeb3Context context;
-  final LotteryPot pot;
-  final EthereumAddress signer;
+  final OrchidWeb3Context? context;
+  final LotteryPot? pot;
+  final EthereumAddress? signer;
   final bool enabled;
 
   const WithdrawFundsPaneV0({
-    Key key,
-    @required this.context,
-    @required this.pot,
-    @required this.signer,
-    @required this.enabled,
+    Key? key,
+    required this.context,
+    required this.pot,
+    required this.signer,
+    required this.enabled,
   }) : super(key: key);
 
   @override
@@ -37,7 +36,7 @@ class _WithdrawFundsPaneV0State extends State<WithdrawFundsPaneV0> {
   final _withdrawEscrowField = TypedTokenValueFieldController(type: tokenType);
   bool _txPending = false;
 
-  LotteryPot get pot {
+  LotteryPot? get pot {
     return widget.pot;
   }
 
@@ -85,12 +84,12 @@ class _WithdrawFundsPaneV0State extends State<WithdrawFundsPaneV0> {
 
   bool get _withdrawFieldValid {
     var balance = _withdrawBalanceField.value;
-    return balance != null && balance <= pot.balance;
+    return balance != null && balance <= pot!.balance;
   }
 
   bool get _escrowFieldValid {
     var escrow = _withdrawEscrowField.value;
-    return escrow != null && escrow <= pot.unlockedAmount;
+    return escrow != null && escrow <= pot!.unlockedAmount;
   }
 
   bool get _withdrawFundsFormEnabled {
@@ -98,25 +97,28 @@ class _WithdrawFundsPaneV0State extends State<WithdrawFundsPaneV0> {
         !_txPending &&
         _withdrawFieldValid &&
         _escrowFieldValid &&
-        (_withdrawBalanceField.value.gtZero() ||
-            _withdrawEscrowField.value.gtZero());
+        (_withdrawBalanceField.value!.gtZero() ||
+            _withdrawEscrowField.value!.gtZero());
   }
 
   void _withdrawFunds() async {
+    if (widget.context == null || pot == null || widget.signer == null) {
+      throw Exception('Invalid state');
+    }
     setState(() {
       _txPending = true;
     });
     try {
-      var txHash = await OrchidWeb3V0(widget.context).orchidWithdrawFunds(
-        wallet: widget.context.walletAddress,
-        signer: widget.signer,
-        pot: pot,
-        withdrawBalance: _withdrawBalanceField.value,
-        withdrawEscrow: _withdrawEscrowField.value,
+      var txHash = await OrchidWeb3V0(widget.context!).orchidWithdrawFunds(
+        wallet: widget.context!.walletAddress,
+        signer: widget.signer!,
+        pot: pot!,
+        withdrawBalance: _withdrawBalanceField.value!,
+        withdrawEscrow: _withdrawEscrowField.value!,
       );
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
-        chainId: widget.context.chain.chainId,
+        chainId: widget.context!.chain.chainId,
         type: DappTransactionType.withdrawFunds,
       ));
       _withdrawBalanceField.clear();

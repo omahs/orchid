@@ -12,9 +12,9 @@ import '../dapp_button.dart';
 import 'package:orchid/util/localization.dart';
 
 class LockWarnPaneV0 extends StatefulWidget {
-  final OrchidWeb3Context context;
+  final OrchidWeb3Context? context;
   final LotteryPot? pot;
-  final EthereumAddress signer;
+  final EthereumAddress? signer;
   final bool enabled;
 
   const LockWarnPaneV0({
@@ -22,7 +22,7 @@ class LockWarnPaneV0 extends StatefulWidget {
     required this.context,
     required this.pot,
     required this.signer,
-    this.enabled = true,
+    this.enabled = false,
   }) : super(key: key);
 
   @override
@@ -101,17 +101,20 @@ class _LockWarnPaneV0State extends State<LockWarnPaneV0> {
   }
 
   void _lockOrUnlock({required bool lock}) async {
+    if (widget.context == null || widget.signer == null) {
+      throw Exception('Context or signer is null');
+    }
     setState(() {
       _txPending = true;
     });
     try {
-      var txHash = await OrchidWeb3V0(widget.context).orchidLockOrWarn(
+      var txHash = await OrchidWeb3V0(widget.context!).orchidLockOrWarn(
         isLock: lock,
-        signer: widget.signer,
+        signer: widget.signer!,
       );
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
-        chainId: widget.context.chain.chainId,
+        chainId: widget.context!.chain.chainId,
         type: lock
             ? DappTransactionType.lockDeposit
             : DappTransactionType.unlockDeposit,

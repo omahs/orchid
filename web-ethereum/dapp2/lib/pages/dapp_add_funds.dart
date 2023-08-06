@@ -23,10 +23,10 @@ class AddFundsPane extends StatefulWidget {
 
   // Callback to add the funds
   final Future<List<String>> Function({
-    OrchidWallet wallet,
-    EthereumAddress? signer,
-    Token addBalance,
-    Token addEscrow,
+    required OrchidWallet wallet,
+    required EthereumAddress? signer,
+    required Token addBalance,
+    required Token addEscrow,
   }) addFunds;
 
   const AddFundsPane({

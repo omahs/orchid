@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -16,17 +15,17 @@ import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 
 class AdvancedFundsPaneV1 extends StatefulWidget {
-  final OrchidWeb3Context context;
-  final LotteryPot pot;
-  final EthereumAddress signer;
+  final OrchidWeb3Context? context;
+  final LotteryPot? pot;
+  final EthereumAddress? signer;
   final bool enabled;
 
   const AdvancedFundsPaneV1({
-    Key key,
-    @required this.context,
-    @required this.pot,
-    @required this.signer,
-    this.enabled,
+    Key? key,
+    required this.context,
+    required this.pot,
+    required this.signer,
+    this.enabled = false,
   }) : super(key: key);
 
   @override
@@ -35,22 +34,22 @@ class AdvancedFundsPaneV1 extends StatefulWidget {
 
 class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     with DappTabWalletContext, DappTabPotContext {
-  OrchidWeb3Context get web3Context => widget.context;
+  OrchidWeb3Context? get web3Context => widget.context;
 
-  LotteryPot get pot => widget.pot;
+  LotteryPot? get pot => widget.pot;
 
-  EthereumAddress get signer => widget.signer;
+  EthereumAddress? get signer => widget.signer;
 
-  TypedTokenValueFieldController _balanceField;
+  late TypedTokenValueFieldController _balanceField;
   _AddWithdrawDirection _balanceFieldDirection = _AddWithdrawDirection.Add;
 
-  TypedTokenValueFieldController _depositField;
+  late TypedTokenValueFieldController _depositField;
   _AddWithdrawDirection _depositFieldDirection = _AddWithdrawDirection.Add;
 
-  TypedTokenValueFieldController _moveField;
+  late TypedTokenValueFieldController _moveField;
   _MoveDirection _moveFieldDirection = _MoveDirection.BalanceToDeposit;
 
-  TypedTokenValueFieldController _warnedField;
+  late TypedTokenValueFieldController _warnedField;
 
   @override
   void initState() {
@@ -69,11 +68,11 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
 
   @override
   Widget build(BuildContext context) {
-    var tokenType = pot?.balance?.type ?? Tokens.TOK;
+    var tokenType = pot?.balance.type ?? Tokens.TOK;
     return TokenPriceBuilder(
         tokenType: tokenType,
         seconds: 30,
-        builder: (USD tokenPrice) {
+        builder: (USD? tokenPrice) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -136,7 +135,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     );
   }
 
-  Widget _buildBalanceField(TokenType tokenType, USD tokenPrice) {
+  Widget _buildBalanceField(TokenType tokenType, USD? tokenPrice) {
     return OrchidLabeledTokenValueField(
       enabled: widget.enabled,
       labelWidth: 100,
@@ -151,7 +150,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
           value: _balanceFieldDirection,
           onChanged: (value) {
             setState(() {
-              _balanceFieldDirection = value;
+              _balanceFieldDirection = value ?? _AddWithdrawDirection.Add;
             });
           },
         ),
@@ -159,7 +158,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     );
   }
 
-  Widget _buildDepositField(TokenType tokenType, USD tokenPrice) {
+  Widget _buildDepositField(TokenType tokenType, USD? tokenPrice) {
     return OrchidLabeledTokenValueField(
       enabled: widget.enabled,
       labelWidth: 100,
@@ -174,7 +173,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
           value: _depositFieldDirection,
           onChanged: (value) {
             setState(() {
-              _depositFieldDirection = value;
+              _depositFieldDirection = value ?? _AddWithdrawDirection.Add;
             });
           },
         ),
@@ -182,7 +181,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     );
   }
 
-  Widget _buildMoveField(TokenType tokenType, USD tokenPrice) {
+  Widget _buildMoveField(TokenType tokenType, USD? tokenPrice) {
     return OrchidLabeledTokenValueField(
       enabled: widget.enabled,
       labelWidth: 100,
@@ -197,7 +196,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
           value: _moveFieldDirection,
           onChanged: (value) {
             setState(() {
-              _moveFieldDirection = value;
+              _moveFieldDirection = value ?? _MoveDirection.BalanceToDeposit;
             });
           },
         ),
@@ -205,11 +204,12 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     );
   }
 
-  List<Widget> _buildWarn(TokenType tokenType, USD tokenPrice) {
+  List<Widget> _buildWarn(TokenType tokenType, USD? tokenPrice) {
     String currentUnlockText = "", futureUnlockText = "";
+    // pot guarded by 'connected'
     if (connected) {
-      currentUnlockText = pot.unlockTime.isAfter(DateTime.now())
-          ? pot.unlockTime.toLocal().toShortString()
+      currentUnlockText = pot!.unlockTime.isAfter(DateTime.now())
+          ? pot!.unlockTime.toLocal().toShortString()
           : s.now;
       futureUnlockText =
           DateTime.now().add(Duration(days: 1)).toLocal().toShortString();
@@ -219,13 +219,13 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     final currentAmount = TypedTokenValueFieldController(type: tokenType);
     currentAmount.value = pot?.warned ?? tokenType.zero;
 
-    final warnLabelText = (connected && pot.isWarned)
+    final warnLabelText = (connected && pot!.isWarned)
         ? s.changeWarnedAmountTo
         : s.setWarnedAmountTo;
 
     return [
       Visibility(
-        visible: connected && pot.isWarned,
+        visible: connected && pot!.isWarned,
         child: Column(
           children: [
             // Current warned amount
@@ -262,7 +262,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
       // User available time
       Visibility(
         visible: _warnedField.hasValue &&
-            _warnedField.value.gtZero() &&
+            _warnedField.value!.gtZero() &&
             !_warnFieldError,
         child: Text(
           s.allWarnedFundsWillBeLockedUntil + ':  ' + futureUnlockText,
@@ -281,15 +281,15 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
   // a move from deposit to balance.
   Token get _moveBalanceToDepositAmount {
     return _moveFieldDirection == _MoveDirection.BalanceToDeposit
-        ? _moveField.value
-        : -_moveField.value;
+        ? _moveField.value!
+        : -_moveField.value!;
   }
 
   // The add balance amount which may be negative to indicate a withdrawal.
   Token get _addBalanceAmount {
     return _balanceFieldDirection == _AddWithdrawDirection.Add
-        ? _balanceField.value
-        : -_balanceField.value;
+        ? _balanceField.value!
+        : -_balanceField.value!;
   }
 
   // a positive or negative amount indicating the amount added to balance;
@@ -297,15 +297,15 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     return _addBalanceAmount - _moveBalanceToDepositAmount;
   }
 
-  Token get _netBalanceWithdraw {
-    return -_netBalanceAdd;
-  }
+  // Token get _netBalanceWithdraw {
+  //   return -_netBalanceAdd;
+  // }
 
   // The add deposit amount which may be negative to indicate a withdrawal.
   Token get _addDepositAmount {
     return _depositFieldDirection == _AddWithdrawDirection.Add
-        ? _depositField.value
-        : -_depositField.value;
+        ? _depositField.value!
+        : -_depositField.value!;
   }
 
   // a positive or negative amount indicating the amount added to deposit
@@ -313,16 +313,16 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     return _addDepositAmount + _moveBalanceToDepositAmount;
   }
 
-  Token get _netDepositWithdraw {
-    return -_netDepositAdd;
-  }
+  // Token get _netDepositWithdraw {
+  //   return -_netDepositAdd;
+  // }
 
   // Change to warn amount: positive if the warned amount is increasing
   Token get _warnedAmountAdd {
     if (_warnedField.hasValue) {
-      return _warnedField.value - pot.warned;
+      return _warnedField.value! - pot!.warned;
     } else {
-      return pot.balance.type.zero;
+      return pot!.balance.type.zero;
     }
   }
 
@@ -349,12 +349,10 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     switch (_balanceFieldDirection) {
       case _AddWithdrawDirection.Add:
         return _balanceField.value != null &&
-            _balanceField.value <= walletBalance;
-        break;
+            _balanceField.value! <= walletBalance;
       case _AddWithdrawDirection.Withdraw:
         return _balanceField.value != null &&
-            _balanceField.value <= pot.balance;
-        break;
+            _balanceField.value! <= pot!.balance;
       default:
         throw Exception();
     }
@@ -368,12 +366,10 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     switch (_depositFieldDirection) {
       case _AddWithdrawDirection.Add:
         return _depositField.value != null &&
-            _depositField.value <= walletBalance;
-        break;
+            _depositField.value! <= walletBalance;
       case _AddWithdrawDirection.Withdraw:
         return _depositField.value != null &&
-            _depositField.value <= pot.unlockedAmount;
-        break;
+            _depositField.value! <= pot!.unlockedAmount;
       default:
         throw Exception();
     }
@@ -386,12 +382,10 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
   bool get _moveFieldValid {
     switch (_moveFieldDirection) {
       case _MoveDirection.BalanceToDeposit:
-        return _moveField.value != null && _moveField.value <= pot.balance;
-        break;
+        return _moveField.value != null && _moveField.value! <= pot!.balance;
       case _MoveDirection.DepositToBalance:
         return _moveField.value != null &&
-            _moveField.value <= pot.unlockedAmount;
-        break;
+            _moveField.value! <= pot!.unlockedAmount;
       default:
         throw Exception();
     }
@@ -402,7 +396,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
   }
 
   bool get _warnFormValid {
-    return _warnedField.value != null && _warnedField.value <= pot.deposit;
+    return _warnedField.value != null && _warnedField.value! <= pot!.deposit;
   }
 
   bool get _warnFieldError {
@@ -442,6 +436,9 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
   }
 
   void _doTx() async {
+    if (widget.context == null) {
+      throw Exception('No context');
+    }
     setState(() {
       txPending = true;
     });
@@ -457,7 +454,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
 
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
-        chainId: widget.context.chain.chainId,
+        chainId: widget.context!.chain.chainId,
         type: DappTransactionType.accountChanges,
       ));
       _balanceField.clear();
@@ -488,14 +485,14 @@ enum _AddWithdrawDirection { Add, Withdraw }
 
 class _AddWithdrawDropdown extends StatelessWidget {
   final _AddWithdrawDirection value;
-  final ValueChanged<_AddWithdrawDirection> onChanged;
+  final ValueChanged<_AddWithdrawDirection?> onChanged;
   final bool enabled;
 
   const _AddWithdrawDropdown({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
-    this.enabled = true,
+    Key? key,
+    required this.value,
+    required this.onChanged,
+    this.enabled = false,
   }) : super(key: key);
 
   @override
@@ -536,14 +533,14 @@ enum _MoveDirection { BalanceToDeposit, DepositToBalance }
 
 class _MoveDirectionDropdown extends StatelessWidget {
   final _MoveDirection value;
-  final ValueChanged<_MoveDirection> onChanged;
+  final ValueChanged<_MoveDirection?> onChanged;
   final bool enabled;
 
   const _MoveDirectionDropdown({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
-    this.enabled = true,
+    Key? key,
+    required this.value,
+    required this.onChanged,
+    this.enabled = false,
   }) : super(key: key);
 
   @override

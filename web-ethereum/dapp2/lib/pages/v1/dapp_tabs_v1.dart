@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -12,15 +11,15 @@ import 'dapp_advanced_funds_v1.dart';
 
 /// The tabs for interacting with the V1 contract.
 class DappTabsV1 extends StatefulWidget {
-  final OrchidWeb3Context web3Context;
-  final EthereumAddress signer;
-  final AccountDetail accountDetail;
+  final OrchidWeb3Context? web3Context;
+  final EthereumAddress? signer;
+  final AccountDetail? accountDetail;
 
   const DappTabsV1({
-    Key key,
-    @required this.web3Context,
-    @required this.signer,
-    @required this.accountDetail,
+    Key? key,
+    required this.web3Context,
+    required this.signer,
+    required this.accountDetail,
   }) : super(key: key);
 
   @override
@@ -28,7 +27,7 @@ class DappTabsV1 extends StatefulWidget {
 }
 
 class _DappTabsV1State extends State<DappTabsV1> with TickerProviderStateMixin {
-  TabController tabController;
+  late TabController tabController;
 
   bool get _enabled {
     return widget.web3Context != null &&
@@ -76,7 +75,7 @@ class _DappTabsV1State extends State<DappTabsV1> with TickerProviderStateMixin {
 
     // Rebuild tab form fields on context change (chain or account).
     // log("XXX: buildTabs web3Context id = ${widget.web3Context?.id}");
-    final contextKey = Key(widget.web3Context?.id?.toString() ?? '');
+    final contextKey = Key(widget.web3Context?.id.toString() ?? '');
 
     return SizedBox(
       // Note: We seem to have to set a fixed height outside the scaffold here.
@@ -106,7 +105,7 @@ class _DappTabsV1State extends State<DappTabsV1> with TickerProviderStateMixin {
             tabView(
               AddFundsPane(
                 tokenType:
-                    widget.web3Context?.chain?.nativeCurrency ?? Tokens.TOK,
+                    widget.web3Context?.chain.nativeCurrency ?? Tokens.TOK,
                 key: contextKey,
                 enabled: _enabled,
                 context: widget.web3Context,
@@ -140,11 +139,14 @@ class _DappTabsV1State extends State<DappTabsV1> with TickerProviderStateMixin {
 
   // Defers construction of the contract until needed
   Future<List<String> /*TransactionId*/ > _orchidAddFunds({
-    OrchidWallet wallet,
-    EthereumAddress signer,
-    Token addBalance,
-    Token addEscrow,
+    required OrchidWallet wallet,
+    required EthereumAddress? signer,
+    required Token addBalance,
+    required Token addEscrow,
   }) async {
+    if (signer == null) {
+      throw Exception("No signer");
+    }
     return OrchidWeb3V1(widget.web3Context).orchidAddFunds(
       wallet: wallet,
       signer: signer,

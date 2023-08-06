@@ -13,9 +13,9 @@ import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/util/localization.dart';
 
 class MoveFundsPaneV0 extends StatefulWidget {
-  final OrchidWeb3Context context;
+  final OrchidWeb3Context? context;
   final LotteryPot? pot;
-  final EthereumAddress signer;
+  final EthereumAddress? signer;
   final bool enabled;
 
   const MoveFundsPaneV0({
@@ -23,7 +23,7 @@ class MoveFundsPaneV0 extends StatefulWidget {
     required this.context,
     required this.pot,
     required this.signer,
-    this.enabled = true,
+    this.enabled = false,
   }) : super(key: key);
 
   @override
@@ -87,21 +87,21 @@ class _MoveFundsPaneV0State extends State<MoveFundsPaneV0> {
   }
 
   void _moveFunds() async {
-    if (pot == null) {
-      throw Exception('Pot is null');
+    if (pot == null || widget.context == null || widget.signer == null) {
+      throw Exception('null');
     }
     setState(() {
       _txPending = true;
     });
     try {
-      var txHash = await OrchidWeb3V0(widget.context).orchidMoveBalanceToEscrow(
-        signer: widget.signer,
+      var txHash = await OrchidWeb3V0(widget.context!).orchidMoveBalanceToEscrow(
+        signer: widget.signer!,
         pot: pot!,
         moveAmount: _moveBalanceField.value!,
       );
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
-        chainId: widget.context.chain.chainId,
+        chainId: widget.context!.chain.chainId,
         type: DappTransactionType.moveFunds,
       ));
       _moveBalanceField.clear();
