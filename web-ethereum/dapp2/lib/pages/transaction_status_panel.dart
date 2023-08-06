@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
@@ -12,16 +11,16 @@ import 'dapp_wallet_info_panel.dart';
 
 class TransactionStatusPanel extends StatefulWidget {
   final DappTransaction tx;
-  final OrchidWeb3Context context;
+  final OrchidWeb3Context? context;
   final VoidCallback onTransactionUpdated;
-  final Function(String) onDismiss;
+  final Function(String?) onDismiss;
 
   const TransactionStatusPanel({
-    Key key,
-    @required this.context,
-    @required this.tx,
-    @required this.onDismiss,
-    this.onTransactionUpdated,
+    Key? key,
+    required this.context,
+    required this.tx,
+    required this.onDismiss,
+    required this.onTransactionUpdated,
   }) : super(key: key);
 
   @override
@@ -29,25 +28,25 @@ class TransactionStatusPanel extends StatefulWidget {
 }
 
 class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
-  TransactionReceipt _receipt;
+  TransactionReceipt? _receipt;
 
   bool get _txComplete {
     if (widget.context == null) {
       return false;
     }
     return (_receipt?.confirmations ?? 0) >=
-        widget.context.chain.requiredConfirmations;
+        widget.context!.chain.requiredConfirmations;
   }
 
   Duration pollingPeriod = const Duration(seconds: 1);
-  Timer _pollTimer;
+  Timer? _pollTimer;
 
   int get confirmations {
     return _receipt?.confirmations ?? 0;
   }
 
   // Support onTransactionUpdated callback
-  int _lastConfirmationCount;
+  int? _lastConfirmationCount;
 
   @override
   void initState() {
@@ -63,8 +62,8 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
   void _poll(_) async {
     if (widget.context?.web3 != null && widget.tx.transactionHash != null) {
       try {
-        _receipt = await widget.context.web3
-            .getTransactionReceipt(widget.tx.transactionHash);
+        _receipt = await widget.context!.web3
+            .getTransactionReceipt(widget.tx.transactionHash!);
       } catch (err) {
         log("Error fetching transaction receipt for ${widget.tx.transactionHash}");
       }
@@ -72,7 +71,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
 
     // Update listeners on first update or change in confirmation count.
     if (_lastConfirmationCount == null ||
-        confirmations > _lastConfirmationCount) {
+        confirmations > _lastConfirmationCount!) {
       widget.onTransactionUpdated();
     }
     _lastConfirmationCount = confirmations;
@@ -118,7 +117,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
   Widget _buildStatus() {
     // log("XXX: widget.tx = ${widget.tx}");
     var message = _receipt != null
-        ? s.confirmations + ': ${_receipt.confirmations}'
+        ? s.confirmations + ': ${_receipt!.confirmations}'
         : s.pending;
 
     final explorerLink = Chains.chainFor(widget.tx.chainId).explorerUrl;
@@ -126,7 +125,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
 
     return Column(
       children: <Widget>[
-        Text(s.orchidTransaction ?? '').body1,
+        Text(s.orchidTransaction).body1,
         pady(8),
         if (!_txComplete)
           Padding(
@@ -137,16 +136,15 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
           Column(
             children: [
               // description
-              if (description != null)
-                Column(
-                  children: [
-                    Text(description).subtitle.bottom(8),
-                    SizedBox(
-                        width: 100,
-                        child:
-                            Divider(height: 1, color: Colors.white).bottom(16)),
-                  ],
-                ),
+              Column(
+                children: [
+                  Text(description).subtitle.bottom(8),
+                  SizedBox(
+                      width: 100,
+                      child:
+                          Divider(height: 1, color: Colors.white).bottom(16)),
+                ],
+              ),
 
               // tx hash
               Column(
@@ -159,9 +157,10 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
                       SizedBox(
                         width: 95,
                         child: TapToCopyText(
-                          _receipt.transactionHash,
+                          // guarded above
+                          _receipt!.transactionHash,
                           displayText: EthereumAddress.elideAddressString(
-                              _receipt.transactionHash),
+                              _receipt!.transactionHash),
                           overflow: TextOverflow.ellipsis,
                           style: OrchidText.caption.tappable,
                           padding: EdgeInsets.zero,
@@ -171,7 +170,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
                   ).bottom(8),
 
                   // confirmation status
-                  Text(message ?? '').caption.bottom(12),
+                  Text(message).caption.bottom(12),
                 ],
               ),
 
@@ -192,7 +191,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
 
   @override
   void dispose() {
-    _pollTimer.cancel();
+    _pollTimer?.cancel();
     super.dispose();
   }
 }

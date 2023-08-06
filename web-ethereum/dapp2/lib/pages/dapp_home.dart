@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/api/orchid_web3/v1/orchid_contract_deployment_v1.dart';
@@ -31,35 +30,35 @@ import 'v1/dapp_tabs_v1.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DappHome extends StatefulWidget {
-  const DappHome({Key key}) : super(key: key);
+  const DappHome({Key? key}) : super(key: key);
 
   @override
   State<DappHome> createState() => _DappHomeState();
 }
 
 class _DappHomeState extends State<DappHome> {
-  OrchidWeb3Context _web3Context;
-  EthereumAddress _signer;
+  OrchidWeb3Context? _web3Context;
+  EthereumAddress? _signer;
 
   // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
   // TODO: Before that we need to add a controller to our PollingBuilder to allow
   // TODO: for refresh on demand.
-  AccountDetailPoller _accountDetail;
+  AccountDetailPoller? _accountDetail;
 
-  Chain _userDefaultChainSelection;
+  Chain? _userDefaultChainSelection;
 
   final _signerField = AddressValueFieldController();
   final _scrollController = ScrollController();
 
   /// The contract version defaulted or selected by the user.
   /// Null if no contacts are available.
-  int _contractVersionSelectedValue;
+  int? _contractVersionSelectedValue;
 
-  int get _contractVersionSelected {
+  int? get _contractVersionSelected {
     return _contractVersionSelectedValue;
   }
 
-  void _selectContractVersion(int version) {
+  void _selectContractVersion(int? version) {
     // if (version == _contractVersionSelected) { return; }
     log('XXX: version = $version');
     _contractVersionSelectedValue = version;
@@ -68,7 +67,7 @@ class _DappHomeState extends State<DappHome> {
     }
   }
 
-  Set<int> get _contractVersionsAvailable {
+  Set<int>? get _contractVersionsAvailable {
     return _web3Context?.contractVersionsAvailable;
   }
 
@@ -153,17 +152,17 @@ class _DappHomeState extends State<DappHome> {
       // Avoid starting the poller in the rare case where there are no contracts
       if (_contractVersionSelected != null) {
         var account = Account.fromSignerAddress(
-          signerAddress: _signer,
-          version: _contractVersionSelected,
-          funder: _web3Context.walletAddress,
-          chainId: _web3Context.chain.chainId,
+          signerAddress: _signer!,
+          version: _contractVersionSelected!,
+          funder: _web3Context!.walletAddress,
+          chainId: _web3Context!.chain.chainId,
         );
         _accountDetail = AccountDetailPoller(
           account: account,
           pollingPeriod: Duration(seconds: 10),
         );
-        _accountDetail.addListener(_accountDetailUpdated);
-        _accountDetail.startPolling();
+        _accountDetail!.addListener(_accountDetailUpdated);
+        _accountDetail!.startPolling();
       }
     }
     setState(() {});
@@ -195,7 +194,8 @@ class _DappHomeState extends State<DappHome> {
           scrollbarTheme: ScrollbarThemeData(
             thumbColor:
                 MaterialStateProperty.all(Colors.white.withOpacity(0.4)),
-            isAlwaysShown: true,
+            // isAlwaysShown: true,
+            trackVisibility: MaterialStateProperty.all(true),
           ),
         ),
         child: Scrollbar(
@@ -209,7 +209,7 @@ class _DappHomeState extends State<DappHome> {
                 child: Column(
                   children: [
                     if (_contractVersionsAvailable != null &&
-                        _contractVersionsAvailable.isEmpty)
+                        _contractVersionsAvailable!.isEmpty)
                       RoundedRect(
                         backgroundColor: OrchidColors.dark_background,
                         child: Text(s
@@ -236,8 +236,7 @@ class _DappHomeState extends State<DappHome> {
                         child: AccountCard(
                           // todo: the key here just allows us to expanded when details are available
                           // todo: maybe make that the default behavior of the card
-                          key:
-                              Key(_accountDetail?.funder?.toString() ?? 'null'),
+                          key: Key(_accountDetail?.funder.toString() ?? 'null'),
                           minHeight: true,
                           showAddresses: false,
                           showContractVersion: false,
@@ -398,7 +397,6 @@ class _DappHomeState extends State<DappHome> {
               selectContractVersion: _selectContractVersion,
               deployContract: _connected ? deploy : null,
             ).left(16),
-
           ],
         ),
       ],
@@ -406,7 +404,7 @@ class _DappHomeState extends State<DappHome> {
   }
 
   void _deployContract() async {
-    final deploy = OrchidContractDeployment(_web3Context);
+    final deploy = OrchidContractDeployment(_web3Context!);
     if (await deploy.deployIfNeeded()) {
       _onAccountOrChainChange();
     }
@@ -495,14 +493,14 @@ class _DappHomeState extends State<DappHome> {
     log("XXX: switch chain: $chain");
 
     // Handle a WalletConnect switch:
-    if (_web3Context.walletConnectProvider != null) {
+    if (_web3Context!.walletConnectProvider != null) {
       await _switchOrAddChainWalletConnect(chain);
       return;
     }
 
     try {
-      if (_web3Context.ethereumProvider != null) {
-        await _web3Context.ethereumProvider.walletSwitchChain(chain.chainId);
+      if (_web3Context?.ethereumProvider != null) {
+        await _web3Context!.ethereumProvider.walletSwitchChain(chain.chainId);
       }
     } on EthereumUserRejected {
       log("XXX: user rejected switch");
@@ -533,7 +531,7 @@ class _DappHomeState extends State<DappHome> {
   // seem to work currently.  So for now we will create a new connection for chain switch.
   // @see our WalletConnect provider switch chain method.  This has been tested and
   // does work if the chain is specified at init() time.
-  void _switchOrAddChainWalletConnect(Chain chain) async {
+  Future<void> _switchOrAddChainWalletConnect(Chain chain) async {
     log("switchOrAddChainWalletConnect");
     // Dispatch this to avoid a flutter bug?
     Future.delayed(millis(0), () {
@@ -554,7 +552,10 @@ class _DappHomeState extends State<DappHome> {
   }
 
   void _addChain(Chain chain) async {
-    final ethereum = _web3Context.ethereumProvider;
+    if (_web3Context == null) {
+      throw Exception("Cannot add chain without a web3 context");
+    }
+    final ethereum = _web3Context!.ethereumProvider;
     try {
       await ethereum.walletAddChain(
         chainId: chain.chainId,
@@ -565,7 +566,7 @@ class _DappHomeState extends State<DappHome> {
           decimals: chain.nativeCurrency.decimals,
         ),
         blockExplorerUrls:
-            chain.explorerUrl != null ? [chain.explorerUrl] : null,
+            chain.explorerUrl != null ? [chain.explorerUrl!] : null,
         rpcUrls: [chain.providerUrl],
       );
     } on EthereumUserRejected {
@@ -600,7 +601,7 @@ class _DappHomeState extends State<DappHome> {
     );
   }
 
-  void _tryConnectEthereum() async {
+  Future<void> _tryConnectEthereum() async {
     if (!Ethereum.isSupported) {
       AppDialogs.showAppDialog(
           context: context,
@@ -667,7 +668,7 @@ class _DappHomeState extends State<DappHome> {
   }
 
   // Init a new context, disconnecting any old context and registering listeners
-  void _setNewContex(OrchidWeb3Context web3Context) async {
+  void _setNewContex(OrchidWeb3Context? web3Context) async {
     log('set new context: $web3Context');
 
     // Clear the old context, removing listeners and disposing of it properly.
@@ -718,11 +719,12 @@ class _DappHomeState extends State<DappHome> {
 
     // Default the contract version
     if (_contractVersionsAvailable != null) {
-      final selectedVersion = _web3Context.contractVersionsAvailable.contains(1)
-          ? 1
-          : _web3Context.contractVersionsAvailable.contains(0)
-              ? 0
-              : null;
+      final selectedVersion =
+          _web3Context!.contractVersionsAvailable.contains(1)
+              ? 1
+              : _web3Context!.contractVersionsAvailable.contains(0)
+                  ? 0
+                  : null;
       _selectContractVersion(selectedVersion);
     } else {
       _selectContractVersion(null);
@@ -742,11 +744,11 @@ class _DappHomeState extends State<DappHome> {
 
   // For contracts that may exist on chains other than main net we ensure that
   // all requests go through the web3 context.
-  void _setAppWeb3Provider(OrchidWeb3Context web3Context) {
+  void _setAppWeb3Provider(OrchidWeb3Context? web3Context) {
     // log("XXX: setAppWeb3Provider: $web3Context");
     if (web3Context != null &&
         _contractVersionSelected != null &&
-        _contractVersionSelected > 0) {
+        _contractVersionSelected! > 0) {
       OrchidEthereumV1.setWeb3Provider(OrchidEthereumV1Web3Impl(web3Context));
     } else {
       OrchidEthereumV1.setWeb3Provider(null);
@@ -768,12 +770,12 @@ class _DappHomeState extends State<DappHome> {
     // Recreate the context wrapper
     var context = null;
     try {
-      if (_web3Context.ethereumProvider != null) {
-        context =
-            await OrchidWeb3Context.fromEthereum(_web3Context.ethereumProvider);
+      if (_web3Context?.ethereumProvider != null) {
+        context = await OrchidWeb3Context.fromEthereum(
+            _web3Context!.ethereumProvider);
       } else {
         context = await OrchidWeb3Context.fromWalletConnect(
-            _web3Context.walletConnectProvider);
+            _web3Context!.walletConnectProvider);
       }
     } catch (err) {
       log('Error constructing web context:');
@@ -808,10 +810,6 @@ class _DappHomeState extends State<DappHome> {
       _web3Context = null;
       _contractVersionSelectedValue = null;
     });
-  }
-
-  S get s {
-    return S.of(context);
   }
 
   @override

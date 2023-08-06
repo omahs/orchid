@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -15,16 +14,16 @@ import 'package:orchid/util/localization.dart';
 
 class MoveFundsPaneV0 extends StatefulWidget {
   final OrchidWeb3Context context;
-  final LotteryPot pot;
+  final LotteryPot? pot;
   final EthereumAddress signer;
   final bool enabled;
 
   const MoveFundsPaneV0({
-    Key key,
-    @required this.context,
-    @required this.pot,
-    @required this.signer,
-    this.enabled,
+    Key? key,
+    required this.context,
+    required this.pot,
+    required this.signer,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -36,7 +35,7 @@ class _MoveFundsPaneV0State extends State<MoveFundsPaneV0> {
   final _moveBalanceField = TypedTokenValueFieldController(type: tokenType);
   bool _txPending = false;
 
-  LotteryPot get pot {
+  LotteryPot? get pot {
     return widget.pot;
   }
 
@@ -76,25 +75,29 @@ class _MoveFundsPaneV0State extends State<MoveFundsPaneV0> {
 
   bool get _moveBalanceFieldValid {
     var balance = _moveBalanceField.value;
-    return balance != null && balance <= pot.balance;
+    // pot null guarded by page logic
+    return balance != null && balance <= pot!.balance;
   }
 
   bool get _formEnabled {
     return pot != null &&
         !_txPending &&
         _moveBalanceFieldValid &&
-        _moveBalanceField.value.gtZero();
+        _moveBalanceField.value!.gtZero();
   }
 
   void _moveFunds() async {
+    if (pot == null) {
+      throw Exception('Pot is null');
+    }
     setState(() {
       _txPending = true;
     });
     try {
       var txHash = await OrchidWeb3V0(widget.context).orchidMoveBalanceToEscrow(
         signer: widget.signer,
-        pot: pot,
-        moveAmount: _moveBalanceField.value,
+        pot: pot!,
+        moveAmount: _moveBalanceField.value!,
       );
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,

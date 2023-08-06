@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
@@ -31,12 +30,12 @@ class AddFundsPane extends StatefulWidget {
   }) addFunds;
 
   const AddFundsPane({
-    Key key,
-    @required this.context,
-    @required this.signer,
-    @required this.addFunds,
-    @required this.tokenType,
-    this.enabled,
+    Key? key,
+    required this.context,
+    required this.signer,
+    required this.addFunds,
+    required this.tokenType,
+    this.enabled = false,
   }) : super(key: key);
 
   @override
@@ -46,8 +45,8 @@ class AddFundsPane extends StatefulWidget {
 class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
   OrchidWeb3Context get web3Context => widget.context;
 
-  TypedTokenValueFieldController _addBalanceField;
-  TypedTokenValueFieldController _addDepositField;
+  late TypedTokenValueFieldController _addBalanceField;
+  late TypedTokenValueFieldController _addDepositField;
 
   @override
   TokenType get tokenType => widget.tokenType;
@@ -70,11 +69,11 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
     return TokenPriceBuilder(
         tokenType: tokenType,
         seconds: 30,
-        builder: (USD tokenPrice) {
+        builder: (USD? tokenPrice) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (allowance != null && allowance.gtZero())
+              if (allowance.gtZero())
                 Text(s.currentTokenPreauthorizationAmount(tokenType.symbol,
                         allowance.formatCurrency(locale: context.locale)))
                     .body2
@@ -167,7 +166,8 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
   }
 
   Token get _totalAdd {
-    return _addBalanceField.value + _addDepositField.value;
+    // null guarded by _addBalanceFieldValid and _addDepositFieldValid
+    return _addBalanceField.value! + _addDepositField.value!;
   }
 
   bool get _netAddError {
@@ -187,8 +187,9 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
       final txHashes = await widget.addFunds(
         wallet: wallet,
         signer: widget.signer,
-        addBalance: _addBalanceField.value,
-        addEscrow: _addDepositField.value,
+        // nulls guarded by _addBalanceFieldValid and _addDepositFieldValid
+        addBalance: _addBalanceField.value!,
+        addEscrow: _addDepositField.value!,
       );
 
       // Persisting the transaction(s) will update the UI elsewhere.

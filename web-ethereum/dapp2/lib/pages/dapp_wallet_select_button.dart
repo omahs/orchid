@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import '../orchid/menu/orchid_popup_menu_button.dart';
@@ -15,15 +14,15 @@ class DappWalletSelectButton extends StatefulWidget {
   final bool connected;
 
   DappWalletSelectButton({
-    Key key,
-    this.width,
-    this.backgroundColor,
-    this.selectedTextStyle,
-    this.unselectedTextStyle,
-    this.connectMetamask,
-    this.connectWalletConnect,
+    Key? key,
+    required this.width,
+    required this.backgroundColor,
+    required this.selectedTextStyle,
+    required this.unselectedTextStyle,
+    required this.connectMetamask,
+    required this.connectWalletConnect,
     this.enabled = true,
-    this.disconnect,
+    required this.disconnect,
     this.connected = false,
   }) : super(key: key);
 
@@ -119,9 +118,9 @@ class _DappWalletSelectButtonState extends State<DappWalletSelectButton> {
   }
 
   PopupMenuItem<String> _buildWalletItem({
-    Widget icon,
-    String title,
-    VoidCallback onPressed,
+    required Widget icon,
+    required String title,
+    required VoidCallback onPressed,
     double topPad = 0,
     double bottomPad = 0,
   }) {

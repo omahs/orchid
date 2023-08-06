@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -14,16 +13,16 @@ import 'package:orchid/util/localization.dart';
 
 class LockWarnPaneV0 extends StatefulWidget {
   final OrchidWeb3Context context;
-  final LotteryPot pot;
+  final LotteryPot? pot;
   final EthereumAddress signer;
   final bool enabled;
 
   const LockWarnPaneV0({
-    Key key,
-    @required this.context,
-    @required this.pot,
-    @required this.signer,
-    this.enabled,
+    Key? key,
+    required this.context,
+    required this.pot,
+    required this.signer,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class LockWarnPaneV0 extends StatefulWidget {
 class _LockWarnPaneV0State extends State<LockWarnPaneV0> {
   bool _txPending = false;
 
-  LotteryPot get pot {
+  LotteryPot? get pot {
     return widget.pot;
   }
 
@@ -49,17 +48,17 @@ class _LockWarnPaneV0State extends State<LockWarnPaneV0> {
     var statusText = '';
     var isUnlockedOrUnlocking = false;
     if (pot != null) {
-      statusText = pot.isUnlocked
+      statusText = pot!.isUnlocked
           ? s.yourDepositOfAmountIsUnlocked(
-              pot.warned.formatCurrency(locale: context.locale))
+              pot!.warned.formatCurrency(locale: context.locale))
           : s.yourDepositOfAmountIsUnlockingOrUnlocked(
-              pot.deposit.formatCurrency(locale: context.locale),
-              pot.isUnlocking ? s.unlocking : s.locked);
-      statusText += pot.isUnlocking
+              pot!.deposit.formatCurrency(locale: context.locale),
+              pot!.isUnlocking ? s.unlocking : s.locked);
+      statusText += pot!.isUnlocking
           ? '\n' +
-              s.theFundsWillBeAvailableForWithdrawalInTime(pot.unlockInString())
+              s.theFundsWillBeAvailableForWithdrawalInTime(pot!.unlockInString())
           : '';
-      isUnlockedOrUnlocking = (pot.isUnlocked || pot.isUnlocking);
+      isUnlockedOrUnlocking = (pot!.isUnlocked || pot!.isUnlocking);
     }
 
     return Column(
@@ -101,7 +100,7 @@ class _LockWarnPaneV0State extends State<LockWarnPaneV0> {
     return pot != null && !_txPending;
   }
 
-  void _lockOrUnlock({bool lock}) async {
+  void _lockOrUnlock({required bool lock}) async {
     setState(() {
       _txPending = true;
     });

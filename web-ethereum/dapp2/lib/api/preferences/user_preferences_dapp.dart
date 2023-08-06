@@ -24,20 +24,20 @@ class UserPreferencesDapp {
           getValue: (key) {
             return _getTransactions();
           },
-          putValue: (key, List<DappTransaction> txs) {
+          putValue: (key, List<DappTransaction>? txs) {
             return _setTransactions(txs);
           });
 
   void addTransaction(DappTransaction tx) {
-    transactions.set(transactions.get() + [tx]);
+    transactions.set(transactions.get()! + [tx]);
   }
 
   void addTransactions(Iterable<DappTransaction> txs) {
-    transactions.set(transactions.get() + txs.toList());
+    transactions.set(transactions.get()! + txs.toList());
   }
 
   void removeTransaction(String txHash) {
-    var list = transactions.get();
+    var list = transactions.get()!;
     list.removeWhere((tx) => tx.transactionHash == txHash);
     transactions.set(list);
   }
@@ -59,7 +59,8 @@ class UserPreferencesDapp {
     }
   }
 
-  static Future<bool> _setTransactions(Iterable<DappTransaction> txs) async {
+  static Future<bool> _setTransactions(Iterable<DappTransaction>? txs) async {
+    txs ??= [];
     print("XXX setTxs: storing txs: ${jsonEncode(txs.toList())}");
     try {
       var value = jsonEncode(txs.toList());

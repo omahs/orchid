@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 
 enum DappTransactionType {
@@ -16,14 +15,14 @@ enum DappTransactionType {
 
 /// Persistent transaction data
 class DappTransaction {
-  final String transactionHash;
+  final String? transactionHash;
   final int chainId;
-  final DappTransactionType type;
+  final DappTransactionType? type;
 
   DappTransaction({
-    @required this.transactionHash,
-    @required this.chainId,
-    @required this.type,
+    this.transactionHash,
+    required this.chainId,
+    this.type,
   });
 
   DappTransaction.fromJson(Map<String, dynamic> json)
@@ -58,7 +57,7 @@ class DappTransaction {
   }
 
   static String descriptionForType(
-      BuildContext context, DappTransactionType type) {
+      BuildContext context, DappTransactionType? type) {
     final s = context.s;
     switch (type ?? DappTransactionType.unknown) {
       case DappTransactionType.addFunds:

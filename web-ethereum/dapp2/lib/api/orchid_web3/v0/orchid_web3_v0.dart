@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -40,10 +39,10 @@ class OrchidWeb3V0 {
   /// Transfer the int amount from the user to the specified lottery pot address.
   /// If the total exceeds walletBalance the amount value is automatically reduced.
   Future<List<String> /*TransactionId*/ > orchidAddFunds({
-    OrchidWallet wallet,
-    EthereumAddress signer,
-    Token addBalance,
-    Token addEscrow,
+    required OrchidWallet wallet,
+    required EthereumAddress signer,
+    required Token addBalance,
+    required Token addEscrow,
   }) async {
     addBalance.assertType(Tokens.OXT);
     addEscrow.assertType(Tokens.OXT);
@@ -91,11 +90,11 @@ class OrchidWeb3V0 {
 
   /// Withdraw from balance and escrow to the wallet address.
   Future<String /*TransactionId*/ > orchidWithdrawFunds({
-    EthereumAddress wallet,
-    EthereumAddress signer,
-    LotteryPot pot,
-    Token withdrawBalance,
-    Token withdrawEscrow,
+    required EthereumAddress wallet,
+    required EthereumAddress signer,
+    required LotteryPot pot,
+    required Token withdrawBalance,
+    required Token withdrawEscrow,
   }) async {
     withdrawBalance.assertType(Tokens.OXT);
     withdrawEscrow.assertType(Tokens.OXT);
@@ -131,9 +130,9 @@ class OrchidWeb3V0 {
 
   /// Withdraw from balance and escrow to the wallet address.
   Future<String /*TransactionId*/ > orchidMoveBalanceToEscrow({
-    EthereumAddress signer,
-    LotteryPot pot,
-    Token moveAmount,
+    required EthereumAddress signer,
+    required LotteryPot pot,
+    required Token moveAmount,
   }) async {
     moveAmount.assertType(Tokens.OXT);
     if (moveAmount > pot.balance) {
@@ -155,8 +154,8 @@ class OrchidWeb3V0 {
   }
 
   Future<String /*TransactionId*/ > orchidLockOrWarn({
-    @required bool isLock,
-    EthereumAddress signer,
+    required bool isLock,
+    required EthereumAddress signer,
   }) async {
     var contract = _lotteryContract.connect(context.web3.getSigner());
     TransactionResponse tx = await contract.send(
