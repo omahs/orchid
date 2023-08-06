@@ -54,9 +54,9 @@ class JSConfig {
   }
 
   bool evalBool(String expression) {
-    JsObject val = _eval(expression);
-    if (val.valueOf is bool) {
-      return val.valueOf;
+    JsObject? val = _eval(expression);
+    if (val?.valueOf is bool) {
+      return val?.valueOf;
     }
     throw Exception("Expression not a boolean: $val");
   }
@@ -79,7 +79,7 @@ class JSConfig {
   }
 
   int evalInt(String expression) {
-    JsObject val = _eval(expression);
+    JsObject? val = _eval(expression);
     try {
       return int.parse(val.toString());
     } catch (err) {
@@ -105,16 +105,16 @@ class JSConfig {
   }
 
   double evalDouble(String expression) {
-    JsObject val = _eval(expression);
-    if (val.valueOf is double) {
-      return val.valueOf;
+    JsObject? val = _eval(expression);
+    if (val?.valueOf is double) {
+      return val?.valueOf;
     }
     throw Exception("Expression not double: $val");
   }
 
   String evalStringDefault(String expression, String defaultValue) {
     try {
-      return evalString(expression);
+      return evalString(expression) ?? defaultValue;
     } catch (err) {
       return defaultValue;
     }
@@ -136,20 +136,20 @@ class JSConfig {
     }
   }
 
-  String evalString(String expression) {
-    JsObject val = _eval(expression);
-    if (val.valueOf is String) {
-      return val.valueOf;
+  String? evalString(String expression) {
+    JsObject? val = _eval(expression);
+    if (val?.valueOf is String) {
+      return val?.valueOf;
     }
     throw Exception("Expression not a string: $val");
   }
 
-  JsObject evalObject(String expression) {
+  JsObject? evalObject(String expression) {
     return _eval(expression);
   }
 
-  JsObject _eval(String expression) {
-    JsObject val = jsEngine.visitProgram(parsejs(expression, filename: "eval"));
+  JsObject? _eval(String expression) {
+    JsObject? val = jsEngine.visitProgram(parsejs(expression, filename: "eval"));
     return val;
   }
 }

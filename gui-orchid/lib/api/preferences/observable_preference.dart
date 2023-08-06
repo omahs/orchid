@@ -34,7 +34,7 @@ class ObservablePreference<T> {
   }
 
   T? get() {
-    if (_initialized) {
+    if (_initialized && _subject.hasValue) {
       return _subject.value;
     } else {
       T? value = getValue(key);
@@ -64,9 +64,13 @@ class ObservablePreference<T> {
     get();
   }
 
-  void _broadcast(value) {
+  void _broadcast(T? value) {
     _initialized = true;
-    _subject.add(value);
+    // TODO: We should allow nulls in the streams
+    if (value != null) {
+      _subject.add(value);
+    }
+    // _subject.add(value);
   }
 }
 

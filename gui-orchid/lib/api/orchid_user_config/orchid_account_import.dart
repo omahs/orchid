@@ -53,6 +53,9 @@ class OrchidAccountImport {
       final config = JSConfig(js);
       JsArray accountsJs = config.evalObject('accounts') as JsArray;
       final accounts = accountsJs.valueOf.map((account) {
+        if (account == null) {
+          throw "Account is null";
+        }
         final secret = account.properties['secret'].toString();
         final signer = resolveImportedKey(secret, existingKeys, []);
         final funder =
@@ -88,6 +91,9 @@ class OrchidAccountImport {
       // signer info
       final config = JSConfig(js);
       var secret = config.evalString('account.secret');
+      if (secret == null) {
+        throw "Account secret is null";
+      }
       var newKeys = <StoredEthereumKey>[]; // type required here
       var signer = resolveImportedKey(secret, existingKeys, newKeys);
 
