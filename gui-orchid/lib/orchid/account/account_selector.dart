@@ -162,7 +162,7 @@ class AccountSelectorDialog extends StatelessWidget {
     return AppDialogs.showConfirmationDialog(
       context: context,
       contentPadding: EdgeInsets.zero,
-      titleWidget: ListenableBuilder(
+      titleWidget: ListenableBuilderUtil(
           listenable: titleChanged,
           builder: (context, snapshot) {
             var num = _selectedAccounts.length;

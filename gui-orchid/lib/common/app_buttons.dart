@@ -279,7 +279,7 @@ class CopyTextButton extends StatelessWidget {
       // surfaceTintColor: Colors.white,
       // ),
       onPressed: () {
-        Clipboard.setData(ClipboardData(text: copyText));
+        Clipboard.setData(ClipboardData(text: copyText ?? ''));
       },
       child: child ??
           Icon(

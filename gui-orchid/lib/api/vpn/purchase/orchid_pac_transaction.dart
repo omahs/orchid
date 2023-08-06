@@ -202,7 +202,7 @@ class PacAddBalanceTransaction extends PacTransaction
   Map<String, dynamic> toJson() {
     var json = super.toJson();
     json.addAll({
-      'signer': signer?.toString() ?? null,
+      'signer': signer.toString(),
       'productId': productId,
       'receipt': receipt,
       'receiptType': receiptType != null ? receiptType!.name : null,

@@ -159,7 +159,7 @@ class _AccountManagerPageState extends State<AccountManagerPage> {
       ],
       child: identitiesEmpty
           ? _buildNoIdentitiesEmptyState()
-          : ListenableBuilder(
+          : ListenableBuilderUtil(
               // not null due to identities check
               listenable: _accountStore!,
               builder: (context, snapshot) {

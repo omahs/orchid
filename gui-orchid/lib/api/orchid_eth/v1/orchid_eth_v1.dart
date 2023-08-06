@@ -11,7 +11,7 @@ abstract class OrchidEthereumV1 {
   static OrchidEthereumV1? _shared;
 
   // This method is used by the dapp to set a web3 provider implementation
-  static setWeb3Provider(OrchidEthereumV1 impl) {
+  static setWeb3Provider(OrchidEthereumV1? impl) {
     _shared = impl;
   }
 
