@@ -3,7 +3,7 @@ import 'object.dart';
 
 class JsArguments extends JsObject {
   @override
-  final List<JsObject> valueOf;
+  final List<JsObject?> valueOf;
   final JsObject callee;
 
   JsArguments(this.valueOf, this.callee) {

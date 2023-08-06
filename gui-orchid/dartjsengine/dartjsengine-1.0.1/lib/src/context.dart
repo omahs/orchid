@@ -16,7 +16,7 @@ class JSContext {
     return new JSContext(scope.createChild(), callStack.duplicate());
   }
 
-  JSContext bind(JsObject context) {
+  JSContext bind(JsObject? context) {
     return createChild()..scope.context = context;
   }
 }

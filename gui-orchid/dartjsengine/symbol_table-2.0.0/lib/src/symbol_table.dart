@@ -173,7 +173,7 @@ class SymbolTable<T> {
   /// You cannot use this method to assign constants.
   ///
   /// Returns the variable whose value was just assigned.
-  Variable<T> assign(String name, T value) {
+  Variable<T> assign(String name, T? value) {
     return resolveOrCreate(name)..value = value;
   }
 

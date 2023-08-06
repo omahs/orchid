@@ -5,7 +5,7 @@ import 'JSEngine.dart';
 import 'util.dart';
 
 class JsObject {
-  final Map<dynamic, JsObject> properties = {};
+  final Map<dynamic, JsObject?> properties = {};
 
   //final Map<String, JsObject> prototype = {};
   String typeof = 'object';
@@ -61,7 +61,7 @@ class JsObject {
     */
   }
 
-  Map<dynamic, JsObject> get prototype {
+  Map<dynamic, JsObject?> get prototype {
     return (properties['prototype'] ??= new JsObject()).properties;
   }
 

@@ -27,7 +27,7 @@ class JSEngine {
    * **node** parsed JS program by JSParser
    */
   // stackName unused here
-  JsObject visitProgram(Program node, [String? stackName, JSContext? ctx]) {
+  JsObject? visitProgram(Program node, [String? stackName, JSContext? ctx]) {
     CallStack callStack;
     stackName = node.filename ?? '<entry>';
 
@@ -37,10 +37,10 @@ class JSEngine {
       callStack = new CallStack();
       ctx = new JSContext(globalScope, callStack);
     }
-    callStack.push(node.filename, node.line ?? 0, stackName);
+    callStack.push(node.filename, node.line, stackName);
 
     // TODO: Hoist functions, declarations into global scope.
-    JsObject out;
+    JsObject? out;
 
     //JS programs are a series of statments,
     //we will loop through them and process each of them
@@ -59,7 +59,7 @@ class JSEngine {
     return out;
   }
 
-  JsObject visitStatement(
+  JsObject? visitStatement(
       Statement node, JSContext ctx, String stackName) {
     var scope = ctx.scope;
     var callStack = ctx.callStack;
@@ -113,9 +113,14 @@ class JSEngine {
     throw callStack.error('Unsupported', node.runtimeType.toString());
   }
 
-  JsObject visitExpression(Expression node, JSContext ctx) {
+  JsObject? visitExpression(Expression? node, JSContext ctx) {
     var scope = ctx.scope;
     var callStack = ctx.callStack;
+
+    // ??
+    if (node == null) {
+      return null;
+    }
 
     if (node is NameExpression) {
       if (node.name.value == 'undefined') {
@@ -145,9 +150,10 @@ class JSEngine {
     }
 
     if (node is ObjectExpression) {
-      var props = <dynamic, JsObject>{};
+      var props = <dynamic, JsObject?>{};
 
       for (var prop in node.properties) {
+
         props[prop.nameString] = visitExpression(prop.expression, ctx);
       }
 
@@ -177,7 +183,7 @@ class JSEngine {
       // TODO: What are the actual semantics of this in JavaScript?
       var target = visitExpression(node.object, ctx);
       var index = visitExpression(node.property, ctx);
-      return target.properties[index.valueOf];
+      return target!.properties[index!.valueOf];
     }
 
     if (node is CallExpression) {
@@ -453,7 +459,7 @@ class JSEngine {
     return function;
   }
 
-  JsObject invoke(JsFunction target, List<JsObject> args, JSContext ctx) {
+  JsObject invoke(JsFunction target, List<JsObject?> args, JSContext ctx) {
     var scope = ctx.scope, callStack = ctx.callStack;
     var childScope = (target.closureScope ?? scope);
     var arguments = new JsArguments(args, target);

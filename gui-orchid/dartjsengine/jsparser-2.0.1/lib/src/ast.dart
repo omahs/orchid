@@ -16,7 +16,7 @@ abstract class Node {
   int? start, end;
 
   /// 1-based line number.
-  int? line;
+  int line = -1;
 
   /// Retrieves the filename from the enclosing [Program]. Returns null if the node is orphaned.
   String? get filename {
