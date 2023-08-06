@@ -222,14 +222,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_cupertino_localizations:
-    dependency: "direct main"
-    description:
-      name: flutter_cupertino_localizations
-      sha256: a4276b91cc3e75738e2e3b1168331bfa68cc87de2eacce637c50f441f9075f3b
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   flutter_lints:
     dependency: "direct main"
     description:
@@ -544,10 +536,10 @@ packages:
     dependency: "direct main"
     description:
       name: rxdart
-      sha256: c7cd7ceed33a8fdf7333f29058af577ae71be670132a70b013084b30e0d9e3c3
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.25.0"
+    version: "0.27.7"
   shared_preferences:
     dependency: "direct main"
     description:
