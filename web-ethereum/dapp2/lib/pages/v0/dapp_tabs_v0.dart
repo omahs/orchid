@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -17,15 +16,15 @@ import 'package:orchid/util/localization.dart';
 
 /// The tabs for interacting with the V0 contract.
 class DappTabsV0 extends StatefulWidget {
-  final OrchidWeb3Context web3Context;
-  final EthereumAddress signer;
-  final AccountDetail accountDetail;
+  final OrchidWeb3Context? web3Context;
+  final EthereumAddress? signer;
+  final AccountDetail? accountDetail;
 
   const DappTabsV0({
-    Key key,
-    @required this.web3Context,
-    @required this.signer,
-    @required this.accountDetail,
+    Key? key,
+    required this.web3Context,
+    required this.signer,
+    required this.accountDetail,
   }) : super(key: key);
 
   @override
@@ -121,10 +120,10 @@ class _DappTabsV0State extends State<DappTabsV0> {
 
   // Defers construction of the contract until needed
   Future<List<String> /*TransactionId*/ > _orchidAddFunds({
-    OrchidWallet wallet,
-    EthereumAddress signer,
-    Token addBalance,
-    Token addEscrow,
+    required OrchidWallet wallet,
+    required EthereumAddress signer,
+    required Token addBalance,
+    required Token addEscrow,
   }) async {
     return OrchidWeb3V0(widget.web3Context).orchidAddFunds(
       wallet: wallet,

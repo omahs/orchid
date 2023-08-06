@@ -14,8 +14,8 @@ import 'dapp_tab_context.dart';
 import '../orchid/field/orchid_labeled_token_value_field.dart';
 
 class AddFundsPane extends StatefulWidget {
-  final OrchidWeb3Context context;
-  final EthereumAddress signer;
+  final OrchidWeb3Context? context;
+  final EthereumAddress? signer;
   final bool enabled;
 
   // Token type can override the default currency for use in V0.
@@ -24,7 +24,7 @@ class AddFundsPane extends StatefulWidget {
   // Callback to add the funds
   final Future<List<String>> Function({
     OrchidWallet wallet,
-    EthereumAddress signer,
+    EthereumAddress? signer,
     Token addBalance,
     Token addEscrow,
   }) addFunds;
@@ -43,7 +43,7 @@ class AddFundsPane extends StatefulWidget {
 }
 
 class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
-  OrchidWeb3Context get web3Context => widget.context;
+  OrchidWeb3Context? get web3Context => widget.context;
 
   late TypedTokenValueFieldController _addBalanceField;
   late TypedTokenValueFieldController _addDepositField;
@@ -195,7 +195,7 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
       // Persisting the transaction(s) will update the UI elsewhere.
       UserPreferencesDapp().addTransactions(txHashes.map((hash) => DappTransaction(
             transactionHash: hash,
-            chainId: widget.context.chain.chainId,
+            chainId: widget.context!.chain.chainId,
             type: DappTransactionType.addFunds,
           )));
 

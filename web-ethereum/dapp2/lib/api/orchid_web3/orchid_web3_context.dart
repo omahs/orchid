@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
