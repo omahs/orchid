@@ -139,15 +139,15 @@ class _DappTabsV1State extends State<DappTabsV1> with TickerProviderStateMixin {
 
   // Defers construction of the contract until needed
   Future<List<String> /*TransactionId*/ > _orchidAddFunds({
-    required OrchidWallet wallet,
+    required OrchidWallet? wallet,
     required EthereumAddress? signer,
     required Token addBalance,
     required Token addEscrow,
   }) async {
-    if (signer == null) {
+    if (signer == null || wallet == null) {
       throw Exception("No signer");
     }
-    return OrchidWeb3V1(widget.web3Context).orchidAddFunds(
+    return OrchidWeb3V1(widget.web3Context!).orchidAddFunds(
       wallet: wallet,
       signer: signer,
       addBalance: addBalance,

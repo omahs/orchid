@@ -332,7 +332,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
   }
 
   bool get _netPayableValid {
-    return _netPayable <= wallet.balance;
+    return _netPayable <= wallet!.balance!;
   }
 
   bool get _netPayableError {
@@ -349,7 +349,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     switch (_balanceFieldDirection) {
       case _AddWithdrawDirection.Add:
         return _balanceField.value != null &&
-            _balanceField.value! <= walletBalance;
+            _balanceField.value! <= walletBalance!;
       case _AddWithdrawDirection.Withdraw:
         return _balanceField.value != null &&
             _balanceField.value! <= pot!.balance;
@@ -366,7 +366,7 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
     switch (_depositFieldDirection) {
       case _AddWithdrawDirection.Add:
         return _depositField.value != null &&
-            _depositField.value! <= walletBalance;
+            _depositField.value! <= walletBalance!;
       case _AddWithdrawDirection.Withdraw:
         return _depositField.value != null &&
             _depositField.value! <= pot!.unlockedAmount;
@@ -443,10 +443,10 @@ class _AdvancedFundsPaneV1State extends State<AdvancedFundsPaneV1>
       txPending = true;
     });
     try {
-      var txHash = await OrchidWeb3V1(widget.context).orchidEditFunds(
-        wallet: wallet,
-        pot: pot,
-        signer: widget.signer,
+      var txHash = await OrchidWeb3V1(widget.context!).orchidEditFunds(
+        wallet: wallet!,
+        pot: pot!,
+        signer: widget.signer!,
         netPayable: _netPayable,
         adjustAmount: _netDepositAdd,
         warnAmount: _warnedAmountAdd,

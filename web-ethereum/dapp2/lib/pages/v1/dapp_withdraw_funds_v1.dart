@@ -304,6 +304,9 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
   }
 
   void _withdrawFunds() async {
+    if (widget.context == null || pot == null || signer == null) {
+      throw Exception('Invalid state for withdraw funds');
+    }
     var withdrawBalance = Token.min(_balanceField.value!, pot!.balance);
     var withdrawDeposit = Token.min(_depositField.value!, pot!.unlockedAmount);
 
@@ -311,9 +314,9 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
       txPending = true;
     });
     try {
-      var txHash = await OrchidWeb3V1(widget.context).orchidWithdrawFunds(
-        pot: pot,
-        signer: signer,
+      var txHash = await OrchidWeb3V1(widget.context!).orchidWithdrawFunds(
+        pot: pot!,
+        signer: signer!,
         withdrawBalance: withdrawBalance,
         withdrawEscrow: withdrawDeposit,
         warnDeposit: _unlockDeposit,

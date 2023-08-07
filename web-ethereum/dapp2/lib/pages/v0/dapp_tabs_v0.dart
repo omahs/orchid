@@ -120,12 +120,12 @@ class _DappTabsV0State extends State<DappTabsV0> {
 
   // Defers construction of the contract until needed
   Future<List<String> /*TransactionId*/ > _orchidAddFunds({
-    required OrchidWallet wallet,
+    required OrchidWallet? wallet,
     required EthereumAddress? signer,
     required Token addBalance,
     required Token addEscrow,
   }) async {
-    if (widget.web3Context == null || signer == null) {
+    if (widget.web3Context == null || signer == null || wallet == null) {
       throw Exception('No web3 context or null signer');
     }
     return OrchidWeb3V0(widget.web3Context!).orchidAddFunds(

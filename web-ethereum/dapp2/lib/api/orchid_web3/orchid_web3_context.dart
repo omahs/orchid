@@ -21,10 +21,10 @@ class OrchidWeb3Context {
   final Web3Provider web3;
 
   final Chain chain;
-  final EthereumAddress walletAddress;
+  final EthereumAddress? walletAddress;
 
   /// If the web3 provider wraps ethereum this is the underlying provider.
-  final Ethereum ethereumProvider;
+  final Ethereum? ethereumProvider;
 
   /// If the web3 provider wraps wallet connect this is the underlying provider.
   final WalletConnectEthereumProvider? walletConnectProvider;
@@ -34,18 +34,18 @@ class OrchidWeb3Context {
   bool disposed = false;
 
   // Wallet
-  OrchidWallet wallet;
-  OrchidWallet _lastWallet;
-  Timer _pollWalletTimer;
+  late OrchidWallet wallet;
+  OrchidWallet? _lastWallet;
+  Timer? _pollWalletTimer;
   Duration _pollWalletPeriod = Duration(seconds: 5);
-  VoidCallback _walletUpdateListener;
+  VoidCallback? _walletUpdateListener;
 
   /// Lottery contract versions available on this chain
-  Set<int> contractVersionsAvailable;
+  Set<int>? contractVersionsAvailable;
 
   OrchidWeb3Context._({
-    this.web3,
-    this.chain,
+    required this.web3,
+    required this.chain,
     this.walletAddress,
     this.ethereumProvider,
     this.walletConnectProvider,
@@ -176,9 +176,9 @@ class OrchidWeb3Context {
     }
 
     if (ethereumProvider != null) {
-      ethereumProvider.onAccountsChanged(invokeListener);
+      ethereumProvider!.onAccountsChanged(invokeListener);
     } else {
-      walletConnectProvider.onAccountsChanged(invokeListener);
+      walletConnectProvider!.onAccountsChanged(invokeListener);
     }
   }
 
@@ -193,9 +193,9 @@ class OrchidWeb3Context {
     }
 
     if (ethereumProvider != null) {
-      ethereumProvider.onChainChanged(invokeListener);
+      ethereumProvider!.onChainChanged(invokeListener);
     } else {
-      walletConnectProvider.onChainChanged(invokeListener);
+      walletConnectProvider!.onChainChanged(invokeListener);
     }
   }
 
@@ -222,7 +222,7 @@ class OrchidWeb3Context {
       wallet = await getWallet();
       if (wallet != _lastWallet) {
         if (_walletUpdateListener != null) {
-          _walletUpdateListener();
+          _walletUpdateListener!();
         }
       }
       _lastWallet = wallet;
@@ -276,7 +276,7 @@ class OrchidWeb3Context {
 }
 
 class OrchidWallet {
-  final OrchidWeb3Context context;
+  final OrchidWeb3Context? context;
 
   Map<TokenType, Token> balances;
 
@@ -285,34 +285,37 @@ class OrchidWallet {
 
   OrchidWallet({
     this.context,
-    Map<TokenType, Token> balances,
-    Map<TokenType, Token> allowances,
+    Map<TokenType, Token>? balances,
+    Map<TokenType, Token>? allowances,
   })  : this.balances = balances ?? {},
         this.allowances = allowances ?? {};
 
-  EthereumAddress get address {
-    return context.walletAddress;
+  EthereumAddress? get address {
+    return context?.walletAddress;
   }
 
   /// The balance of the native token type for the chain.
-  Token get balance {
-    return balances[context.chain.nativeCurrency];
+  Token? get balance {
+    return balances[context?.chain.nativeCurrency];
   }
 
   /// Fetch the native token balance for
   Future<Token> getBalance() async {
-    return context.getBalance();
+    if (context == null) {
+      throw Exception("Context is null");
+    }
+    return context!.getBalance();
   }
 
-  Token get oxtBalance {
+  Token? get oxtBalance {
     return balances[Tokens.OXT];
   }
 
-  Token balanceOf(TokenType type) {
+  Token? balanceOf(TokenType type) {
     return balances[type];
   }
 
-  Token allowanceOf(TokenType type) {
+  Token? allowanceOf(TokenType type) {
     return allowances[type];
   }
 

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
@@ -7,28 +6,28 @@ import 'package:orchid/orchid/orchid_identicon.dart';
 import 'package:orchid/pages/dapp_wallet_info_panel.dart';
 
 class DappWalletInfoButton extends StatefulWidget {
-  final OrchidWeb3Context web3Context;
+  final OrchidWeb3Context? web3Context;
   final VoidCallback onDisconnect;
   final bool showBalance;
   final VoidCallback disconnect;
 
-  final int contractVersionSelected;
+  final int? contractVersionSelected;
   final void Function(int version) selectContractVersion;
-  final Set<int> contractVersionsAvailable;
-  final VoidCallback deployContract;
+  final Set<int>? contractVersionsAvailable;
+  final VoidCallback? deployContract;
 
   /// If true only the first four chars are shown, else elided first and last four.
   final bool minimalAddress;
 
   DappWalletInfoButton({
-    Key key,
-    @required this.web3Context,
-    @required this.onDisconnect,
-    @required this.showBalance,
+    Key? key,
+    required this.web3Context,
+    required this.onDisconnect,
+    required this.showBalance,
     this.minimalAddress = false,
-    this.disconnect,
+    required this.disconnect,
     this.contractVersionSelected,
-    this.selectContractVersion,
+    required this.selectContractVersion,
     this.contractVersionsAvailable,
     this.deployContract,
   }) : super(key: key);
@@ -100,9 +99,9 @@ class _DappWalletInfoButtonState extends State<DappWalletInfoButton> {
         ],
       );
     }
-    final balanceText = widget.web3Context.wallet?.balance
-        ?.formatCurrency(locale: context.locale);
-    var addressText = widget.web3Context.walletAddress.toString(elide: true);
+    final balanceText = widget.web3Context!.wallet.balance
+        .formatCurrency(locale: context.locale);
+    var addressText = widget.web3Context!.walletAddress.toString(elide: true);
     if (widget.minimalAddress) {
       addressText = addressText.substring(0, 7);
     }
@@ -113,7 +112,7 @@ class _DappWalletInfoButtonState extends State<DappWalletInfoButton> {
         SizedBox(
           width: 20,
           height: 20,
-          child: OrchidIdenticon(address: widget.web3Context.walletAddress),
+          child: OrchidIdenticon(address: widget.web3Context!.walletAddress),
         ).left(16),
         Text(
           addressText,
@@ -125,7 +124,7 @@ class _DappWalletInfoButtonState extends State<DappWalletInfoButton> {
           SizedBox(
             width: 20,
             height: 20,
-            child: widget.web3Context.wallet?.balance?.type?.icon ?? padx(20),
+            child: widget.web3Context!.wallet.balance.type.icon ?? padx(20),
           ).left(16),
         if (widget.showBalance)
           SizedBox(

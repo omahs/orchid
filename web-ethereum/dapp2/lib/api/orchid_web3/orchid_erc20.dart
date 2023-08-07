@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
@@ -13,8 +12,8 @@ class OrchidERC20 {
   final Contract _contract;
 
   OrchidERC20({
-    this.context,
-    this.tokenType,
+    required this.context,
+    required this.tokenType,
   }) : this._contract = Contract(
             tokenType.erc20Address.toString(), _erc20Abi, context.web3);
 
@@ -26,7 +25,7 @@ class OrchidERC20 {
 
   /// Get the OXT allowance for this wallet
   Future<Token> getERC20Allowance(
-      {EthereumAddress owner, EthereumAddress spender}) async {
+      {required EthereumAddress owner, required EthereumAddress spender}) async {
     // allowance(address owner, address spender) external view returns (uint256)",
     var allowance = await _contract.call('allowance', [
       owner.toString(),
@@ -38,9 +37,9 @@ class OrchidERC20 {
   /// Approve for transfer the total amount from the user to the specified lottery contract.
   /// If the total exceeds the wallet balance the amount value is automatically reduced.
   Future<String /*TransactionId*/ > approveERC20({
-    EthereumAddress owner,
-    EthereumAddress spender,
-    Token amount,
+    required EthereumAddress owner,
+    required EthereumAddress spender,
+    required Token amount,
   }) async {
     var walletBalance = await getERC20Balance(owner);
 

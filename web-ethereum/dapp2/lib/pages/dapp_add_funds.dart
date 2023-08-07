@@ -23,7 +23,7 @@ class AddFundsPane extends StatefulWidget {
 
   // Callback to add the funds
   final Future<List<String>> Function({
-    required OrchidWallet wallet,
+    required OrchidWallet? wallet,
     required EthereumAddress? signer,
     required Token addBalance,
     required Token addEscrow,
@@ -160,7 +160,7 @@ class _AddFundsPaneState extends State<AddFundsPane> with DappTabWalletContext {
     final zero = tokenType.zero;
     if (_addBalanceFieldValid && _addDepositFieldValid) {
       var total = _totalAdd;
-      return total > zero && total <= walletBalanceOf(tokenType);
+      return total > zero && total <= walletBalanceOf(tokenType)!;
     }
     return false;
   }

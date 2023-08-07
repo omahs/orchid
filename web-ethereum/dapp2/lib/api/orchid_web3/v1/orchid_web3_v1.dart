@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -33,10 +32,10 @@ class OrchidWeb3V1 {
   /// Transfer the amount from the user to the specified lottery pot address.
   /// If the total exceeds walletBalance the balance value is reduced.
   Future<List<String> /*TransactionId*/ > orchidAddFunds({
-    OrchidWallet wallet,
-    EthereumAddress signer,
-    Token addBalance,
-    Token addEscrow,
+    required OrchidWallet wallet,
+    required EthereumAddress signer,
+    required Token addBalance,
+    required Token addEscrow,
   }) async {
     var walletBalance = await context.wallet.getBalance();
 

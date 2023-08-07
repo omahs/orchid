@@ -110,7 +110,7 @@ class _WithdrawFundsPaneV0State extends State<WithdrawFundsPaneV0> {
     });
     try {
       var txHash = await OrchidWeb3V0(widget.context!).orchidWithdrawFunds(
-        wallet: widget.context!.walletAddress,
+        wallet: widget.context!.walletAddress!,
         signer: widget.signer!,
         pot: pot!,
         withdrawBalance: _withdrawBalanceField.value!,
