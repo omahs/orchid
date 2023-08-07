@@ -16,34 +16,33 @@ import 'package:flutter_svg/svg.dart';
 
 class DappHomeHeader extends StatefulWidget {
   final OrchidWeb3Context? _web3Context;
-  final BuildContext context;
+  final BuildContext buildContext;
   final Set<int>? _contractVersionsAvailable;
   final VoidCallback? _deployContract;
   final int? _contractVersionSelected;
-  final void Function(int? version) _selectContractVersion;
-  final bool _connected;
+  final void Function(int? version)? _selectContractVersion;
   final Future<void> Function() _disconnect;
   final VoidCallback connectEthereum;
   final void Function(OrchidWeb3Context? web3Context) setNewContext;
 
   const DappHomeHeader({
     super.key,
-    OrchidWeb3Context? web3Context,
-    Set<int>? contractVersionsAvailable,
-    VoidCallback? deployContract,
-    int? contractVersionSelected,
-    required Future<void> Function() disconnect,
-    required void Function(int? version) selectContractVersion,
-    required bool connected,
-    required this.context,
-    required this.connectEthereum,
+    required this.buildContext,
+    required OrchidWeb3Context? web3Context,
     required this.setNewContext,
+
+    Set<int>? contractVersionsAvailable,
+    int? contractVersionSelected,
+    void Function(int? version)? selectContractVersion,
+    VoidCallback? deployContract,
+
+    required this.connectEthereum,
+    required Future<void> Function() disconnect,
   })  : this._web3Context = web3Context,
         this._contractVersionsAvailable = contractVersionsAvailable,
         this._deployContract = deployContract,
         this._contractVersionSelected = contractVersionSelected,
         this._selectContractVersion = selectContractVersion,
-        this._connected = connected,
         this._disconnect = disconnect;
 
   @override
@@ -53,6 +52,12 @@ class DappHomeHeader extends StatefulWidget {
 class _DappHomeHeaderState extends State<DappHomeHeader> {
   var _walletConnectionInProgress = false;
   Chain? _userDefaultChainSelection;
+
+  BuildContext get context => widget.buildContext;
+
+  bool get connected {
+    return widget._web3Context != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
               contractVersionsAvailable: widget._contractVersionsAvailable,
               contractVersionSelected: widget._contractVersionSelected,
               selectContractVersion: widget._selectContractVersion,
-              deployContract: widget._connected ? deploy : null,
+              deployContract: connected ? deploy : null,
             ).left(16),
           ],
         ),
@@ -86,8 +91,8 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
   }
 
   Widget _buildLogo() {
-    final size = AppSize(widget.context);
-    final narrow = (widget._connected && size.narrowerThanWidth(765)) ||
+    final size = AppSize(context);
+    final narrow = (connected && size.narrowerThanWidth(765)) ||
         size.narrowerThanWidth(680);
 
     return TripleTapGestureDetector(
@@ -104,8 +109,8 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
   }
 
   Widget _buildChainSelector() {
-    final size = AppSize(widget.context);
-    final narrow = (widget._connected && size.narrowerThanWidth(700)) ||
+    final size = AppSize(context);
+    final narrow = (connected && size.narrowerThanWidth(700)) ||
         size.narrowerThanWidth(600);
     final chain = widget._web3Context?.chain ?? _userDefaultChainSelection;
     return SizedBox(
@@ -122,8 +127,8 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
 
   /// The "connect" button in the header that toggles the connection panel
   Widget _buildHeaderConnectWalletButton() {
-    final narrow = AppSize(widget.context).narrowerThanWidth(550);
-    final reallyNarrow = AppSize(widget.context).narrowerThanWidth(385);
+    final narrow = AppSize(context).narrowerThanWidth(550);
+    final reallyNarrow = AppSize(context).narrowerThanWidth(385);
 
     final textStyleBase =
         OrchidText.medium_16_025.semibold.black.copyWith(height: 1.8);
@@ -137,7 +142,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
 
     return AnimatedCrossFade(
       duration: Duration(milliseconds: 300),
-      crossFadeState: widget._connected
+      crossFadeState: connected
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
       // Wallet info button
@@ -161,7 +166,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
       secondChild: SizedBox(
         height: 40,
         child: DappWalletSelectButton(
-          connected: widget._connected,
+          connected: connected,
           disconnect: widget._disconnect,
           enabled: !_walletConnectionInProgress,
           width: reallyNarrow ? 115 : 164,
@@ -226,7 +231,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
     // Dispatch this to avoid a flutter bug?
     Future.delayed(millis(0), () {
       AppDialogs.showConfirmationDialog(
-          context: widget.context,
+          context: context,
           title: "Switch Chain",
           bodyText:
               "Switching to the ${chain.name} with WalletConnect will require a new connection.\n"
@@ -270,7 +275,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
   }
 
   void _openLogsPage() {
-    Navigator.push(widget.context,
+    Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return LoggingPage();
     }));
@@ -317,7 +322,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
     }
     if (!wc.connected) {
       AppDialogs.showAppDialog(
-          context: widget.context,
+          context: context,
           title: s.error,
           bodyText: s.failedToConnectToWalletconnect);
       return;

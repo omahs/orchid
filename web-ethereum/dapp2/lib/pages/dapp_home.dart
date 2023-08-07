@@ -60,10 +60,6 @@ class _DappHomeState extends State<DappHome> {
     return _web3Context?.contractVersionsAvailable;
   }
 
-  bool get _connected {
-    return _web3Context != null;
-  }
-
   bool get _hasAccount =>
       _signer != null && _web3Context?.walletAddress != null;
 
@@ -167,15 +163,17 @@ class _DappHomeState extends State<DappHome> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DappHomeHeader(
-          context: context,
+          buildContext: context,
+          web3Context: _web3Context,
+          setNewContext: _setNewContext,
+
           contractVersionsAvailable: _contractVersionsAvailable,
-          deployContract: _deployContract,
           contractVersionSelected: _contractVersionSelected,
           selectContractVersion: _selectContractVersion,
-          connected: _connected,
-          disconnect: _disconnect,
+          deployContract: _deployContract,
+
           connectEthereum: _connectEthereum,
-          setNewContext: _setNewContext,
+          disconnect: _disconnect,
         ).padx(24).top(30).bottom(24),
         _buildMainColumn(),
       ],

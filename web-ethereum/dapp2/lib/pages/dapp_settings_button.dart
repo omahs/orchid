@@ -12,7 +12,7 @@ import '../orchid/menu/orchid_popup_menu_button.dart';
 
 class DappSettingsButton extends StatefulWidget {
   final int? contractVersionSelected;
-  final void Function(int version) selectContractVersion;
+  final void Function(int version)? selectContractVersion;
   final Set<int>? contractVersionsAvailable;
   final VoidCallback? deployContract;
 
@@ -295,11 +295,14 @@ class _DappSettingsButtonState extends State<DappSettingsButton> {
   }
 
   Widget _buildContractVersionOptions() {
+    if (widget.selectContractVersion == null) {
+      return Container();
+    }
     return _contractVersionOptions(
       context: context,
       available: widget.contractVersionsAvailable!,
       selected: widget.contractVersionSelected!,
-      select: widget.selectContractVersion,
+      select: widget.selectContractVersion!,
       textStyle: _textStyle,
     );
   }
