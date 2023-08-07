@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -71,11 +70,11 @@ class OrchidWeb3V1 {
   /// If warnDeposit is true and the deposit is non-zero all remaining deposit
   /// will be warned.
   Future<String /*TransactionId*/ > orchidWithdrawFunds({
-    @required LotteryPot pot,
-    @required EthereumAddress signer,
-    @required Token withdrawBalance,
-    @required Token withdrawEscrow,
-    @required bool warnDeposit,
+    required LotteryPot pot,
+    required EthereumAddress signer,
+    required Token withdrawBalance,
+    required Token withdrawEscrow,
+    required bool warnDeposit,
   }) async {
     log("orchidWithdrawFunds: balance: $withdrawBalance, escrow: $withdrawEscrow, warn: $warnDeposit");
 
@@ -123,17 +122,17 @@ class OrchidWeb3V1 {
   /// warnAmount may be positive or negative to indicate a change in the warned amount.
   /// Note that when funds are recovered from deposit the warned amount is automatically decreased.
   Future<String /*TransactionId*/ > orchidEditFunds({
-    @required OrchidWallet wallet,
-    @required EthereumAddress signer,
-    @required LotteryPot pot,
-    @required Token netPayable,
-    @required Token adjustAmount,
-    @required Token warnAmount,
+    required OrchidWallet wallet,
+    required EthereumAddress signer,
+    required LotteryPot pot,
+    required Token netPayable,
+    required Token adjustAmount,
+    required Token warnAmount,
   }) async {
     log("orchidEditFunds: netPayable: $netPayable, adjustAmount: $adjustAmount, warnAmount: $warnAmount ");
 
     // check payable
-    if (netPayable > wallet.balance) {
+    if (netPayable > wallet.balance!) {
       throw Exception('insufficient wallet balance: ');
     }
     // check adjust
@@ -166,11 +165,11 @@ class OrchidWeb3V1 {
   // function edit(address signer, int256 adjust, int256 warn, uint256 retrieve)
   // positive adjust moves from balance to escrow
   Future<TransactionResponse> _editCall({
-    @required EthereumAddress signer,
-    @required BigInt adjust,
-    @required BigInt warn,
-    @required BigInt retrieve,
-    Token totalPayable,
+    required EthereumAddress signer,
+    required BigInt adjust,
+    required BigInt warn,
+    required BigInt retrieve,
+    Token? totalPayable,
   }) async {
     var contract = _lottery.connect(context.web3.getSigner());
     TransactionResponse tx = await contract.send(

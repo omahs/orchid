@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -44,9 +43,12 @@ class OrchidWeb3V0 {
     required Token addBalance,
     required Token addEscrow,
   }) async {
+    if (wallet.address == null) {
+      throw Exception("Wallet address is null");
+    }
     addBalance.assertType(Tokens.OXT);
     addEscrow.assertType(Tokens.OXT);
-    var walletBalance = await _oxt.getERC20Balance(wallet.address);
+    var walletBalance = await _oxt.getERC20Balance(wallet.address!);
 
     // Don't attempt to add more than the wallet balance.
     // This mitigates the potential for rounding errors in calculated amounts.
@@ -58,13 +60,13 @@ class OrchidWeb3V0 {
     // Check allowance and skip approval if sufficient.
     // function allowance(address owner, address spender) external view returns (uint256)
     Token oxtAllowance = await _oxt.getERC20Allowance(
-      owner: wallet.address,
+      owner: wallet.address!,
       spender: OrchidContractV0.lotteryContractAddressV0,
     );
     if (oxtAllowance < totalOXT) {
       log("XXX: oxtAllowance increase required: $oxtAllowance < $totalOXT");
       var approveTxHash = await _oxt.approveERC20(
-          owner: wallet.address,
+          owner: wallet.address!,
           spender: OrchidContractV0.lotteryContractAddressV0,
           amount: totalOXT);
       txHashes.add(approveTxHash);

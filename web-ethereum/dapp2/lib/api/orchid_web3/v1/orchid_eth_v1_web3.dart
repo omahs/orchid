@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
@@ -50,7 +49,7 @@ class OrchidEthereumV1Web3Impl implements OrchidEthereumV1 {
    */
 
   Future<LotteryPot> getLotteryPot(
-      {Chain chain, EthereumAddress funder, EthereumAddress signer}) async {
+      {required Chain chain, required EthereumAddress funder, required EthereumAddress signer}) async {
     if (chain != _context.chain) {
       throw Exception(
           "web3impl: asked to poll chain ${chain.chainId} with web3 provider: $_context");
@@ -63,7 +62,7 @@ class OrchidEthereumV1Web3Impl implements OrchidEthereumV1 {
     //     }
     var result = await _lotteryContract.call('read', [
       EthereumAddress.zero.toString(prefix: false),
-      _context.walletAddress.toString(prefix: false),
+      _context.walletAddress!.toString(prefix: false),
       signer.toString(prefix: false),
     ]);
     var escrowAmount = BigInt.parse(result[0].toString());
@@ -85,7 +84,7 @@ class OrchidEthereumV1Web3Impl implements OrchidEthereumV1 {
   // Note: provide another version that accepts the signer address and produces
   // Note: tracked accounts by address.
   Future<List<Account>> discoverAccounts(
-      {Chain chain, StoredEthereumKey signer}) async {
+      {required Chain chain, required StoredEthereumKey signer}) async {
     throw Exception('Account Discovery in web3 context unimplemented');
   }
 }
