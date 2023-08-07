@@ -16,6 +16,7 @@ class OrchidUserParams {
   }
 
   Map<String, String> get params {
+    // The 'base' URL is the page on Web or a URI for the current working directory on mobile.
     return Uri.base.queryParameters;
   }
 
