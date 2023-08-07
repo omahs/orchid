@@ -113,6 +113,9 @@ class OrchidWeb3Context {
   Future<OrchidWallet> getWallet() async {
     Map<TokenType, Token> balances = {};
     Map<TokenType, Token> allowances = {};
+    if (walletAddress == null) {
+      throw Exception("No wallet address available.");
+    }
 
     balances[chain.nativeCurrency] = await getBalance();
 
@@ -123,9 +126,9 @@ class OrchidWeb3Context {
     if (chain.isEthereum /*|| OrchidUserParams().test*/) {
       try {
         var oxt = OrchidERC20(context: this, tokenType: Tokens.OXT);
-        balances[Tokens.OXT] = await oxt.getERC20Balance(walletAddress);
+        balances[Tokens.OXT] = await oxt.getERC20Balance(walletAddress!);
         allowances[Tokens.OXT] = await oxt.getERC20Allowance(
-            owner: walletAddress,
+            owner: walletAddress!,
             spender: OrchidContractV0.lotteryContractAddressV0);
       } catch (err) {
         log("Error: Unable to find erc20 balance: $err");
