@@ -105,18 +105,18 @@ class DappWalletInfoPanel extends StatelessWidget {
   Widget _buildWalletBalances(BuildContext context) {
     final textStyle = OrchidText.normal_16_025.copyWith(height: 2.0);
     final wallet = web3Context?.wallet;
-    if (wallet == null) {
+    if (wallet?.balance == null) {
       return Container();
     }
-    var showOxtBalance = wallet.oxtBalance != null;
+    var showOxtBalance = wallet!.oxtBalance != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(context.s.balance, style: textStyle),
-        _buildBalanceRow(context, wallet.balance).top(12),
+        _buildBalanceRow(context, wallet.balance!).top(12),
         if (showOxtBalance)
-          _buildBalanceRow(context, wallet.oxtBalance).top(12),
+          _buildBalanceRow(context, wallet.oxtBalance!).top(12),
       ],
     );
   }
@@ -124,7 +124,7 @@ class DappWalletInfoPanel extends StatelessWidget {
   Widget _buildBalanceRow(BuildContext context, Token balance) {
     final numberStyle = OrchidText.title.copyWith(fontSize: 22);
     final priceStyle = OrchidText.medium_14.newPurpleBright;
-    final tokenType = balance?.type ?? Tokens.TOK;
+    final tokenType = balance.type;
     return TapToCopyText(
       balance.floatValue.toString(),
       style: OrchidText.title.copyWith(height: 1.8),
@@ -157,10 +157,9 @@ class DappWalletInfoPanel extends StatelessWidget {
           // Localized price
           TokenPriceBuilder(
               tokenType: tokenType,
-              builder: (USD tokenPrice) {
+              builder: (USD? tokenPrice) {
                 final usdText = ((tokenPrice ?? USD.zero) * balance.floatValue)
-                        .formatCurrency(locale: context.locale) ??
-                    '';
+                        .formatCurrency(locale: context.locale);
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
