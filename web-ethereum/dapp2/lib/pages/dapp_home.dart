@@ -18,6 +18,7 @@ import 'package:orchid/api/orchid_web3/v1/orchid_eth_v1_web3.dart';
 import 'package:orchid/pages/transaction_status_panel.dart';
 import 'package:orchid/pages/v0/dapp_tabs_v0.dart';
 import 'dapp_home_header.dart';
+import 'dapp_transaction_list.dart';
 import 'v1/dapp_tabs_v1.dart';
 
 class DappHome extends StatefulWidget {
@@ -163,7 +164,6 @@ class _DappHomeState extends State<DappHome> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DappHomeHeader(
-          buildContext: context,
           web3Context: _web3Context,
           setNewContext: _setNewContext,
           contractVersionsAvailable: _contractVersionsAvailable,
@@ -177,8 +177,6 @@ class _DappHomeState extends State<DappHome> {
       ],
     );
   }
-
-  int _txStatusIndex = 0;
 
   // main info column
   Expanded _buildMainColumn() {
@@ -215,7 +213,10 @@ class _DappHomeState extends State<DappHome> {
                             .pad(24),
                       ).center.bottom(24),
 
-                    _buildTransactionsList().top(24),
+                    DappTransactionList(
+                      refreshUserData: _refreshUserData,
+                      width: mainColumnWidth,
+                    ).top(24),
 
                     // signer field
                     ConstrainedBox(
@@ -284,60 +285,6 @@ class _DappHomeState extends State<DappHome> {
           accountDetail: _accountDetail,
         );
     }
-  }
-
-  // The transactions list monitors transaction progress of pending transactions.
-  // The individual transaction panels trigger refresh of the wallet and orchid
-  // account info here whenever they are added or updated.
-  static Widget _buildTransactionsList() {
-    return UserPreferencesDapp().transactions.builder((txs) {
-      // Limit to currently selected chain
-      txs = (txs ?? [])
-          .where((tx) => tx.chainId == _web3Context?.chain.chainId)
-          .toList();
-      if (txs.isEmpty) {
-        return Container();
-      }
-
-      // REMOVE: TESTING
-      // txs = txs + txs + txs + txs;
-
-      var txWidgets = txs
-          .map((tx) => TransactionStatusPanel(
-                context: _web3Context,
-                tx: tx,
-                onDismiss: _dismissTransaction,
-                onTransactionUpdated: () {
-                  _refreshUserData();
-                },
-              ))
-          .toList()
-          // show latest first
-          .reversed
-          .toList();
-
-      final colWidth = min(MediaQuery.of(context).size.width, mainColumnWidth);
-      var viewportFraction = min(0.75, 334 / colWidth);
-
-      return AnimatedSwitcher(
-        duration: millis(400),
-        child: SizedBox(
-          height: 180,
-          child: PageView.builder(
-            itemCount: txWidgets.length,
-            controller: PageController(viewportFraction: viewportFraction),
-            onPageChanged: (int index) =>
-                setState(() => _txStatusIndex = index),
-            itemBuilder: (_, i) {
-              return AnimatedScale(
-                  duration: millis(300),
-                  scale: i == _txStatusIndex ? 1 : 0.9,
-                  child: Center(child: txWidgets[i]));
-            },
-          ),
-        ),
-      );
-    });
   }
 
   Widget _buildPasteSignerField() {
@@ -503,12 +450,6 @@ class _DappHomeState extends State<DappHome> {
       log('Error constructing web context:');
     }
     _setNewContext(context);
-  }
-
-  _dismissTransaction(String? txHash) {
-    if (txHash != null) {
-      UserPreferencesDapp().removeTransaction(txHash);
-    }
   }
 
   void _onContractVersionChanged(int version) async {

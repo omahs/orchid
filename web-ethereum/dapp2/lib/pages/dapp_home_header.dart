@@ -16,7 +16,6 @@ import 'package:flutter_svg/svg.dart';
 
 class DappHomeHeader extends StatefulWidget {
   final OrchidWeb3Context? _web3Context;
-  final BuildContext buildContext;
   final Set<int>? _contractVersionsAvailable;
   final VoidCallback? _deployContract;
   final int? _contractVersionSelected;
@@ -27,7 +26,6 @@ class DappHomeHeader extends StatefulWidget {
 
   const DappHomeHeader({
     super.key,
-    required this.buildContext,
     required OrchidWeb3Context? web3Context,
     required this.setNewContext,
 
@@ -52,8 +50,6 @@ class DappHomeHeader extends StatefulWidget {
 class _DappHomeHeaderState extends State<DappHomeHeader> {
   var _walletConnectionInProgress = false;
   Chain? _userDefaultChainSelection;
-
-  BuildContext get context => widget.buildContext;
 
   bool get connected {
     return widget._web3Context != null;
