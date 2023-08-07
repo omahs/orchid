@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 import 'package:orchid/api/orchid_eth/chainlink.dart';
 import 'package:orchid/api/orchid_eth/historical_gas_prices.dart';
@@ -12,8 +11,8 @@ class HistoricalPricingPanel extends StatefulWidget {
   final Chain chain;
 
   const HistoricalPricingPanel({
-    Key key,
-    @required this.chain,
+    Key? key,
+    required this.chain,
   }) : super(key: key);
 
   @override
@@ -22,10 +21,10 @@ class HistoricalPricingPanel extends StatefulWidget {
 
 class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
   /// token price history for current chain
-  List<TokenPrice> _historicalTokenPrice;
+  late List<TokenPrice?>? _historicalTokenPrice;
 
   /// gas price history for current chain
-  List<GasPrice> _historicalGasPrice;
+  late List<GasPrice?>? _historicalGasPrice;
 
   Chain get chain => widget.chain;
 
@@ -39,7 +38,7 @@ class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
     await _getHistoricalPricing();
   }
 
-  void _getHistoricalPricing() async {
+  Future<void> _getHistoricalPricing() async {
     final days = 7;
     _historicalTokenPrice =
         await Chainlink.historicalTokenPrice(chain: chain, days: days);
@@ -62,7 +61,7 @@ class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
     // should have the same length
     if (_historicalTokenPrice != null &&
         _historicalGasPrice != null &&
-        (_historicalTokenPrice.length != _historicalGasPrice.length)) {
+        (_historicalTokenPrice!.length != _historicalGasPrice!.length)) {
       return Container();
     }
     int len = max((_historicalTokenPrice ?? []).length,
@@ -70,8 +69,8 @@ class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
     List<Widget> panels = [];
     for (var i = 0; i < len; i++) {
       panels.add(_buildHistoricalPricePanel(
-        _historicalTokenPrice != null ? _historicalTokenPrice[i] : null,
-        _historicalGasPrice != null ? _historicalGasPrice[i] : null,
+        _historicalTokenPrice != null ? _historicalTokenPrice![i] : null,
+        _historicalGasPrice != null ? _historicalGasPrice![i] : null,
       ));
     }
 
@@ -89,7 +88,7 @@ class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
     );
   }
 
-  Widget _buildHistoricalPriceLabelPanel(TokenType tokenType) {
+  Widget _buildHistoricalPriceLabelPanel(TokenType? tokenType) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -103,7 +102,7 @@ class _HistoricalPricingPanelState extends State<HistoricalPricingPanel> {
     );
   }
 
-  Widget _buildHistoricalPricePanel(TokenPrice token, GasPrice gas) {
+  Widget _buildHistoricalPricePanel(TokenPrice? token, GasPrice? gas) {
     final date = token != null ? token.date : (gas != null ? gas.date : null);
     final dateText = date != null ? date.toShortDateString() : '...';
     final tokenText = token != null ? token.priceUSD.toStringAsFixed(2) : '...';

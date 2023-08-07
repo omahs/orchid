@@ -322,7 +322,7 @@ class _DappHomeState extends State<DappHome> {
     return UserPreferencesDapp().transactions.builder((txs) {
       // Limit to currently selected chain
       txs = (txs ?? [])
-          .where((tx) => tx.chainId == _web3Context?.chain?.chainId)
+          .where((tx) => tx.chainId == _web3Context?.chain.chainId)
           .toList();
       if (txs.isEmpty) {
         return Container();
@@ -610,7 +610,11 @@ class _DappHomeState extends State<DappHome> {
       return;
     }
 
-    var web3 = await OrchidWeb3Context.fromEthereum(ethereum);
+    if (ethereum == null) {
+      log("no ethereum provider");
+      return;
+    }
+    var web3 = await OrchidWeb3Context.fromEthereum(ethereum!);
     _setNewContex(web3);
   }
 
@@ -775,7 +779,7 @@ class _DappHomeState extends State<DappHome> {
             _web3Context!.ethereumProvider);
       } else {
         context = await OrchidWeb3Context.fromWalletConnect(
-            _web3Context!.walletConnectProvider);
+            _web3Context!.walletConnectProvider!);
       }
     } catch (err) {
       log('Error constructing web context:');
@@ -783,8 +787,10 @@ class _DappHomeState extends State<DappHome> {
     _setNewContex(context);
   }
 
-  _dismissTransaction(String txHash) {
-    UserPreferencesDapp().removeTransaction(txHash);
+  _dismissTransaction(String? txHash) {
+    if (txHash != null) {
+      UserPreferencesDapp().removeTransaction(txHash);
+    }
   }
 
   void _onContractVersionChanged(int version) async {

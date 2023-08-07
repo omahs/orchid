@@ -27,7 +27,7 @@ class OrchidWeb3Context {
   final Ethereum ethereumProvider;
 
   /// If the web3 provider wraps wallet connect this is the underlying provider.
-  final WalletConnectEthereumProvider walletConnectProvider;
+  final WalletConnectEthereumProvider? walletConnectProvider;
 
   // Indicates that this context has been disconnected and should no longer be alive.
   // This is a workaround to ensure that listeners do not fire in this state.

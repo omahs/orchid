@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -16,17 +15,17 @@ import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 
 class WithdrawFundsPaneV1 extends StatefulWidget {
-  final OrchidWeb3Context context;
-  final EthereumAddress signer;
-  final LotteryPot pot;
+  final OrchidWeb3Context? context;
+  final EthereumAddress? signer;
+  final LotteryPot? pot;
   final bool enabled;
 
   WithdrawFundsPaneV1({
-    Key key,
-    @required this.context,
-    @required this.pot,
-    @required this.signer,
-    this.enabled,
+    Key? key,
+    required this.context,
+    required this.pot,
+    required this.signer,
+    this.enabled = false,
   }) : super(key: key) {
     // this.signer = AccountMock.account1xdai.signerAddress;
     // this.pot = AccountMock.account1xdaiLocked.mockLotteryPot;
@@ -40,14 +39,14 @@ class WithdrawFundsPaneV1 extends StatefulWidget {
 
 class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
     with DappTabWalletContext, DappTabPotContext {
-  OrchidWeb3Context get web3Context => widget.context;
+  OrchidWeb3Context? get web3Context => widget.context;
 
-  LotteryPot get pot => widget.pot;
+  LotteryPot? get pot => widget.pot;
 
-  EthereumAddress get signer => widget.signer;
+  EthereumAddress? get signer => widget.signer;
 
-  TypedTokenValueFieldController _balanceField;
-  TypedTokenValueFieldController _depositField;
+  late TypedTokenValueFieldController _balanceField;
+  late TypedTokenValueFieldController _depositField;
   bool _unlockDeposit = false;
 
   @override
@@ -68,11 +67,12 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
     }
 
     bool fullyUnlocked;
-    String availableText;
-    Token totalFunds;
+    String? availableText;
+    Token? totalFunds;
+    // pot guarded by connected
     if (connected) {
-      totalFunds = pot.balance + pot.deposit;
-      final maxWithdraw = pot.maxWithdrawable;
+      totalFunds = pot!.balance + pot!.deposit;
+      final maxWithdraw = pot!.maxWithdrawable;
       fullyUnlocked = maxWithdraw >= totalFunds;
       availableText = fullyUnlocked
           ? s.allOfYourFundsAreAvailableForWithdrawal
@@ -80,18 +80,18 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
               maxWithdraw.formatCurrency(locale: context.locale),
               totalFunds.formatCurrency(locale: context.locale));
     }
-    bool showUnlock = connected && pot.deposit > pot.unlockedAmount;
+    bool showUnlock = connected && pot!.deposit > pot!.unlockedAmount;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         pady(16),
-        if (connected && totalFunds.gtZero())
-          Text(availableText).title.bottom(24),
+        if (connected && totalFunds!.gtZero())
+          Text(availableText!).title.bottom(24),
         TokenPriceBuilder(
             tokenType: tokenType,
             seconds: 30,
-            builder: (USD tokenPrice) {
+            builder: (USD? tokenPrice) {
               return Column(
                 children: [
                   OrchidLabeledTokenValueField(
@@ -107,7 +107,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
                     label: s.deposit,
                     trailing: _depositLockIndicator(),
                     bottomBanner: _depositBottomBanner(),
-                    enabled: connected && pot.isUnlocked,
+                    enabled: connected && (pot?.isUnlocked ?? false),
                     labelWidth: 100,
                     type: tokenType,
                     controller: _depositField,
@@ -134,7 +134,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
   }
 
   bool get _showDepositBottomBanner {
-    return _unlockDeposit || (connected && pot.isUnlocking);
+    return _unlockDeposit || (connected && pot!.isUnlocking);
   }
 
   Widget _depositBottomBanner() {
@@ -157,7 +157,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
         ],
       );
     }
-    if (connected && pot.isUnlocking) {
+    if (connected && pot!.isUnlocking) {
       return TimedBuilder.interval(
           seconds: 1,
           builder: (context) {
@@ -168,7 +168,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
                 SizedBox(
                   width: 70,
                   child: Text(
-                    pot.unlockTime.toCountdownString(),
+                    pot!.unlockTime.toCountdownString(),
                   ).withStyle(style),
                 ),
               ],
@@ -181,10 +181,10 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
 
   // The lock icon and text annotation on the deposit field
   Widget _depositLockIndicator() {
-    if (!connected || pot.deposit.isZero()) {
+    if (!connected || pot!.deposit.isZero()) {
       return Container();
     }
-    return pot.isLocked
+    return pot!.isLocked
         ? Row(
             children: [
               Icon(
@@ -216,7 +216,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
   // The unlock checkbox and instructions shown when applicable
   Widget _buildUnlockDepositCheckbox(BuildContext context) {
     final active = connected;
-    if (!active || pot.isWarned) {
+    if (!active || pot!.isWarned) {
       return Container();
     }
     final style = OrchidText.body2.enabledIf(active);
@@ -237,14 +237,19 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
               Theme(
                 data: Theme.of(context).copyWith(
                   unselectedWidgetColor: Colors.white,
-                  toggleableActiveColor: OrchidColors.tappable,
+                  // toggleableActiveColor: OrchidColors.tappable,
+                  // checkboxTheme: CheckboxThemeData(
+                  //   checkColor: OrchidColors.tappable,
+                  // )
                 ),
                 child: Checkbox(
                   value: _unlockDeposit,
                   onChanged: (value) {
-                    setState(() {
-                      _unlockDeposit = value;
-                    });
+                    if (value != null) {
+                      setState(() {
+                        _unlockDeposit = value;
+                      });
+                    }
                   },
                 ),
               ),
@@ -264,7 +269,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
   bool get _formEnabled {
     // The normal condition for a withdrawal of funds
     bool validPositiveWithdrawal() =>
-        _netWithdraw.gtZero() && _netWithdraw <= pot.maxWithdrawable;
+        _netWithdraw.gtZero() && _netWithdraw <= pot!.maxWithdrawable;
 
     // This allows unlocking without any actual withdrawal amount
     bool validZeroWithdrawal() => _netWithdraw.isZero() && _unlockDeposit;
@@ -278,7 +283,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
 
   bool get _balanceFormValid {
     var value = _balanceField.value;
-    return value != null && value <= pot.balance;
+    return value != null && value <= pot!.balance;
   }
 
   bool get _balanceFieldError {
@@ -287,7 +292,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
 
   bool get _depositFormValid {
     var value = _depositField.value;
-    return value != null && value <= pot.unlockedAmount;
+    return value != null && value <= pot!.unlockedAmount;
   }
 
   bool get _depositFieldError {
@@ -295,12 +300,12 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
   }
 
   Token get _netWithdraw {
-    return _balanceField.value + _depositField.value;
+    return _balanceField.value! + _depositField.value!;
   }
 
   void _withdrawFunds() async {
-    var withdrawBalance = Token.min(_balanceField.value, pot.balance);
-    var withdrawDeposit = Token.min(_depositField.value, pot.unlockedAmount);
+    var withdrawBalance = Token.min(_balanceField.value!, pot!.balance);
+    var withdrawDeposit = Token.min(_depositField.value!, pot!.unlockedAmount);
 
     setState(() {
       txPending = true;
@@ -315,7 +320,7 @@ class _WithdrawFundsPaneV1State extends State<WithdrawFundsPaneV1>
       );
       UserPreferencesDapp().addTransaction(DappTransaction(
         transactionHash: txHash,
-        chainId: widget.context.chain.chainId,
+        chainId: widget.context!.chain.chainId,
         type: DappTransactionType.withdrawFunds,
       ));
       _balanceField.clear();

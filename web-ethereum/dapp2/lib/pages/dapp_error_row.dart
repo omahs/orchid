@@ -1,12 +1,11 @@
-// @dart=2.9
 import 'package:orchid/orchid/orchid.dart';
 
 class DappErrorRow extends StatelessWidget {
   final String text;
 
   const DappErrorRow({
-    Key key,
-    this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
 
   @override
