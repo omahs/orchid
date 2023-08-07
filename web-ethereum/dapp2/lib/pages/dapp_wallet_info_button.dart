@@ -11,11 +11,6 @@ class DappWalletInfoButton extends StatefulWidget {
   final bool showBalance;
   final VoidCallback disconnect;
 
-  final int? contractVersionSelected;
-  final void Function(int version) selectContractVersion;
-  final Set<int>? contractVersionsAvailable;
-  final VoidCallback? deployContract;
-
   /// If true only the first four chars are shown, else elided first and last four.
   final bool minimalAddress;
 
@@ -26,10 +21,6 @@ class DappWalletInfoButton extends StatefulWidget {
     required this.showBalance,
     this.minimalAddress = false,
     required this.disconnect,
-    this.contractVersionSelected,
-    required this.selectContractVersion,
-    this.contractVersionsAvailable,
-    this.deployContract,
   }) : super(key: key);
 
   @override

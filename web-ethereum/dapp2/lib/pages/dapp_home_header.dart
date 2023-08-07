@@ -136,10 +136,6 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
         textStyleBase.copyWith(color: Colors.white.withOpacity(0.8));
     final backgroundColor = OrchidColors.tappable;
 
-    final deploy = (widget._contractVersionsAvailable?.contains(1) ?? false)
-        ? null
-        : widget._deployContract;
-
     return AnimatedCrossFade(
       duration: Duration(milliseconds: 300),
       crossFadeState: connected
@@ -156,10 +152,6 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
           minimalAddress: reallyNarrow,
           // onPressed: _toggleShowConnectPanel,
           disconnect: widget._disconnect,
-          contractVersionsAvailable: widget._contractVersionsAvailable,
-          contractVersionSelected: widget._contractVersionSelected,
-          selectContractVersion: widget._selectContractVersion,
-          deployContract: deploy,
         ),
       ),
       // Connect button
