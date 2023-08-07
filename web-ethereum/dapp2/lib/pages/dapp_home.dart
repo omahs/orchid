@@ -154,7 +154,7 @@ class _DappHomeState extends State<DappHome> {
         var account = Account.fromSignerAddress(
           signerAddress: _signer!,
           version: _contractVersionSelected!,
-          funder: _web3Context!.walletAddress,
+          funder: _web3Context!.walletAddress!,
           chainId: _web3Context!.chain.chainId,
         );
         _accountDetail = AccountDetailPoller(
@@ -500,7 +500,7 @@ class _DappHomeState extends State<DappHome> {
 
     try {
       if (_web3Context?.ethereumProvider != null) {
-        await _web3Context!.ethereumProvider.walletSwitchChain(chain.chainId);
+        await _web3Context!.ethereumProvider!.walletSwitchChain(chain.chainId);
       }
     } on EthereumUserRejected {
       log("XXX: user rejected switch");
@@ -556,6 +556,9 @@ class _DappHomeState extends State<DappHome> {
       throw Exception("Cannot add chain without a web3 context");
     }
     final ethereum = _web3Context!.ethereumProvider;
+    if (ethereum == null) {
+      throw Exception("Cannot add chain without an ethereum provider");
+    }
     try {
       await ethereum.walletAddChain(
         chainId: chain.chainId,
@@ -724,9 +727,9 @@ class _DappHomeState extends State<DappHome> {
     // Default the contract version
     if (_contractVersionsAvailable != null) {
       final selectedVersion =
-          _web3Context!.contractVersionsAvailable.contains(1)
+          _web3Context!.contractVersionsAvailable!.contains(1)
               ? 1
-              : _web3Context!.contractVersionsAvailable.contains(0)
+              : _web3Context!.contractVersionsAvailable!.contains(0)
                   ? 0
                   : null;
       _selectContractVersion(selectedVersion);
@@ -776,7 +779,7 @@ class _DappHomeState extends State<DappHome> {
     try {
       if (_web3Context?.ethereumProvider != null) {
         context = await OrchidWeb3Context.fromEthereum(
-            _web3Context!.ethereumProvider);
+            _web3Context!.ethereumProvider!);
       } else {
         context = await OrchidWeb3Context.fromWalletConnect(
             _web3Context!.walletConnectProvider!);

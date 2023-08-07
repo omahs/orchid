@@ -92,16 +92,15 @@ class _DappWalletInfoButtonState extends State<DappWalletInfoButton> {
   }
 
   Widget _buildTitle(BuildContext context) {
-    if (widget.web3Context == null) {
+    if (widget.web3Context?.walletAddress == null) {
       return Row(
         children: [
           Text("...").title,
         ],
       );
     }
-    final balanceText = widget.web3Context!.wallet.balance
-        .formatCurrency(locale: context.locale);
-    var addressText = widget.web3Context!.walletAddress.toString(elide: true);
+    final balanceText = widget.web3Context!.wallet.balance?.formatCurrency(locale: context.locale);
+    var addressText = widget.web3Context!.walletAddress!.toString(elide: true);
     if (widget.minimalAddress) {
       addressText = addressText.substring(0, 7);
     }
@@ -124,7 +123,7 @@ class _DappWalletInfoButtonState extends State<DappWalletInfoButton> {
           SizedBox(
             width: 20,
             height: 20,
-            child: widget.web3Context!.wallet.balance.type.icon ?? padx(20),
+            child: widget.web3Context!.wallet.balance?.type.icon ?? padx(20),
           ).left(16),
         if (widget.showBalance)
           SizedBox(

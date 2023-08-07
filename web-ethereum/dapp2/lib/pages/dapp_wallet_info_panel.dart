@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -10,11 +9,11 @@ import 'package:orchid/api/pricing/usd.dart';
 import '../api/orchid_eth/token_type.dart';
 
 class DappWalletInfoPanel extends StatelessWidget {
-  final OrchidWeb3Context web3Context;
+  final OrchidWeb3Context? web3Context;
 
   DappWalletInfoPanel({
-    Key key,
-    @required this.web3Context,
+    Key? key,
+    required this.web3Context,
   }) : super(key: key);
 
   final _textStyle = OrchidText.medium_16_025.copyWith(height: 2.0);
@@ -31,7 +30,7 @@ class DappWalletInfoPanel extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    final link = web3Context?.chain?.explorerUrl;
+    final link = web3Context?.chain.explorerUrl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -53,7 +52,7 @@ class DappWalletInfoPanel extends StatelessWidget {
   static Widget buildExplorerLink(
     BuildContext context,
     TextStyle textStyle,
-    String link, {
+    String? link, {
     MainAxisAlignment alignment = MainAxisAlignment.start,
     MainAxisSize size = MainAxisSize.max,
     bool disabled = false,
@@ -69,14 +68,17 @@ class DappWalletInfoPanel extends StatelessWidget {
             child: Icon(Icons.arrow_forward,
                 color: disabled ? OrchidColors.disabled : Colors.white)),
         Text(text, style: textStyle.disabledIf(disabled))
-            .link(url: link)
+            .link(url: link!) // guarded by disabled
             .left(8),
       ],
     );
   }
 
   Widget _buildWalletAddressRow() {
-    final text = web3Context.walletAddress.toString(elide: false);
+    if (web3Context?.walletAddress == null) {
+      return Container();
+    }
+    final text = web3Context!.walletAddress!.toString(elide: false);
 
     return TapToCopyText(
       text,
@@ -87,9 +89,9 @@ class DappWalletInfoPanel extends StatelessWidget {
           SizedBox(
               width: 28,
               height: 28,
-              child: OrchidIdenticon(address: web3Context.walletAddress)),
+              child: OrchidIdenticon(address: web3Context!.walletAddress)),
           Text(
-            web3Context.walletAddress.toString(elide: true),
+            web3Context!.walletAddress!.toString(elide: true),
             style: OrchidText.title,
             overflow: TextOverflow.visible,
           ).left(16).top(4),
