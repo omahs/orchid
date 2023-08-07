@@ -166,12 +166,10 @@ class _DappHomeState extends State<DappHome> {
           buildContext: context,
           web3Context: _web3Context,
           setNewContext: _setNewContext,
-
           contractVersionsAvailable: _contractVersionsAvailable,
           contractVersionSelected: _contractVersionSelected,
           selectContractVersion: _selectContractVersion,
           deployContract: _deployContract,
-
           connectEthereum: _connectEthereum,
           disconnect: _disconnect,
         ).padx(24).top(30).bottom(24),
@@ -291,7 +289,7 @@ class _DappHomeState extends State<DappHome> {
   // The transactions list monitors transaction progress of pending transactions.
   // The individual transaction panels trigger refresh of the wallet and orchid
   // account info here whenever they are added or updated.
-  Widget _buildTransactionsList() {
+  static Widget _buildTransactionsList() {
     return UserPreferencesDapp().transactions.builder((txs) {
       // Limit to currently selected chain
       txs = (txs ?? [])
