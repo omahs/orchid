@@ -8,7 +8,7 @@ class SubmenuPopopMenuItemBuilder<T> extends PopupMenuItem<T> {
   SubmenuPopopMenuItemBuilder({
     Key? key,
     required this.builder,
-    required VoidCallback onTap,
+    VoidCallback? onTap,
   }) : super(key: key, onTap: onTap, child: Container());
 
   @override

@@ -7,7 +7,7 @@ class OrchidPopupMenuButton<T> extends StatelessWidget {
   final PopupMenuItemBuilder<T> itemBuilder;
   final Widget? child;
   final bool selected;
-  final double width, height;
+  final double? width, height;
   final bool showBorder;
   final Offset? offset;
   final Color? backgroundColor;
@@ -23,7 +23,7 @@ class OrchidPopupMenuButton<T> extends StatelessWidget {
     this.onSelected,
     this.onCanceled,
     this.child,
-    required this.width,
+    this.width,
     required this.height,
     this.showBorder = false,
     this.offset,
