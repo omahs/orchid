@@ -161,6 +161,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
+  dartjsengine:
+    dependency: "direct main"
+    description:
+      path: "dartjsengine/dartjsengine-1.0.1"
+      relative: true
+    source: path
+    version: "1.0.1"
   dotted_border:
     dependency: "direct main"
     description:
@@ -324,11 +331,26 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  jsparser:
+    dependency: transitive
+    description:
+      path: "dartjsengine/jsparser-2.0.1"
+      relative: true
+    source: path
+    version: "2.0.1"
   lints:
     dependency: transitive
     description:
       name: lints
       sha256: a2c3d198cb5ea2e179926622d433331d8b58374ab8f29cdda6e863bd62fd369c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  lists:
+    dependency: transitive
+    description:
+      name: lists
+      sha256: "4ca5c19ae4350de036a7e996cdd1ee39c93ac0a2b840f4915459b7d0a7d4ab27"
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
@@ -617,6 +639,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  symbol_table:
+    dependency: transitive
+    description:
+      path: "dartjsengine/symbol_table-2.0.0"
+      relative: true
+    source: path
+    version: "2.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -641,6 +670,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  unicode:
+    dependency: transitive
+    description:
+      name: unicode
+      sha256: "0f69e46593d65245774d4f17125c6084d2c20b4e473a983f6e21b7d7762218f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   url_launcher:
     dependency: "direct main"
     description:
