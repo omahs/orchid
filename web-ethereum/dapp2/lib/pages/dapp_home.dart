@@ -218,7 +218,12 @@ class _DappHomeState extends State<DappHome> {
                     // signer field
                     ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: _buildPasteSignerField().top(24).padx(8)),
+                        child: OrchidLabeledAddressField(
+                          label: s.orchidIdentity,
+                          controller: _signerField,
+                          contentPadding: EdgeInsets.only(
+                              top: 8, bottom: 18, left: 16, right: 16),
+                        ).top(24).padx(8)),
 
                     // account card
                     AnimatedVisibility(
@@ -282,14 +287,6 @@ class _DappHomeState extends State<DappHome> {
           accountDetail: _accountDetail,
         );
     }
-  }
-
-  Widget _buildPasteSignerField() {
-    return OrchidLabeledAddressField(
-      label: s.orchidIdentity,
-      controller: _signerField,
-      contentPadding: EdgeInsets.only(top: 8, bottom: 18, left: 16, right: 16),
-    );
   }
 
   Future<void> _deployContract() async {
