@@ -1,12 +1,12 @@
-import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/common/rounded_rect.dart';
+import 'package:orchid/dapp/orchid/transaction_status_panel.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/tap_copy_text.dart';
 import 'package:orchid/orchid/orchid_identicon.dart';
 import 'package:orchid/api/pricing/usd.dart';
-import '../api/orchid_eth/token_type.dart';
+import '../../api/orchid_eth/token_type.dart';
 
 class DappWalletInfoPanel extends StatelessWidget {
   final OrchidWeb3Context? web3Context;
@@ -40,36 +40,12 @@ class DappWalletInfoPanel extends StatelessWidget {
           ],
         ).height(26),
         _buildWalletAddressRow().top(16),
-        buildExplorerLink(context, _textStyle, link, disabled: link == null)
+        DappUtil.buildExplorerLink(context, _textStyle, link,
+                disabled: link == null)
             .top(8),
         _buildWalletBalances(context).top(12),
         // _buildDisconnectButton(context).top(24),
         pady(16)
-      ],
-    );
-  }
-
-  static Widget buildExplorerLink(
-    BuildContext context,
-    TextStyle textStyle,
-    String? link, {
-    MainAxisAlignment alignment = MainAxisAlignment.start,
-    MainAxisSize size = MainAxisSize.max,
-    bool disabled = false,
-  }) {
-    final text =
-        context.s.blockExplorer + (disabled ? ' (' + "unknown" + ')' : '');
-    return Row(
-      mainAxisSize: size,
-      mainAxisAlignment: alignment,
-      children: [
-        Transform.rotate(
-            angle: -3.14 / 4,
-            child: Icon(Icons.arrow_forward,
-                color: disabled ? OrchidColors.disabled : Colors.white)),
-        Text(text, style: textStyle.disabledIf(disabled))
-            .link(url: link!) // guarded by disabled
-            .left(8),
       ],
     );
   }
@@ -159,7 +135,7 @@ class DappWalletInfoPanel extends StatelessWidget {
               tokenType: tokenType,
               builder: (USD? tokenPrice) {
                 final usdText = ((tokenPrice ?? USD.zero) * balance.floatValue)
-                        .formatCurrency(locale: context.locale);
+                    .formatCurrency(locale: context.locale);
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

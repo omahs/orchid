@@ -3,8 +3,10 @@ import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/orchid/menu/orchid_popup_menu_button.dart';
 import 'package:orchid/orchid/orchid_identicon.dart';
-import 'package:orchid/pages/dapp_wallet_info_panel.dart';
+import 'package:orchid/dapp/orchid/dapp_wallet_info_panel.dart';
 
+// Head button widget that displays the wallet address and balance.
+// When pressed it shows a pop down menu with connection details.
 class DappWalletInfoButton extends StatefulWidget {
   final OrchidWeb3Context? web3Context;
   final VoidCallback onDisconnect;

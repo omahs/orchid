@@ -8,7 +8,7 @@ import 'package:orchid/dapp/orchid_web3/v0/orchid_web3_v0.dart';
 import 'package:orchid/dapp/preferences/dapp_transaction.dart';
 import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/formatting.dart';
-import '../dapp_button.dart';
+import '../../dapp/orchid/dapp_button.dart';
 import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/util/localization.dart';
 

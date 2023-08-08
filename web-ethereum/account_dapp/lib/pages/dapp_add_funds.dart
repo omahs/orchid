@@ -8,9 +8,9 @@ import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 import 'package:orchid/api/pricing/usd.dart';
 import 'package:styled_text/styled_text.dart';
-import 'dapp_button.dart';
-import 'dapp_error_row.dart';
-import 'dapp_tab_context.dart';
+import '../dapp/orchid/dapp_button.dart';
+import '../dapp/orchid/dapp_error_row.dart';
+import '../dapp/orchid/dapp_tab_context.dart';
 import '../orchid/field/orchid_labeled_token_value_field.dart';
 
 class AddFundsPane extends StatefulWidget {

@@ -8,7 +8,7 @@ import 'package:orchid/dapp/preferences/dapp_transaction.dart';
 import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_text.dart';
-import '../dapp_button.dart';
+import '../../dapp/orchid/dapp_button.dart';
 import 'package:orchid/util/localization.dart';
 
 class LockWarnPaneV0 extends StatefulWidget {

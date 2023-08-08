@@ -7,10 +7,10 @@ import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_web3_v1.dart';
 import 'package:orchid/dapp/preferences/dapp_transaction.dart';
-import 'package:orchid/pages/dapp_tab_context.dart';
+import 'package:orchid/dapp/orchid/dapp_tab_context.dart';
 import 'package:orchid/util/timed_builder.dart';
 import 'package:orchid/api/pricing/usd.dart';
-import '../dapp_button.dart';
+import '../../dapp/orchid/dapp_button.dart';
 import '../../orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';
 

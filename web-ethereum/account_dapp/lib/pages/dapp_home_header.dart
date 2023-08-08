@@ -10,8 +10,8 @@ import 'package:orchid/util/gestures.dart';
 import '../orchid/menu/orchid_chain_selector_menu.dart';
 import 'dapp_home.dart';
 import 'dapp_settings_button.dart';
-import 'dapp_wallet_info_button.dart';
-import 'dapp_wallet_select_button.dart';
+import '../dapp/orchid/dapp_wallet_info_button.dart';
+import '../dapp/orchid/dapp_wallet_select_button.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DappHomeHeader extends StatefulWidget {

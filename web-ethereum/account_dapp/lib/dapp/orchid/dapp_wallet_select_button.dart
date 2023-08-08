@@ -1,6 +1,6 @@
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
-import '../orchid/menu/orchid_popup_menu_button.dart';
+import '../../orchid/menu/orchid_popup_menu_button.dart';
 
 class DappWalletSelectButton extends StatefulWidget {
   final double width;

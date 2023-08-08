@@ -6,8 +6,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/tap_copy_text.dart';
 import 'package:orchid/orchid/orchid_circular_progress.dart';
-import '../dapp/preferences/dapp_transaction.dart';
-import 'dapp_wallet_info_panel.dart';
+import '../preferences/dapp_transaction.dart';
 
 class TransactionStatusPanel extends StatefulWidget {
   final DappTransaction tx;
@@ -175,7 +174,7 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
               ),
 
               // explorer link
-              DappWalletInfoPanel.buildExplorerLink(
+              DappUtil.buildExplorerLink(
                 context,
                 OrchidText.caption.tappable,
                 explorerLink,
@@ -193,5 +192,32 @@ class _TransactionStatusPanelState extends State<TransactionStatusPanel> {
   void dispose() {
     _pollTimer?.cancel();
     super.dispose();
+  }
+}
+
+class DappUtil {
+  static Widget buildExplorerLink(
+    BuildContext context,
+    TextStyle textStyle,
+    String? link, {
+    MainAxisAlignment alignment = MainAxisAlignment.start,
+    MainAxisSize size = MainAxisSize.max,
+    bool disabled = false,
+  }) {
+    final text =
+        context.s.blockExplorer + (disabled ? ' (' + "unknown" + ')' : '');
+    return Row(
+      mainAxisSize: size,
+      mainAxisAlignment: alignment,
+      children: [
+        Transform.rotate(
+            angle: -3.14 / 4,
+            child: Icon(Icons.arrow_forward,
+                color: disabled ? OrchidColors.disabled : Colors.white)),
+        Text(text, style: textStyle.disabledIf(disabled))
+            .link(url: link!) // guarded by disabled
+            .left(8),
+      ],
+    );
   }
 }

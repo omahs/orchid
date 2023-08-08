@@ -15,7 +15,7 @@ import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_eth_v1_web3.dart';
 import 'package:orchid/pages/v0/dapp_tabs_v0.dart';
 import 'dapp_home_header.dart';
-import 'dapp_transaction_list.dart';
+import '../dapp/orchid/dapp_transaction_list.dart';
 import 'v1/dapp_tabs_v1.dart';
 
 class DappHome extends StatefulWidget {
