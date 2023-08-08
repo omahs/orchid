@@ -2,7 +2,7 @@ import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
-import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
+import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 
 mixin DappTabWalletContext {
   bool txPending = false;

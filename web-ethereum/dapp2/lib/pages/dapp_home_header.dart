@@ -1,11 +1,11 @@
 import 'package:orchid/orchid/orchid.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
-import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
+import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/pages/settings/logging_page.dart';
-import 'package:orchid/api/orchid_web3/wallet_connect_eth_provider.dart';
+import 'package:orchid/dapp/orchid_web3/wallet_connect_eth_provider.dart';
 import 'package:orchid/util/gestures.dart';
 import '../orchid/menu/orchid_chain_selector_menu.dart';
 import 'dapp_home.dart';

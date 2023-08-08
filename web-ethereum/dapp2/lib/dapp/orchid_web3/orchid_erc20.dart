@@ -1,9 +1,8 @@
 import 'package:flutter_web3/flutter_web3.dart';
+import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
-
-import '../orchid_crypto.dart';
-import '../orchid_log.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'orchid_web3_context.dart';
 
 class OrchidERC20 {

@@ -2,7 +2,7 @@ import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_urls.dart';
-import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
+import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/api/preferences/dapp_transaction.dart';
 import 'package:orchid/api/preferences/user_preferences_dapp.dart';
 import 'package:orchid/orchid/builder/token_price_builder.dart';

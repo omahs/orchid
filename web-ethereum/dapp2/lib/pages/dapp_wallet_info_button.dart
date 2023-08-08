@@ -1,6 +1,6 @@
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
-import 'package:orchid/api/orchid_web3/orchid_web3_context.dart';
+import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/orchid/menu/orchid_popup_menu_button.dart';
 import 'package:orchid/orchid/orchid_identicon.dart';
 import 'package:orchid/pages/dapp_wallet_info_panel.dart';
