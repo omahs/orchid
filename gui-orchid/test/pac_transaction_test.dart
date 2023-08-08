@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/eth_transaction.dart';
-import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
+import 'package:orchid/vpn/purchase/orchid_pac_transaction.dart';
 
 import 'expect.dart';
 

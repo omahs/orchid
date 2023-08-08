@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/abi_encode.dart';
-import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
+import 'package:orchid/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:convert/convert.dart';

@@ -7,10 +7,10 @@ import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
 import 'package:orchid/api/pricing/binance_pricing.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
-import 'package:orchid/api/vpn/purchase/orchid_pac_seller.dart';
-import 'package:orchid/api/vpn/purchase/orchid_pac_server.dart';
-import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
-import 'package:orchid/api/vpn/purchase/orchid_purchase.dart';
+import 'package:orchid/vpn/purchase/orchid_pac_seller.dart';
+import 'package:orchid/vpn/purchase/orchid_pac_server.dart';
+import 'package:orchid/vpn/purchase/orchid_pac_transaction.dart';
+import 'package:orchid/vpn/purchase/orchid_purchase.dart';
 
 ///
 /// Server integration tests
