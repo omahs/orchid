@@ -36,7 +36,10 @@ class OrchidWeb3V1 {
     required Token addBalance,
     required Token addEscrow,
   }) async {
-    var walletBalance = await context.wallet.getBalance();
+    if (context.wallet == null) {
+      throw Exception('no wallet');
+    }
+    var walletBalance = await context.wallet!.getBalance();
 
     // Don't attempt to add more than the wallet balance.
     // This mitigates the potential for rounding errors in calculated amounts.

@@ -34,7 +34,7 @@ class OrchidWeb3Context {
   bool disposed = false;
 
   // Wallet
-  late OrchidWallet wallet;
+  OrchidWallet? wallet;
   OrchidWallet? _lastWallet;
   Timer? _pollWalletTimer;
   Duration _pollWalletPeriod = Duration(seconds: 5);
