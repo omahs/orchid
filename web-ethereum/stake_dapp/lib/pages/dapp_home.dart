@@ -1,4 +1,5 @@
 import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
+import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_contract_deployment_v1.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -13,10 +14,7 @@ import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/account/account_card.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_eth_v1_web3.dart';
-import 'package:orchid/pages/v0/dapp_tabs_v0.dart';
 import 'dapp_home_header.dart';
-import 'dapp_transaction_list.dart';
-import 'v1/dapp_tabs_v1.dart';
 
 class DappHome extends StatefulWidget {
   const DappHome({Key? key}) : super(key: key);
@@ -256,7 +254,7 @@ class _DappHomeState extends State<DappHome> {
                       show: true,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: _buildTabs(),
+                        child: Container(),
                       ).padx(8).top(16),
                     ),
 
@@ -269,24 +267,6 @@ class _DappHomeState extends State<DappHome> {
         ),
       ),
     );
-  }
-
-  Widget _buildTabs() {
-    switch (_contractVersionSelected) {
-      case 0:
-        return DappTabsV0(
-          web3Context: _web3Context,
-          signer: _signer,
-          accountDetail: _accountDetail,
-        );
-      case 1:
-      default:
-        return DappTabsV1(
-          web3Context: _web3Context,
-          signer: _signer,
-          accountDetail: _accountDetail,
-        );
-    }
   }
 
   Future<void> _deployContract() async {
