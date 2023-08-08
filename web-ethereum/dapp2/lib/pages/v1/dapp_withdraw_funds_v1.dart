@@ -1,4 +1,4 @@
-import 'package:orchid/api/preferences/user_preferences_dapp.dart';
+import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
@@ -6,7 +6,7 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_web3_v1.dart';
-import 'package:orchid/api/preferences/dapp_transaction.dart';
+import 'package:orchid/dapp/preferences/dapp_transaction.dart';
 import 'package:orchid/pages/dapp_tab_context.dart';
 import 'package:orchid/util/timed_builder.dart';
 import 'package:orchid/api/pricing/usd.dart';

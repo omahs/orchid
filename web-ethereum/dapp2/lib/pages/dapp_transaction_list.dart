@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
-import 'package:orchid/api/preferences/user_preferences_dapp.dart';
+import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
 import 'package:orchid/pages/transaction_status_panel.dart';
 
 class DappTransactionList extends StatefulWidget {
