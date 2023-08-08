@@ -1,3 +1,19 @@
+#  
+# e.g.
+#
+#  +---------+-------------------------------------------+
+#  | Package | Dependencies                              |
+#  +---------+-------------------------------------------+
+#  | l10n    |                                           |
+#  | util    | (api.log)                                 |
+#  | vpn     | (api.log), api, util                      |
+#  | common  | api, orchid, util                         |
+#  | api     | (api.log), orchid, util, vpn              |
+#  | orchid  | (api.log), api, common, util, vpn         |
+#  | pages   | (api.log), api, common, orchid, util, vpn |
+#  +---------+-------------------------------------------+
+#  
+
 import os
 import re
 
