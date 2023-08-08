@@ -147,7 +147,7 @@ class OrchidRestartManager {
     // Wait for a non-connected state before restarting.
     StreamSubscription<OrchidVPNExtensionState>? sub;
     sub = api.vpnExtensionStatus.stream
-        .timeout(Duration(seconds: 10))
+        .timeout(Duration(seconds: 30))
         .listen((state) async {
       switch (state) {
         case OrchidVPNExtensionState.Invalid:
@@ -182,7 +182,7 @@ class OrchidRestartManager {
     var api = OrchidAPI();
     StreamSubscription<OrchidVPNExtensionState>? sub;
     sub = api.vpnExtensionStatus.stream
-        .timeout(Duration(seconds: 10))
+        .timeout(Duration(seconds: 30))
         .listen((state) async {
       switch (state) {
         case OrchidVPNExtensionState.Invalid:
