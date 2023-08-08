@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:orchid/api/vpn/orchid_api.dart';
-import 'package:orchid/api/vpn/orchid_api_real.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/api/orchid_log.dart';
+import 'package:orchid/vpn/orchid_api.dart';
+import 'package:orchid/vpn/orchid_api_real.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import 'monitoring/analysis_db.dart';
-import 'monitoring/restart_manager.dart';
-import '../orchid_log.dart';
+import '../../vpn/monitoring/analysis_db.dart';
+import '../../vpn/monitoring/restart_manager.dart';
 
 ///
 /// Mock Orchid App Channel API Implementation

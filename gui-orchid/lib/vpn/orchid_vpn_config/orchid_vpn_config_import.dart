@@ -5,10 +5,10 @@ import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_user_config/orchid_account_import.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
-import 'package:orchid/api/vpn/model/circuit.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
-import 'package:orchid/api/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/model/circuit.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
+import 'package:orchid/vpn/model/orchid_hop.dart';
 
 /// Support for importing the JavaScript configuration file used by the Orchid VPN.
 // Note: The parsing in this class should be simplified using the (real) JSConfig parser.

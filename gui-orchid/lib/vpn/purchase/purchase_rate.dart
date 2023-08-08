@@ -1,5 +1,5 @@
 // A PAC purchase
-import 'package:orchid/api/vpn/preferences/user_secure_storage.dart';
+import 'package:orchid/vpn/preferences/user_secure_storage.dart';
 import 'orchid_pac.dart';
 
 class Purchase {

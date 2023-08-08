@@ -1,5 +1,5 @@
 
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
 
 class WireGuardHop extends CircuitHop {
   final String? config;

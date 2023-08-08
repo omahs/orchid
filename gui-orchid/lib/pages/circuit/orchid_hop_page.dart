@@ -8,7 +8,8 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_eth_v0.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_contract_v0.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/orchid/account_chart.dart';
 import 'package:orchid/common/app_buttons.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
@@ -29,8 +30,7 @@ import 'curator_page.dart';
 import '../../orchid/menu/orchid_funder_selector_menu.dart';
 import 'hop_editor.dart';
 import 'package:orchid/orchid/menu/orchid_key_selector_menu.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
-import '../../api/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
 
 /// Create / edit / view an Orchid Hop
 // The OrchidHopEditor operates in a "settings"-like fashion and allows

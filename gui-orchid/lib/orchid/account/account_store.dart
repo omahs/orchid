@@ -4,9 +4,9 @@ import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/v0/orchid_eth_v0.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
-import 'package:orchid/api/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/model/orchid_hop.dart';
 
 /// Discovers on-chain and persistently caches accounts for a single signer identity.
 class AccountStore extends ChangeNotifier {

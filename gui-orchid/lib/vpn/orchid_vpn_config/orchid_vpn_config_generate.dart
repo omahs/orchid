@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/api/orchid_crypto.dart';
-import 'package:orchid/api/vpn/model/circuit.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
-import 'package:orchid/api/vpn/model/orchid_hop.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/model/circuit.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
+import 'package:orchid/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 
 class OrchidVPNConfigGenerate {
   /// Generate the circuit hops list portion of the VPN config managed by the UI.

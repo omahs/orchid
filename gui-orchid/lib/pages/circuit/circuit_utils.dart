@@ -2,13 +2,13 @@ import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/model/circuit.dart';
+import 'package:orchid/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/account/account_finder.dart';
 import 'add_hop_page.dart';
-import '../../api/vpn/model/circuit.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
-import '../../api/vpn/model/orchid_hop.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
 
 typedef HopCompletion = void Function(UniqueHop);
 
@@ -49,7 +49,7 @@ class CircuitUtils {
   // Note:   OrchidAPI().circuitConfigurationChanged.add(null);
   // Note: }
   static void _pushNewHopEditorRoute(BuildContext context,
-      MaterialPageRoute route, HopCompletion onComplete) async {
+      MaterialPageRoute route, HopCompletion? onComplete) async {
     var hop = await Navigator.push(context, route);
     if (hop == null) {
       return; // user cancelled

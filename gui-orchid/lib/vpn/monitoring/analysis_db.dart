@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:orchid/api/vpn/orchid_api_mock.dart';
+import 'package:orchid/vpn/monitoring/query_parser.dart';
+import 'package:orchid/vpn/orchid_api.dart';
+import 'package:orchid/vpn/orchid_api_mock.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import '../orchid_api.dart';
+
 import 'iana.dart';
-import 'query_parser.dart';
 
 /// Traffic analysis database published by the Orchid extension.
 class AnalysisDb {

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
+import 'package:orchid/vpn/orchid_api.dart';
+import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
-import '../orchid_api.dart';
-import '../../orchid_log.dart';
-import '../../orchid_platform.dart';
+import '../../api/orchid_log.dart';
+import '../../api/orchid_platform.dart';
 
 /// Manage automated restarts of the VPN extension.
 ///

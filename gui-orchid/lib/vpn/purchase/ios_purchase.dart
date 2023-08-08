@@ -1,5 +1,5 @@
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/vpn/orchid_api.dart';
+import 'package:orchid/vpn/orchid_api.dart';
 import 'dart:async';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'orchid_pac.dart';

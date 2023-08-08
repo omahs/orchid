@@ -1,5 +1,5 @@
-import 'package:orchid/api/vpn/orchid_api_real.dart';
-import 'package:orchid/api/vpn/orchid_api_mock.dart';
+import 'package:orchid/vpn/orchid_api_real.dart';
+import 'package:orchid/vpn/orchid_api_mock.dart';
 import 'package:rxdart/rxdart.dart';
 
 ///

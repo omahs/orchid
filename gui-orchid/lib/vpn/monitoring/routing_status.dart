@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/vpn/orchid_api.dart';
-import 'http_unix_client.dart';
+import 'package:orchid/vpn/monitoring/http_unix_client.dart';
+import 'package:orchid/vpn/orchid_api.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// Status monitoring from the Orchid VPN extension.

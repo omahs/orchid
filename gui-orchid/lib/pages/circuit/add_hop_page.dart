@@ -9,7 +9,7 @@ import 'package:orchid/pages/circuit/hop_editor.dart';
 import 'package:orchid/pages/circuit/wireguard_hop_page.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
 import 'openvpn_hop_page.dart';
 import 'orchid_hop_page.dart';
 import 'package:orchid/util/localization.dart';

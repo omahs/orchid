@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
+import 'package:orchid/vpn/monitoring/analysis_db.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_asset.dart';
 import 'package:orchid/util/localization.dart';

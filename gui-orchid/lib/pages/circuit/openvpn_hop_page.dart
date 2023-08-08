@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orchid/api/orchid_log.dart';
-import 'package:orchid/api/vpn/model/circuit_hop.dart';
+import 'package:orchid/vpn/model/circuit_hop.dart';
 import 'package:orchid/common/config_text.dart';
 import 'package:orchid/common/formatting.dart';
 import 'package:orchid/common/instructions_view.dart';
@@ -9,10 +8,10 @@ import 'package:orchid/common/tap_clears_focus.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
 import 'package:orchid/orchid/orchid_text.dart';
 import 'package:orchid/orchid/field/orchid_text_field.dart';
+import 'package:orchid/vpn/model/openvpn_hop.dart';
 import '../../common/app_sizes.dart';
 import '../../common/app_text.dart';
 import 'hop_editor.dart';
-import '../../api/vpn/model/openvpn_hop.dart';
 import 'package:orchid/util/localization.dart';
 
 /// Create / edit / view an OpenVPN Hop

@@ -3,8 +3,8 @@ import 'dart:convert';
 // TODO: Stand-in this until we have support for MacOS
 //import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
-import 'package:orchid/api/vpn/purchase/purchase_rate.dart';
-import '../../orchid_log.dart';
+import 'package:orchid/vpn/purchase/purchase_rate.dart';
+import '../../api/orchid_log.dart';
 
 // TODO: Stand-in until we have support for MacOS
 class NonSecureStorage {

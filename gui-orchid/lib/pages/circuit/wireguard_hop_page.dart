@@ -5,9 +5,9 @@ import 'package:orchid/common/instructions_view.dart';
 import 'package:orchid/common/screen_orientation.dart';
 import 'package:orchid/common/tap_clears_focus.dart';
 import 'package:orchid/orchid/orchid_titled_page_base.dart';
+import 'package:orchid/vpn/model/wireguard_hop.dart';
 import '../../common/app_sizes.dart';
 import 'hop_editor.dart';
-import '../../api/vpn/model/wireguard_hop.dart';
 import 'package:orchid/util/localization.dart';
 
 /// Create / edit / view an WireGuard Hop

@@ -9,7 +9,7 @@ import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_language.dart';
 import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/orchid_platform.dart';
-import 'package:orchid/api/vpn/orchid_api.dart';
+import 'package:orchid/vpn/orchid_api.dart';
 import 'package:orchid/util/json.dart';
 import 'package:web3dart/crypto.dart';
 import 'orchid_pac_seller.dart';
