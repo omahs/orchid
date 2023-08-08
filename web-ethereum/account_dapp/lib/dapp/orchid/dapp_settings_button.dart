@@ -8,7 +8,7 @@ import 'package:orchid/orchid/menu/submenu_popup_menu_item.dart';
 import 'package:orchid/pages/help/open_source_page.dart';
 import 'package:orchid/pages/settings/logging_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../orchid/menu/orchid_popup_menu_button.dart';
+import '../../orchid/menu/orchid_popup_menu_button.dart';
 
 class DappSettingsButton extends StatefulWidget {
   final int? contractVersionSelected;

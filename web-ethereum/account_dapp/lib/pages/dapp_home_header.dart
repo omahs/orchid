@@ -9,7 +9,7 @@ import 'package:orchid/dapp/orchid_web3/wallet_connect_eth_provider.dart';
 import 'package:orchid/util/gestures.dart';
 import '../orchid/menu/orchid_chain_selector_menu.dart';
 import 'dapp_home.dart';
-import 'dapp_settings_button.dart';
+import '../dapp/orchid/dapp_settings_button.dart';
 import '../dapp/orchid/dapp_wallet_info_button.dart';
 import '../dapp/orchid/dapp_wallet_select_button.dart';
 import 'package:flutter_svg/svg.dart';
