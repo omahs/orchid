@@ -2,7 +2,7 @@ import 'package:orchid/orchid/orchid.dart';
 import 'dart:async';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/orchid/orchid_circular_identicon.dart';
 import 'orchid_selector_menu.dart';
 

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:orchid/api/preferences/vpn/release_version.dart';
+import 'package:orchid/api/vpn/preferences/release_version.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_eth/v1/orchid_eth_bandwidth_pricing.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
@@ -8,7 +8,7 @@ import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
 import 'package:orchid/api/orchid_eth/orchid_lottery.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/api/pricing/orchid_pricing.dart';
 import 'package:orchid/common/app_sizes.dart';
 import 'package:orchid/common/screen_orientation.dart';

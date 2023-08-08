@@ -1,10 +1,10 @@
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
-import 'package:orchid/api/preferences/vpn/release_version.dart';
+import 'package:orchid/api/vpn/preferences/release_version.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'dart:math';
 import 'package:orchid/api/orchid_user_config/orchid_user_config.dart';
 import 'package:orchid/api/orchid_platform.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_buttons_deprecated.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_switch.dart';

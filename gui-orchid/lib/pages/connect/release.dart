@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orchid/api/preferences/vpn/release_version.dart';
+import 'package:orchid/api/vpn/preferences/release_version.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

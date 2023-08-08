@@ -5,7 +5,7 @@ import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
 import 'package:orchid/api/vpn/monitoring/restart_manager.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import 'orchid_vpn_config/orchid_vpn_config_generate.dart';
 import 'monitoring/routing_status.dart';

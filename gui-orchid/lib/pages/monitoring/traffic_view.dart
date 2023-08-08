@@ -5,7 +5,7 @@ import 'package:orchid/api/orchid_log.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orchid/api/vpn/monitoring/analysis_db.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/orchid_scroll.dart';
 import 'package:collection/collection.dart';

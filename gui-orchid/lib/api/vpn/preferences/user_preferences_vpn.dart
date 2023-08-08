@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:orchid/api/preferences/observable_preference.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_mock.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_mock.dart';
 import 'package:orchid/api/orchid_eth/orchid_account_mock.dart';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/purchase/orchid_pac_transaction.dart';
 import 'package:orchid/api/vpn/model/circuit.dart';
 import '../../orchid_log.dart';
+import '../../preferences/user_preferences.dart';
+import '../../preferences/user_preferences_keys.dart';
 import 'accounts_preferences.dart';
-import '../user_preferences.dart';
-import '../user_preferences_keys.dart';
 import 'release_version.dart';
 
 class UserPreferencesVPN {

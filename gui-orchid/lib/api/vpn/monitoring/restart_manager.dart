@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import '../orchid_api.dart';
 import '../../orchid_log.dart';

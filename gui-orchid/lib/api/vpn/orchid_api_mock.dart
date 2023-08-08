@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:orchid/api/vpn/orchid_api.dart';
 import 'package:orchid/api/vpn/orchid_api_real.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 import 'monitoring/analysis_db.dart';

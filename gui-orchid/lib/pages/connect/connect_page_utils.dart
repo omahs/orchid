@@ -1,6 +1,6 @@
 import 'package:orchid/api/vpn/orchid_api_mock.dart';
 import 'package:orchid/orchid/orchid.dart';
-import 'package:orchid/api/preferences/vpn/user_preferences_vpn.dart';
+import 'package:orchid/api/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/pages/app_routes.dart';
 import 'package:orchid/pages/purchase/purchase_page.dart';
 
