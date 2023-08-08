@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:orchid/api/preferences/user_preferences.dart';
 import 'package:orchid/pages/orchid_app.dart';

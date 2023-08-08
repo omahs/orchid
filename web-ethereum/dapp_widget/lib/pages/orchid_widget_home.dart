@@ -1,7 +1,5 @@
-// @dart=2.9
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/orchid_market.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
@@ -19,7 +17,7 @@ import 'package:styled_text/styled_text.dart';
 import 'package:orchid/util/localization.dart';
 
 class OrchidWidgetHome extends StatefulWidget {
-  const OrchidWidgetHome({Key key}) : super(key: key);
+  const OrchidWidgetHome({Key? key}) : super(key: key);
 
   @override
   _OrchidWidgetHomeState createState() => _OrchidWidgetHomeState();
@@ -119,7 +117,7 @@ class _OrchidWidgetHomeState extends State<OrchidWidgetHome> {
         80.0;
   }
 
-  Widget column(int i, {Widget child}) {
+  Widget column(int i, {required Widget child}) {
     return SizedBox(
       width: _columnSizes[i].toDouble(),
       child: child,
@@ -170,7 +168,7 @@ class _OrchidWidgetHomeState extends State<OrchidWidgetHome> {
 
     final tokenCell = Text(model.fundsToken.symbol).body2;
 
-    Widget valueCell(Token token, USD tokenPrice) {
+    Widget valueCell(Token? token, USD? tokenPrice) {
       if (token == null || tokenPrice == null) {
         return Container();
       }
@@ -227,14 +225,14 @@ class _ChainModel {
   /// The contract version for price calculations
   final int version;
 
-  PotStats stats;
-  USD totalCostToCreateAccount;
-  USD fundsTokenPrice;
-  USD gasTokenPrice;
+  PotStats? stats;
+  USD? totalCostToCreateAccount;
+  USD? fundsTokenPrice;
+  USD? gasTokenPrice;
 
   _ChainModel({
-    @required this.chain,
-    @required this.fundsToken,
+    required this.chain,
+    required this.fundsToken,
     this.version = 1,
   });
 
@@ -252,8 +250,8 @@ class _ChainModel {
       fundsTokenPrice = USD(await OrchidPricing().usdPrice(fundsToken));
       gasTokenPrice = USD(await OrchidPricing().usdPrice(chain.nativeCurrency));
       totalCostToCreateAccount = await OrchidPricing()
-              .tokenToUSD(stats.createBalance + stats.createDeposit) +
-          await OrchidPricing().tokenToUSD(stats.createGas);
+              .tokenToUSD(stats!.createBalance + stats!.createDeposit) +
+          await OrchidPricing().tokenToUSD(stats!.createGas);
     }
     /*
     if (version == 0) {
