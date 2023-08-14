@@ -26,17 +26,17 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
   final mainColumnWidth = 800.0;
   final altColumnWidth = 500.0;
 
-  EthereumAddress? _signer;
-
   // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
   // TODO: Before that we need to add a controller to our PollingBuilder to allow
   // TODO: for refresh on demand.
-  AccountDetailPoller? _accountDetail;
+  AccountDetailPoller? _funderAccountDetail;
 
+  EthereumAddress? _signer;
   final _signerField = AddressValueFieldController();
-  final _scrollController = ScrollController();
 
   bool get _hasAccount => _signer != null && web3Context?.walletAddress != null;
+
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -80,9 +80,9 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
 
   // TODO: replace this account detail management with a provider builder
   void _clearAccountDetail() {
-    _accountDetail?.cancel();
-    _accountDetail?.removeListener(_accountDetailUpdated);
-    _accountDetail = null;
+    _funderAccountDetail?.cancel();
+    _funderAccountDetail?.removeListener(_accountDetailUpdated);
+    _funderAccountDetail = null;
   }
 
   // TODO: replace this account detail management with a provider builder
@@ -99,12 +99,12 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
           funder: web3Context!.walletAddress!,
           chainId: web3Context!.chain.chainId,
         );
-        _accountDetail = AccountDetailPoller(
+        _funderAccountDetail = AccountDetailPoller(
           account: account,
           pollingPeriod: Duration(seconds: 10),
         );
-        _accountDetail!.addListener(_accountDetailUpdated);
-        _accountDetail!.startPolling();
+        _funderAccountDetail!.addListener(_accountDetailUpdated);
+        _funderAccountDetail!.startPolling();
       }
     }
     setState(() {});
@@ -189,11 +189,12 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
                         child: AccountCard(
                           // todo: the key here just allows us to expanded when details are available
                           // todo: maybe make that the default behavior of the card
-                          key: Key(_accountDetail?.funder.toString() ?? 'null'),
+                          key: Key(_funderAccountDetail?.funder.toString() ??
+                              'null'),
                           minHeight: true,
                           showAddresses: false,
                           showContractVersion: false,
-                          accountDetail: _accountDetail,
+                          accountDetail: _funderAccountDetail,
                           // initiallyExpanded: _accountDetail != null,
                           initiallyExpanded: false,
                           // partial values from the connection panel
@@ -232,14 +233,14 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
         return DappTabsV0(
           web3Context: web3Context,
           signer: _signer,
-          accountDetail: _accountDetail,
+          accountDetail: _funderAccountDetail,
         );
       case 1:
       default:
         return DappTabsV1(
           web3Context: web3Context,
           signer: _signer,
-          accountDetail: _accountDetail,
+          accountDetail: _funderAccountDetail,
         );
     }
   }
@@ -250,7 +251,7 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
     // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
     // TODO: Before that we need to add a controller to our PollingBuilder to allow
     // TODO: for refresh on demand.
-    _accountDetail?.refresh();
+    _funderAccountDetail?.refresh();
   }
 
   // Init a new context, disconnecting any old context and registering listeners
