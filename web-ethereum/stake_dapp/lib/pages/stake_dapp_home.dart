@@ -25,22 +25,22 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   final mainColumnWidth = 800.0;
   final altColumnWidth = 500.0;
 
-  EthereumAddress? _signer;
-
   // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
   // TODO: Before that we need to add a controller to our PollingBuilder to allow
   // TODO: for refresh on demand.
-  AccountDetailPoller? _accountDetail;
+  AccountDetailPoller? _funderAccountDetail;
 
-  final _signerField = AddressValueFieldController();
+  EthereumAddress? _stakee;
+  final _stakeeField = AddressValueFieldController();
+
+  bool get _hasAccount => _stakee != null && web3Context?.walletAddress != null;
+
   final _scrollController = ScrollController();
-
-  bool get _hasAccount => _signer != null && web3Context?.walletAddress != null;
 
   @override
   void initState() {
     super.initState();
-    _signerField.addListener(_signerFieldChanged);
+    _stakeeField.addListener(_signerFieldChanged);
     initStateAsync();
   }
 
@@ -54,18 +54,18 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     if (OrchidUserParams().test) {
       await Future.delayed(Duration(seconds: 0), () {
         connectEthereum();
-        _signer =
+        _stakee =
             EthereumAddress.from('0x5eea55E63a62138f51D028615e8fd6bb26b8D354');
-        _signerField.textController.text = _signer.toString();
+        _stakeeField.textController.text = _stakee.toString();
       });
     }
   }
 
   void _signerFieldChanged() {
     // signer field changed?
-    var oldSigner = _signer;
-    _signer = _signerField.value;
-    if (_signer != oldSigner) {
+    var oldSigner = _stakee;
+    _stakee = _stakeeField.value;
+    if (_stakee != oldSigner) {
       _selectedAccountChanged();
     }
 
@@ -79,9 +79,9 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   // TODO: replace this account detail management with a provider builder
   void _clearAccountDetail() {
-    _accountDetail?.cancel();
-    _accountDetail?.removeListener(_accountDetailUpdated);
-    _accountDetail = null;
+    _funderAccountDetail?.cancel();
+    _funderAccountDetail?.removeListener(_accountDetailUpdated);
+    _funderAccountDetail = null;
   }
 
   // TODO: replace this account detail management with a provider builder
@@ -93,17 +93,17 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
       // Avoid starting the poller in the rare case where there are no contracts
       if (contractVersionSelected != null) {
         var account = Account.fromSignerAddress(
-          signerAddress: _signer!,
+          signerAddress: _stakee!,
           version: contractVersionSelected!,
           funder: web3Context!.walletAddress!,
           chainId: web3Context!.chain.chainId,
         );
-        _accountDetail = AccountDetailPoller(
+        _funderAccountDetail = AccountDetailPoller(
           account: account,
           pollingPeriod: Duration(seconds: 10),
         );
-        _accountDetail!.addListener(_accountDetailUpdated);
-        _accountDetail!.startPolling();
+        _funderAccountDetail!.addListener(_accountDetailUpdated);
+        _funderAccountDetail!.startPolling();
       }
     }
     setState(() {});
@@ -174,7 +174,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
                         child: OrchidLabeledAddressField(
                           label: s.orchidIdentity,
-                          controller: _signerField,
+                          controller: _stakeeField,
                           contentPadding: EdgeInsets.only(
                               top: 8, bottom: 18, left: 16, right: 16),
                         ).top(24).padx(8)),
@@ -188,17 +188,17 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                         child: AccountCard(
                           // todo: the key here just allows us to expanded when details are available
                           // todo: maybe make that the default behavior of the card
-                          key: Key(_accountDetail?.funder.toString() ?? 'null'),
+                          key: Key(_funderAccountDetail?.funder.toString() ?? 'null'),
                           minHeight: true,
                           showAddresses: false,
                           showContractVersion: false,
-                          accountDetail: _accountDetail,
+                          accountDetail: _funderAccountDetail,
                           // initiallyExpanded: _accountDetail != null,
                           initiallyExpanded: false,
                           // partial values from the connection panel
                           partialAccountFunderAddress:
                               web3Context?.walletAddress,
-                          partialAccountSignerAddress: _signer,
+                          partialAccountSignerAddress: _stakee,
                         ).top(24).padx(8),
                       ),
                     ),
@@ -231,7 +231,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
     // TODO: Before that we need to add a controller to our PollingBuilder to allow
     // TODO: for refresh on demand.
-    _accountDetail?.refresh();
+    _funderAccountDetail?.refresh();
   }
 
   // Init a new context, disconnecting any old context and registering listeners
@@ -267,7 +267,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   @override
   void dispose() {
-    _signerField.removeListener(_signerFieldChanged);
+    _stakeeField.removeListener(_signerFieldChanged);
     super.dispose();
   }
 }
