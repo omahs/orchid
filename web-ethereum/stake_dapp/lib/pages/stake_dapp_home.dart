@@ -16,14 +16,14 @@ import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_eth_v1_web3.dart';
 import 'dapp_home_header.dart';
 
-class DappHome extends StatefulWidget {
-  const DappHome({Key? key}) : super(key: key);
+class StakeDappHome extends StatefulWidget {
+  const StakeDappHome({Key? key}) : super(key: key);
 
   @override
-  State<DappHome> createState() => _DappHomeState();
+  State<StakeDappHome> createState() => _StakeDappHomeState();
 }
 
-class _DappHomeState extends State<DappHome> {
+class _StakeDappHomeState extends State<StakeDappHome> {
   OrchidWeb3Context? _web3Context;
   EthereumAddress? _signer;
 

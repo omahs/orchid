@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/preferences/user_preferences_ui.dart';
 import 'package:orchid/orchid/orchid_desktop_dragscroll.dart';
 import 'package:orchid/orchid/orchid_gradients.dart';
-import 'package:orchid/pages/dapp_home.dart';
+import 'package:orchid/pages/stake_dapp_home.dart';
 
 // Provide the MaterialApp wrapper and localization context.
 class OrchidApp extends StatefulWidget {
@@ -68,6 +68,6 @@ class _OrchidAppNoTabsState extends State<OrchidAppNoTabs> {
   }
 
   Widget _body() {
-    return Center(child: DappHome());
+    return Center(child: StakeDappHome());
   }
 }
