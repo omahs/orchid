@@ -21,7 +21,7 @@ class DappHome extends StatefulWidget {
   State<DappHome> createState() => DappHomeState();
 }
 
-class DappHomeState extends DappHomeStateBase {
+class DappHomeState extends DappHomeStateBase<DappHome> {
   // This must be wide enough to accommodate the tab names.
   final mainColumnWidth = 800.0;
   final altColumnWidth = 500.0;
@@ -244,6 +244,15 @@ class DappHomeState extends DappHomeStateBase {
     }
   }
 
+  // Refresh the wallet and account balances
+  void _refreshUserData() {
+    web3Context?.refresh();
+    // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
+    // TODO: Before that we need to add a controller to our PollingBuilder to allow
+    // TODO: for refresh on demand.
+    _accountDetail?.refresh();
+  }
+
   // Init a new context, disconnecting any old context and registering listeners
   @override
   void setNewContext(OrchidWeb3Context? web3Context) async {
@@ -265,15 +274,6 @@ class DappHomeState extends DappHomeStateBase {
     } catch (err) {
       log('on contract version changed: error in selected account changed: $err');
     }
-  }
-
-  // Refresh the wallet and account balances
-  void _refreshUserData() {
-    web3Context?.refresh();
-    // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
-    // TODO: Before that we need to add a controller to our PollingBuilder to allow
-    // TODO: for refresh on demand.
-    _accountDetail?.refresh();
   }
 
   @override

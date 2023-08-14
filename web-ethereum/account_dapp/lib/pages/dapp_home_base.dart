@@ -5,9 +5,8 @@ import 'package:orchid/api/orchid_eth/v1/orchid_eth_v1.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_eth_v1_web3.dart';
-import 'dapp_home.dart';
 
-class DappHomeStateBase extends State<DappHome> {
+class DappHomeStateBase<T extends StatefulWidget> extends State<T> {
   OrchidWeb3Context? web3Context;
 
   /// The contract version defaulted or selected by the user.
