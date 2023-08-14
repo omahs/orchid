@@ -1,14 +1,11 @@
-import 'package:orchid/api/orchid_eth/orchid_account_detail.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
-import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
-import 'package:orchid/orchid/account/account_card.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'dapp_home_base.dart';
 import 'dapp_home_header.dart';
@@ -24,11 +21,6 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   // This must be wide enough to accommodate the tab names.
   final mainColumnWidth = 800.0;
   final altColumnWidth = 500.0;
-
-  // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
-  // TODO: Before that we need to add a controller to our PollingBuilder to allow
-  // TODO: for refresh on demand.
-  AccountDetailPoller? _funderAccountDetail;
 
   EthereumAddress? _stakee;
   final _stakeeField = AddressValueFieldController();
@@ -66,46 +58,16 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     var oldSigner = _stakee;
     _stakee = _stakeeField.value;
     if (_stakee != oldSigner) {
-      _selectedAccountChanged();
+      _selectedStakeeChanged();
     }
 
     // Update UI
     setState(() {});
   }
 
-  void _accountDetailUpdated() {
-    setState(() {});
-  }
-
-  // TODO: replace this account detail management with a provider builder
-  void _clearAccountDetail() {
-    _funderAccountDetail?.cancel();
-    _funderAccountDetail?.removeListener(_accountDetailUpdated);
-    _funderAccountDetail = null;
-  }
-
-  // TODO: replace this account detail management with a provider builder
   // Start polling the correct account
-  void _selectedAccountChanged() async {
-    // log("XXX: selectedAccountChanged");
-    _clearAccountDetail();
-    if (_hasAccount) {
-      // Avoid starting the poller in the rare case where there are no contracts
-      if (contractVersionSelected != null) {
-        var account = Account.fromSignerAddress(
-          signerAddress: _stakee!,
-          version: contractVersionSelected!,
-          funder: web3Context!.walletAddress!,
-          chainId: web3Context!.chain.chainId,
-        );
-        _funderAccountDetail = AccountDetailPoller(
-          account: account,
-          pollingPeriod: Duration(seconds: 10),
-        );
-        _funderAccountDetail!.addListener(_accountDetailUpdated);
-        _funderAccountDetail!.startPolling();
-      }
-    }
+  void _selectedStakeeChanged() async {
+    // XXX
     setState(() {});
   }
 
@@ -169,39 +131,18 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                       width: mainColumnWidth,
                     ).top(24),
 
-                    // signer field
+                    // stakee field
                     ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
                         child: OrchidLabeledAddressField(
-                          label: s.orchidIdentity,
+                          label: "Stakee Address", // localize
                           controller: _stakeeField,
                           contentPadding: EdgeInsets.only(
                               top: 8, bottom: 18, left: 16, right: 16),
                         ).top(24).padx(8)),
 
-                    // account card
-                    AnimatedVisibility(
-                      show: _hasAccount,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minWidth: altColumnWidth, maxWidth: altColumnWidth),
-                        child: AccountCard(
-                          // todo: the key here just allows us to expanded when details are available
-                          // todo: maybe make that the default behavior of the card
-                          key: Key(_funderAccountDetail?.funder.toString() ?? 'null'),
-                          minHeight: true,
-                          showAddresses: false,
-                          showContractVersion: false,
-                          accountDetail: _funderAccountDetail,
-                          // initiallyExpanded: _accountDetail != null,
-                          initiallyExpanded: false,
-                          // partial values from the connection panel
-                          partialAccountFunderAddress:
-                              web3Context?.walletAddress,
-                          partialAccountSignerAddress: _stakee,
-                        ).top(24).padx(8),
-                      ),
-                    ),
+                    // Stakee info ("account card")
+                    // XXX
 
                     // tabs
                     // Divider(color: Colors.white.withOpacity(0.3)).bottom(8),
@@ -228,10 +169,6 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   // Refresh the wallet and account balances
   void _refreshUserData() {
     web3Context?.refresh();
-    // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
-    // TODO: Before that we need to add a controller to our PollingBuilder to allow
-    // TODO: for refresh on demand.
-    _funderAccountDetail?.refresh();
   }
 
   // Init a new context, disconnecting any old context and registering listeners
@@ -240,7 +177,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     super.setNewContext(web3Context);
 
     try {
-      _selectedAccountChanged();
+      _selectedStakeeChanged();
     } catch (err) {
       log('set new context: error in selected account changed: $err');
     }
@@ -251,7 +188,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     super.onContractVersionChanged(version);
     // todo: does this need to be done first?
     try {
-      _selectedAccountChanged();
+      _selectedStakeeChanged();
     } catch (err) {
       log('on contract version changed: error in selected account changed: $err');
     }
@@ -259,9 +196,9 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   @override
   Future<void> disconnect() async {
-    setState(() {
-      _clearAccountDetail();
-    });
+    // setState(() {
+    //   _clearAccountDetail();
+    // });
     super.disconnect();
   }
 
