@@ -22,6 +22,10 @@ class DappHome extends StatefulWidget {
 }
 
 class DappHomeState extends DappHomeStateBase {
+  // This must be wide enough to accommodate the tab names.
+  final mainColumnWidth = 800.0;
+  final altColumnWidth = 500.0;
+
   EthereumAddress? _signer;
 
   // TODO: Encapsulate this in a provider builder widget (ala TokenPriceBuilder)
@@ -32,8 +36,7 @@ class DappHomeState extends DappHomeStateBase {
   final _signerField = AddressValueFieldController();
   final _scrollController = ScrollController();
 
-  bool get _hasAccount =>
-      _signer != null && web3Context?.walletAddress != null;
+  bool get _hasAccount => _signer != null && web3Context?.walletAddress != null;
 
   @override
   void initState() {
@@ -106,10 +109,6 @@ class DappHomeState extends DappHomeStateBase {
     }
     setState(() {});
   }
-
-  // This must be wide enough to accommodate the tab names.
-  final mainColumnWidth = 800.0;
-  final altColumnWidth = 500.0;
 
   @override
   Widget build(BuildContext context) {
@@ -255,14 +254,17 @@ class DappHomeState extends DappHomeStateBase {
     } catch (err) {
       log('set new context: error in selected account changed: $err');
     }
-    setState(() {});
   }
 
   @override
   void onContractVersionChanged(int version) async {
     super.onContractVersionChanged(version);
     // todo: does this need to be done first?
-    _selectedAccountChanged();
+    try {
+      _selectedAccountChanged();
+    } catch (err) {
+      log('on contract version changed: error in selected account changed: $err');
+    }
   }
 
   // Refresh the wallet and account balances
@@ -288,4 +290,3 @@ class DappHomeState extends DappHomeStateBase {
     super.dispose();
   }
 }
-

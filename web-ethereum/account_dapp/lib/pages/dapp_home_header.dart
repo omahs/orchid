@@ -30,12 +30,10 @@ class DappHomeHeader extends StatefulWidget {
     super.key,
     required OrchidWeb3Context? web3Context,
     required this.setNewContext,
-
     Set<int>? contractVersionsAvailable,
     int? contractVersionSelected,
     void Function(int? version)? selectContractVersion,
     VoidCallback? deployContract,
-
     required this.connectEthereum,
     required Future<void> Function() disconnect,
   })  : this._web3Context = web3Context,
@@ -136,9 +134,8 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
 
     return AnimatedCrossFade(
       duration: Duration(milliseconds: 300),
-      crossFadeState: connected
-          ? CrossFadeState.showFirst
-          : CrossFadeState.showSecond,
+      crossFadeState:
+          connected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       // Wallet info button
       firstChild: SizedBox(
         // Hight must be set on each child
@@ -265,8 +262,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
   }
 
   void _openLogsPage() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return LoggingPage();
     }));
   }

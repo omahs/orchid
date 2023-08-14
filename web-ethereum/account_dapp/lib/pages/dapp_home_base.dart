@@ -7,14 +7,7 @@ import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/dapp/orchid_web3/v1/orchid_eth_v1_web3.dart';
 import 'dapp_home.dart';
 
-
 class DappHomeStateBase extends State<DappHome> {
-
-  // TODO:???
-  // This must be wide enough to accommodate the tab names.
-  final mainColumnWidth = 800.0;
-  final altColumnWidth = 500.0;
-
   OrchidWeb3Context? web3Context;
 
   /// The contract version defaulted or selected by the user.
@@ -156,11 +149,11 @@ class DappHomeStateBase extends State<DappHome> {
     // Default the contract version
     if (contractVersionsAvailable != null) {
       final selectedVersion =
-      web3Context!.contractVersionsAvailable!.contains(1)
-          ? 1
-          : web3Context!.contractVersionsAvailable!.contains(0)
-          ? 0
-          : null;
+          web3Context!.contractVersionsAvailable!.contains(1)
+              ? 1
+              : web3Context!.contractVersionsAvailable!.contains(0)
+                  ? 0
+                  : null;
       selectContractVersion(selectedVersion);
     } else {
       selectContractVersion(null);
@@ -170,14 +163,7 @@ class DappHomeStateBase extends State<DappHome> {
     //   _contractVersionSelected = 0;
     // }
 
-    /*
-    try {
-      _selectedAccountChanged();
-    } catch (err) {
-      log('set new context: error in selected account changed: $err');
-    }
-    setState(() {});
-     */
+    // Subclasses should override and update the UI here
   }
 
   // For contracts that may exist on chains other than main net we ensure that
@@ -223,8 +209,8 @@ class DappHomeStateBase extends State<DappHome> {
 
   void onContractVersionChanged(int version) async {
     _setAppWeb3Provider(web3Context);
-    // Update the UI
     setState(() {});
+    // Subclasses should override and update the UI here
   }
 
   Future<void> disconnect() async {
