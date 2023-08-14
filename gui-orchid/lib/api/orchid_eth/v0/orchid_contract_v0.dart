@@ -41,6 +41,23 @@ class OrchidContractV0 {
     return EthereumAddress.from(oxtContractAddressString);
   }
 
+  static final _testDirectoryContractAddressV0 = '0xxxx';
+
+  // OXT Directory on main net
+  static final _directoryContractAddressV0 =
+      '0x918101FB64f467414e9a785aF9566ae69C3e22C5';
+
+  static String get directoryContractAddressString {
+    if (OrchidUserParams().test) {
+      return _testDirectoryContractAddressV0;
+    }
+    return _directoryContractAddressV0;
+  }
+
+  static EthereumAddress get directoryContractAddress {
+    return EthereumAddress.from(directoryContractAddressString);
+  }
+
   static String updateEventHashV0 =
       "0x3cd5941d0d99319105eba5f5393ed93c883f132d251e56819e516005c5e20dbc";
 
@@ -56,7 +73,9 @@ class OrchidContractV0 {
 
   static int gasLimitApprove = 200000;
 
-  static List<String> abi = [
+  static int gasLimitDirectoryPush = 300000;
+
+  static List<String> lotteryAbi = [
     'event Update(address indexed funder, address indexed signer, uint128 amount, uint128 escrow, uint256 unlock)',
     'event Create(address indexed funder, address indexed signer)',
     'event Bound(address indexed funder, address indexed signer)',
@@ -68,6 +87,8 @@ class OrchidContractV0 {
     'function pull(address signer, address payable target, bool autolock, uint128 amount, uint128 escrow)',
     'function yank(address signer, address payable target, bool autolock)',
   ];
+
+  static List<String> directoryAbi = [ ];
 }
 
 enum OrchidTransactionTypeV0 {
@@ -194,7 +215,10 @@ class OrchidUpdateEventV0 {
   OXT endBalance;
   OXT endDeposit;
 
-  OrchidUpdateEventV0({required this.transactionHash, required this.endBalance, required this.endDeposit});
+  OrchidUpdateEventV0(
+      {required this.transactionHash,
+      required this.endBalance,
+      required this.endDeposit});
 
   /*
     {
@@ -237,7 +261,10 @@ class OrchidCreateEvent {
   final EthereumAddress funder;
   final EthereumAddress signer;
 
-  OrchidCreateEvent({required this.transactionHash, required this.funder, required this.signer});
+  OrchidCreateEvent(
+      {required this.transactionHash,
+      required this.funder,
+      required this.signer});
 }
 
 class OrchidCreateEventV1 {
@@ -262,7 +289,10 @@ class OrchidCreateEventV0 implements OrchidCreateEvent {
   final EthereumAddress funder;
   final EthereumAddress signer;
 
-  OrchidCreateEventV0({required this.transactionHash, required this.funder, required this.signer});
+  OrchidCreateEventV0(
+      {required this.transactionHash,
+      required this.funder,
+      required this.signer});
 
   static OrchidCreateEventV0 fromJsonRpcResult(dynamic result) {
     // Parse the results

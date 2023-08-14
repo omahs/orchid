@@ -19,7 +19,7 @@ class OrchidWeb3V0 {
   OrchidWeb3V0(this.context)
       : this._lotteryContract = Contract(
             OrchidContractV0.lotteryContractAddressV0String,
-            OrchidContractV0.abi,
+            OrchidContractV0.lotteryAbi,
             context.web3),
         this._oxt = OrchidERC20(context: context, tokenType: Tokens.OXT);
 
