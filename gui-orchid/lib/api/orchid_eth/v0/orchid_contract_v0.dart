@@ -88,7 +88,21 @@ class OrchidContractV0 {
     'function yank(address signer, address payable target, bool autolock)',
   ];
 
-  static List<String> directoryAbi = [ ];
+  static List<String> directoryAbi = [
+    'function heft(address stakee) external view returns (uint256)',
+    'function push(address stakee, uint256 amount, uint128 delay)',
+    // 'function transfer(address recipient, uint256 amount) external returns (bool)',
+    // 'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
+    // 'function what() external view returns (IERC20)',
+    // 'function name(address staker, address stakee) public pure returns (bytes32)',
+    // 'function have() public view returns (uint256)',
+    // 'function seek(uint256 point) public view returns (address, uint128)',
+    // 'function pick(uint128 percent) external view returns (address, uint128)',
+    // 'function wait(address stakee, uint128 delay)',
+    // 'function take(uint256 index, uint256 amount, address payable target)',
+    // 'function stop(uint256 index, uint256 amount, uint128 delay)',
+    // 'function pull(address stakee, uint256 amount, uint256 index)',
+  ];
 }
 
 enum OrchidTransactionTypeV0 {
