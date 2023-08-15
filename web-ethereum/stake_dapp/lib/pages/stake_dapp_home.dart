@@ -157,29 +157,21 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                         ).top(24).padx(8)),
 
                     // Current staked amount
-                    if (_stakee != null && _stakedAmountController.value != null)
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: OrchidLabeledTokenValueField(
-                                // localize
-                                label: "Staked amount",
-                                type: Tokens.OXT,
-                                readOnly: true,
-                                enabled: false,
-                                controller: _stakedAmountController)
-                            .width(double.infinity)
-                            .pady(24),
-                      ),
-
-                    // tabs
-                    // Divider(color: Colors.white.withOpacity(0.3)).bottom(8),
                     AnimatedVisibility(
-                      // show: _hasAccount,
-                      show: true,
+                      show: _stakee != null &&
+                          _stakedAmountController.value != null,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: Container(),
-                      ).padx(8).top(16),
+                        child: OrchidLabeledTokenValueField(
+                          // localize
+                          label: "Staked amount",
+                          type: Tokens.OXT,
+                          readOnly: true,
+                          enabled: false,
+                          controller: _stakedAmountController,
+                        ).width(double.infinity).pady(24).padx(8),
+
+                      ),
                     ),
 
                     // _buildFooter().padx(24).bottom(24),

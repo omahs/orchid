@@ -29,6 +29,10 @@ class OrchidWeb3StakeV0 {
     BigInt? delay,
   }) async {
     delay ??= BigInt.zero;
+    // Currently disallow staking delay.
+    if (delay != BigInt.zero) {
+      throw Exception("Staking delay not allowed.");
+    }
     amount.assertType(Tokens.OXT);
     log("Stake funds amount: $amount, stakee: $stakee, delay: $delay");
     var walletBalance = await _oxt.getERC20Balance(wallet.address!);
@@ -56,9 +60,6 @@ class OrchidWeb3StakeV0 {
     }
 
     // Do the stake call
-    if (delay != BigInt.zero) {
-      throw Exception("Staking delay not allowed.");
-    }
     var contract = _directoryContract.connect(context.web3.getSigner());
     TransactionResponse tx = await contract.send(
       'push',
