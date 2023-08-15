@@ -26,8 +26,9 @@ class OrchidWeb3StakeV0 {
     required EthereumAddress stakee,
     required Token amount,
     required OrchidWallet wallet,
-    required BigInt delay,
+    BigInt? delay,
   }) async {
+    delay ??= BigInt.zero;
     amount.assertType(Tokens.OXT);
     log("Stake funds amount: $amount, stakee: $stakee, delay: $delay");
     var walletBalance = await _oxt.getERC20Balance(wallet.address!);
@@ -49,13 +50,15 @@ class OrchidWeb3StakeV0 {
         amount: amount, // Amount is the new total approval amount
       );
       txHashes.add(approveTxHash);
-      // arbitrary delay
       await Future.delayed(Duration(milliseconds: 1000));
     } else {
       log("oxtAllowance sufficient: $oxtAllowance");
     }
 
     // Do the stake call
+    if (delay != BigInt.zero) {
+      throw Exception("Staking delay not allowed.");
+    }
     var contract = _directoryContract.connect(context.web3.getSigner());
     TransactionResponse tx = await contract.send(
       'push',

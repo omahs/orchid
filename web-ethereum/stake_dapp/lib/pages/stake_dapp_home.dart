@@ -1,5 +1,9 @@
+import 'package:orchid/api/orchid_eth/token_type.dart';
+import 'package:orchid/api/orchid_eth/tokens.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
+import 'package:orchid/gui-orchid/lib/orchid/orchid_panel.dart';
+import 'package:orchid/orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -29,6 +33,9 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   bool get _hasAccount => _stakee != null && web3Context?.walletAddress != null;
 
   final _scrollController = ScrollController();
+
+  final _stakedAmountController =
+      TypedTokenValueFieldController(type: Tokens.OXT);
 
   @override
   void initState() {
@@ -70,9 +77,11 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   void _selectedStakeeChanged() async {
     // XXX
     if (_stakee != null && web3Context != null) {
-      // TEST
-      var result = await OrchidWeb3StakeV0(web3Context!).orchidGetStake(_stakee!);
-      log("XXX: heft = $result");
+      _stakedAmountController.value =
+          await OrchidWeb3StakeV0(web3Context!).orchidGetStake(_stakee!);
+      log("XXX: heft = $_stakedAmountController");
+    } else {
+      _stakedAmountController.value = null;
     }
     setState(() {});
   }
@@ -147,8 +156,20 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                               top: 8, bottom: 18, left: 16, right: 16),
                         ).top(24).padx(8)),
 
-                    // Stakee info ("account card")
-                    // XXX
+                    // Current staked amount
+                    if (_stakee != null && _stakedAmountController.value != null)
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: altColumnWidth),
+                        child: OrchidLabeledTokenValueField(
+                                // localize
+                                label: "Staked amount",
+                                type: Tokens.OXT,
+                                readOnly: true,
+                                enabled: false,
+                                controller: _stakedAmountController)
+                            .width(double.infinity)
+                            .pady(24),
+                      ),
 
                     // tabs
                     // Divider(color: Colors.white.withOpacity(0.3)).bottom(8),
