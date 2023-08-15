@@ -166,6 +166,7 @@ class DappHomeState extends DappHomeStateBase<DappHome> {
                       ).center.bottom(24),
 
                     DappTransactionList(
+                      web3Context: web3Context,
                       refreshUserData: _refreshUserData,
                       width: mainColumnWidth,
                     ).top(24),
