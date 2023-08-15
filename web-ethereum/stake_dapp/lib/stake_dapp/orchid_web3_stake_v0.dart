@@ -22,10 +22,9 @@ class OrchidWeb3StakeV0 {
   /// Transfer the int amount from the user to the specified directory address.
   /// Amount won't exceed walletBalance.
   Future<List<String> /*TransactionId*/ > orchidStakeFunds({
-    required EthereumAddress funder,
+    required OrchidWallet wallet,
     required EthereumAddress stakee,
     required Token amount,
-    required OrchidWallet wallet,
     BigInt? delay,
   }) async {
     delay ??= BigInt.zero;
@@ -35,7 +34,8 @@ class OrchidWeb3StakeV0 {
     }
     amount.assertType(Tokens.OXT);
     log("Stake funds amount: $amount, stakee: $stakee, delay: $delay");
-    var walletBalance = await _oxt.getERC20Balance(wallet.address!);
+    final funder = wallet.address!;
+    var walletBalance = await _oxt.getERC20Balance(funder);
     amount = Token.min(amount, walletBalance);
 
     List<String> txHashes = [];
@@ -43,13 +43,13 @@ class OrchidWeb3StakeV0 {
     // Check allowance and skip approval if sufficient.
     // function allowance(address owner, address spender) external view returns (uint256)
     Token oxtAllowance = await _oxt.getERC20Allowance(
-      owner: wallet.address!,
+      owner: funder,
       spender: OrchidContractV0.lotteryContractAddressV0,
     );
     if (oxtAllowance < amount) {
       log("oxtAllowance increase required: $oxtAllowance < $amount");
       var approveTxHash = await _oxt.approveERC20(
-        owner: wallet.address!,
+        owner: funder,
         spender: OrchidContractV0.directoryContractAddress,
         amount: amount, // Amount is the new total approval amount
       );

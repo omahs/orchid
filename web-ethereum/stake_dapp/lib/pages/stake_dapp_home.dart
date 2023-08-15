@@ -1,12 +1,6 @@
 import 'package:orchid/api/orchid_eth/token_type.dart';
-import 'package:orchid/api/orchid_eth/tokens.dart';
-import 'package:orchid/api/pricing/usd.dart';
-import 'package:orchid/dapp/orchid/dapp_button.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
-import 'package:orchid/gui-orchid/lib/orchid/field/token_value_widget_row.dart';
-import 'package:orchid/gui-orchid/lib/orchid/orchid_panel.dart';
-import 'package:orchid/orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -17,6 +11,7 @@ import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
 import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
 import 'dapp_home_base.dart';
 import 'dapp_home_header.dart';
+import 'stake_panel.dart';
 
 class StakeDappHome extends StatefulWidget {
   const StakeDappHome({Key? key}) : super(key: key);
@@ -38,8 +33,6 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   final _scrollController = ScrollController();
 
   Token? _currentStake;
-  final _addToStakeAmountController =
-      TypedTokenValueFieldController(type: Tokens.OXT);
 
   @override
   void initState() {
@@ -78,6 +71,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   }
 
   // Start polling the correct account
+  // TODO: Poll this
   void _selectedStakeeChanged() async {
     if (_stakee != null && web3Context != null) {
       _currentStake =
@@ -86,7 +80,6 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     } else {
       _currentStake = null;
     }
-    _addToStakeAmountController.value = null;
     setState(() {});
   }
 
@@ -147,6 +140,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                       ).center.bottom(24),
 
                     DappTransactionList(
+                      web3Context: web3Context,
                       refreshUserData: _refreshUserData,
                       width: mainColumnWidth,
                     ).top(24),
@@ -166,7 +160,12 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                       show: _stakee != null && _currentStake != null,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: _buildStakeeColumn(),
+                        child: AddStakePanel(
+                          web3context: web3Context,
+                          stakee: _stakee,
+                          currentStake: _currentStake,
+                          price: null,
+                        ),
                       ),
                     ),
 
@@ -179,42 +178,6 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
         ),
       ),
     );
-  }
-
-  Widget _buildStakeeColumn() {
-    Token stake = Tokens.OXT.fromDouble(100.0);
-    USD price = USD(0.07);
-    bool _addFundsFormEnabled = false;
-    var _addFunds = () {};
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text("Current Stake").title.white,
-          ],
-        ).top(32).padx(24),
-        TokenValueWidgetRow(
-          tokenType: Tokens.OXT,
-          value: stake,
-          context: context,
-          child:
-              Text(stake.formatCurrency(locale: context.locale, precision: 2))
-                  .title
-                  .white,
-          price: price,
-        ).padx(24).top(0),
-        OrchidLabeledTokenValueField(
-          label: "Add to Stake",
-          type: Tokens.OXT,
-          controller: _addToStakeAmountController,
-        ).top(32).padx(8),
-        DappButton(
-          text: s.addFunds,
-          onPressed: _addFundsFormEnabled ? _addFunds : null,
-        ).top(32),
-      ],
-    ).width(double.infinity);
   }
 
   // Refresh the wallet and account balances
