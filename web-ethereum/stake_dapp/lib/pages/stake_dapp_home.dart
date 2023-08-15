@@ -7,6 +7,7 @@ import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
+import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
 import 'dapp_home_base.dart';
 import 'dapp_home_header.dart';
 
@@ -32,7 +33,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   @override
   void initState() {
     super.initState();
-    _stakeeField.addListener(_signerFieldChanged);
+    _stakeeField.addListener(_stakeeFieldChanged);
     initStateAsync();
   }
 
@@ -53,7 +54,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
     }
   }
 
-  void _signerFieldChanged() {
+  void _stakeeFieldChanged() {
     // signer field changed?
     var oldSigner = _stakee;
     _stakee = _stakeeField.value;
@@ -68,6 +69,11 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   // Start polling the correct account
   void _selectedStakeeChanged() async {
     // XXX
+    if (_stakee != null && web3Context != null) {
+      // TEST
+      var result = await OrchidWeb3StakeV0(web3Context!).orchidGetStake(_stakee!);
+      log("XXX: heft = $result");
+    }
     setState(() {});
   }
 
@@ -204,7 +210,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   @override
   void dispose() {
-    _stakeeField.removeListener(_signerFieldChanged);
+    _stakeeField.removeListener(_stakeeFieldChanged);
     super.dispose();
   }
 }

@@ -29,7 +29,7 @@ class OrchidWeb3StakeV0 {
     required BigInt delay,
   }) async {
     amount.assertType(Tokens.OXT);
-    log("Stake funds amount: $amount");
+    log("Stake funds amount: $amount, stakee: $stakee, delay: $delay");
     var walletBalance = await _oxt.getERC20Balance(wallet.address!);
     amount = Token.min(amount, walletBalance);
 
@@ -72,12 +72,13 @@ class OrchidWeb3StakeV0 {
   }
 
   Future<Token> orchidGetStake(EthereumAddress stakee) async {
-    log("Get stake for $stakee");
+    log("Get stake for: $stakee");
     var result = await _directoryContract.call('heft', [
       stakee.toString(), // 0x ?
     ]);
+    log("XXX: heft = $result");
     try {
-      return Tokens.OXT.fromIntString(result[0]);
+      return Tokens.OXT.fromIntString(result.toString());
     } catch (err) {
       log("Error parsing heft result: $err");
       return Tokens.OXT.zero;
