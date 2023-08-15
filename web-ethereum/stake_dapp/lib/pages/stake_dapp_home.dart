@@ -1,7 +1,10 @@
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/api/orchid_eth/tokens.dart';
+import 'package:orchid/api/pricing/usd.dart';
+import 'package:orchid/dapp/orchid/dapp_button.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
+import 'package:orchid/gui-orchid/lib/orchid/field/token_value_widget_row.dart';
 import 'package:orchid/gui-orchid/lib/orchid/orchid_panel.dart';
 import 'package:orchid/orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/orchid.dart';
@@ -34,7 +37,8 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   final _scrollController = ScrollController();
 
-  final _stakedAmountController =
+  Token? _currentStake;
+  final _addToStakeAmountController =
       TypedTokenValueFieldController(type: Tokens.OXT);
 
   @override
@@ -75,14 +79,14 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   // Start polling the correct account
   void _selectedStakeeChanged() async {
-    // XXX
     if (_stakee != null && web3Context != null) {
-      _stakedAmountController.value =
+      _currentStake =
           await OrchidWeb3StakeV0(web3Context!).orchidGetStake(_stakee!);
-      log("XXX: heft = $_stakedAmountController");
+      log("XXX: heft = $_currentStake");
     } else {
-      _stakedAmountController.value = null;
+      _currentStake = null;
     }
+    _addToStakeAmountController.value = null;
     setState(() {});
   }
 
@@ -97,9 +101,10 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
           contractVersionsAvailable: contractVersionsAvailable,
           contractVersionSelected: contractVersionSelected,
           selectContractVersion: selectContractVersion,
-          deployContract: deployContract,
+          // deployContract: deployContract,
           connectEthereum: connectEthereum,
           disconnect: disconnect,
+          showChainSelector: false,
         ).padx(24).top(30).bottom(24),
         _buildMainColumn(),
       ],
@@ -158,19 +163,10 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
                     // Current staked amount
                     AnimatedVisibility(
-                      show: _stakee != null &&
-                          _stakedAmountController.value != null,
+                      show: _stakee != null && _currentStake != null,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: OrchidLabeledTokenValueField(
-                          // localize
-                          label: "Staked amount",
-                          type: Tokens.OXT,
-                          readOnly: true,
-                          enabled: false,
-                          controller: _stakedAmountController,
-                        ).width(double.infinity).pady(24).padx(8),
-
+                        child: _buildStakeeColumn(),
                       ),
                     ),
 
@@ -183,6 +179,42 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
         ),
       ),
     );
+  }
+
+  Widget _buildStakeeColumn() {
+    Token stake = Tokens.OXT.fromDouble(100.0);
+    USD price = USD(0.07);
+    bool _addFundsFormEnabled = false;
+    var _addFunds = () {};
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text("Current Stake").title.white,
+          ],
+        ).top(32).padx(24),
+        TokenValueWidgetRow(
+          tokenType: Tokens.OXT,
+          value: stake,
+          context: context,
+          child:
+              Text(stake.formatCurrency(locale: context.locale, precision: 2))
+                  .title
+                  .white,
+          price: price,
+        ).padx(24).top(0),
+        OrchidLabeledTokenValueField(
+          label: "Add to Stake",
+          type: Tokens.OXT,
+          controller: _addToStakeAmountController,
+        ).top(32).padx(8),
+        DappButton(
+          text: s.addFunds,
+          onPressed: _addFundsFormEnabled ? _addFunds : null,
+        ).top(32),
+      ],
+    ).width(double.infinity);
   }
 
   // Refresh the wallet and account balances
