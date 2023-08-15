@@ -25,6 +25,7 @@ class DappHomeHeader extends StatefulWidget {
   final Future<void> Function() _disconnect;
   final VoidCallback connectEthereum;
   final void Function(OrchidWeb3Context? web3Context) setNewContext;
+  final bool showChainSelector;
 
   const DappHomeHeader({
     super.key,
@@ -36,6 +37,7 @@ class DappHomeHeader extends StatefulWidget {
     VoidCallback? deployContract,
     required this.connectEthereum,
     required Future<void> Function() disconnect,
+    this.showChainSelector = true,
   })  : this._web3Context = web3Context,
         this._contractVersionsAvailable = contractVersionsAvailable,
         this._deployContract = deployContract,
@@ -72,7 +74,7 @@ class _DappHomeHeaderState extends State<DappHomeHeader> {
         _buildLogo(),
         Row(
           children: [
-            _buildChainSelector().left(16),
+            if (widget.showChainSelector) _buildChainSelector().left(16),
             _buildHeaderConnectWalletButton().left(16),
             DappSettingsButton(
               contractVersionsAvailable: widget._contractVersionsAvailable,
