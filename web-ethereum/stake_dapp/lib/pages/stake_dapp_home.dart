@@ -1,6 +1,8 @@
+import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
+import 'package:orchid/gui-orchid/lib/orchid/orchid_panel.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -105,7 +107,10 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   }
 
   // main info column
-  Expanded _buildMainColumn() {
+  Widget _buildMainColumn() {
+    if (web3Context != null && web3Context!.chain != Chains.Ethereum)
+      return _buildWrongChainPanel();
+
     return Expanded(
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -220,6 +225,27 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
   void dispose() {
     _stakeeField.removeListener(_stakeeFieldChanged);
     super.dispose();
+  }
+
+  Widget _buildWrongChainPanel() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RoundedRect(
+          backgroundColor: OrchidColors.dark_background,
+          child: Column(
+            children: [
+              Text(
+                "Orchid staking requires a connection to the Ethereum main net.\n"
+                "Please connect your wallet to Ethereum.",
+                textAlign: TextAlign.center,
+              ).body1.white.padx(24).top(24),
+              Chains.Ethereum.icon.top(16).bottom(24),
+            ],
+          ),
+        ),
+      ],
+    ).top(64);
   }
 }
 
