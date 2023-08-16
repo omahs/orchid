@@ -7,7 +7,6 @@ import 'package:orchid/dapp/orchid/dapp_tab_context.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/dapp/preferences/dapp_transaction.dart';
 import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
-import 'package:orchid/gui-orchid/lib/orchid/field/token_value_widget_row.dart';
 import 'package:orchid/orchid/field/orchid_labeled_token_value_field.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
@@ -53,12 +52,13 @@ class _AddStakePanelState extends State<AddStakePanel>
   Widget build(BuildContext context) {
     return Column(
       children: [
-       OrchidLabeledTokenValueField(
+        OrchidLabeledTokenValueField(
           enabled: widget.enabled,
           label: "Add to Stake",
           type: Tokens.OXT,
           controller: _addToStakeAmountController,
           error: _addStakeFieldError,
+          usdPrice: widget.price,
         ).top(32).padx(8),
         DappButton(
           text: s.addFunds,

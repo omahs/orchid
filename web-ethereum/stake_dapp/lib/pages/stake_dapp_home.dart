@@ -5,6 +5,7 @@ import 'package:orchid/api/pricing/usd.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
 import 'package:orchid/gui-orchid/lib/orchid/field/token_value_widget_row.dart';
+import 'package:orchid/orchid/builder/token_price_builder.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -111,7 +112,14 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   // main info column
   Widget _buildMainColumn() {
-    var _price = USD.zero; // TODO
+    return TokenPriceBuilder(
+        tokenType: Tokens.OXT,
+        builder: (USD? tokenPrice) {
+          return _buildMainColumnWith(tokenPrice);
+        });
+  }
+
+  Widget _buildMainColumnWith(USD? price) {
     if (web3Context != null && web3Context!.chain != Chains.Ethereum)
       return _buildWrongChainPanel();
 
@@ -186,7 +194,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                                       '')
                                   .title
                                   .white,
-                              price: _price,
+                              price: price,
                             ).top(8),
                           ],
                         ).top(24).padx(24),
@@ -200,7 +208,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                         web3Context: web3Context,
                         stakee: _stakee,
                         currentStake: _currentStake,
-                        price: _price,
+                        price: price,
                       ),
                     ).top(40),
 
