@@ -1,8 +1,10 @@
 import 'package:orchid/api/orchid_eth/chains.dart';
 import 'package:orchid/api/orchid_eth/token_type.dart';
+import 'package:orchid/api/orchid_eth/tokens.dart';
+import 'package:orchid/api/pricing/usd.dart';
 import 'package:orchid/dapp/orchid/dapp_transaction_list.dart';
 import 'package:orchid/common/rounded_rect.dart';
-import 'package:orchid/gui-orchid/lib/orchid/orchid_panel.dart';
+import 'package:orchid/gui-orchid/lib/orchid/field/token_value_widget_row.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
 import 'package:orchid/api/orchid_crypto.dart';
@@ -10,10 +12,11 @@ import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
+import 'package:orchid/pages/stake_tabs.dart';
 import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
 import 'dapp_home_base.dart';
 import 'dapp_home_header.dart';
-import 'stake_panel.dart';
+import 'add_stake_panel.dart';
 
 class StakeDappHome extends StatefulWidget {
   const StakeDappHome({Key? key}) : super(key: key);
@@ -108,6 +111,7 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
 
   // main info column
   Widget _buildMainColumn() {
+    var _price = USD.zero; // TODO
     if (web3Context != null && web3Context!.chain != Chains.Ethereum)
       return _buildWrongChainPanel();
 
@@ -160,19 +164,45 @@ class _StakeDappHomeState extends DappHomeStateBase<StakeDappHome> {
                               top: 8, bottom: 18, left: 16, right: 16),
                         ).top(24).padx(8)),
 
-                    // Current staked amount
+                    // Current stake
                     AnimatedVisibility(
                       show: _stakee != null && _currentStake != null,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: altColumnWidth),
-                        child: AddStakePanel(
-                          web3context: web3Context,
-                          stakee: _stakee,
-                          currentStake: _currentStake,
-                          price: null,
-                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text("Current Stake").title.white,
+                              ],
+                            ),
+                            TokenValueWidgetRow(
+                              tokenType: Tokens.OXT,
+                              value: _currentStake,
+                              context: context,
+                              child: Text(_currentStake?.formatCurrency(
+                                          locale: context.locale,
+                                          precision: 2) ??
+                                      '')
+                                  .title
+                                  .white,
+                              price: _price,
+                            ).top(8),
+                          ],
+                        ).top(24).padx(24),
                       ),
                     ),
+
+                    // tabs
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: altColumnWidth),
+                      child: StakeTabs(
+                        web3Context: web3Context,
+                        stakee: _stakee,
+                        currentStake: _currentStake,
+                        price: _price,
+                      ),
+                    ).top(40),
 
                     // _buildFooter().padx(24).bottom(24),
                   ],

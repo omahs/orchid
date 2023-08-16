@@ -17,6 +17,7 @@ class AddStakePanel extends StatefulWidget {
   final EthereumAddress? stakee;
   final Token? currentStake;
   final USD? price;
+  final bool enabled;
 
   const AddStakePanel({
     super.key,
@@ -24,6 +25,7 @@ class AddStakePanel extends StatefulWidget {
     required this.stakee,
     required this.currentStake,
     required this.price,
+    required this.enabled,
   });
 
   @override
@@ -51,23 +53,8 @@ class _AddStakePanelState extends State<AddStakePanel>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Text("Current Stake").title.white,
-          ],
-        ).top(32).padx(24),
-        TokenValueWidgetRow(
-          tokenType: Tokens.OXT,
-          value: widget.currentStake,
-          context: context,
-          child: Text(widget.currentStake
-                      ?.formatCurrency(locale: context.locale, precision: 2) ??
-                  '')
-              .title
-              .white,
-          price: widget.price,
-        ).padx(24).top(0),
-        OrchidLabeledTokenValueField(
+       OrchidLabeledTokenValueField(
+          enabled: widget.enabled,
           label: "Add to Stake",
           type: Tokens.OXT,
           controller: _addToStakeAmountController,
@@ -87,7 +74,9 @@ class _AddStakePanelState extends State<AddStakePanel>
   }
 
   bool get _formEnabled {
-    return !txPending && _addStakeFieldValid && _addToStakeAmountController.value!.gtZero();
+    return !txPending &&
+        _addStakeFieldValid &&
+        _addToStakeAmountController.value!.gtZero();
   }
 
   bool get _addStakeFieldError {
