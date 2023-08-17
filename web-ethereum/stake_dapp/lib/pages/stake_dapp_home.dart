@@ -13,11 +13,11 @@ import 'package:orchid/api/orchid_platform.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/common/app_dialogs.dart';
 import 'package:orchid/orchid/field/orchid_labeled_address_field.dart';
-import 'package:orchid/pages/stake_tabs.dart';
+import 'package:orchid/pages/tabs/stake_tabs.dart';
 import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
 import 'dapp_home_base.dart';
 import 'dapp_home_header.dart';
-import 'add_stake_panel.dart';
+import 'tabs/add_stake_panel.dart';
 
 class StakeDappHome extends StatefulWidget {
   const StakeDappHome({Key? key}) : super(key: key);

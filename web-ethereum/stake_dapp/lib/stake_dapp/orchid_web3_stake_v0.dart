@@ -19,9 +19,23 @@ class OrchidWeb3StakeV0 {
             context.web3),
         this._oxt = OrchidERC20(context: context, tokenType: Tokens.OXT);
 
+  Future<Token> orchidGetStake(EthereumAddress stakee) async {
+    log("Get stake for: $stakee");
+    var result = await _directoryContract.call('heft', [
+      stakee.toString(), // 0x ?
+    ]);
+    log("XXX: heft = $result");
+    try {
+      return Tokens.OXT.fromIntString(result.toString());
+    } catch (err) {
+      log("Error parsing heft result: $err");
+      return Tokens.OXT.zero;
+    }
+  }
+
   /// Transfer the int amount from the user to the specified directory address.
   /// Amount won't exceed walletBalance.
-  Future<List<String> /*TransactionId*/ > orchidStakeFunds({
+  Future<List<String> /*TransactionId*/ > orchidStakePushFunds({
     required OrchidWallet wallet,
     required EthereumAddress stakee,
     required Token amount,
@@ -75,17 +89,30 @@ class OrchidWeb3StakeV0 {
     return txHashes;
   }
 
-  Future<Token> orchidGetStake(EthereumAddress stakee) async {
-    log("Get stake for: $stakee");
-    var result = await _directoryContract.call('heft', [
-      stakee.toString(), // 0x ?
-    ]);
-    log("XXX: heft = $result");
-    try {
-      return Tokens.OXT.fromIntString(result.toString());
-    } catch (err) {
-      log("Error parsing heft result: $err");
-      return Tokens.OXT.zero;
-    }
+  /// Pull funds to the specified index.
+  Future<List<String> /*TransactionId*/ > orchidStakePullFunds({
+    required OrchidWallet wallet,
+    required EthereumAddress stakee,
+    required Token amount,
+    required int index,
+  }) async {
+    amount.assertType(Tokens.OXT);
+    log("Pull funds amount: $amount, stakee: $stakee, index: $index");
+    List<String> txHashes = [];
+
+    // Do the pull call
+    var contract = _directoryContract.connect(context.web3.getSigner());
+    TransactionResponse tx = await contract.send(
+      'pull',
+      [
+        stakee.toString(),
+        amount.intValue.toString(),
+        index.toString(),
+      ],
+      TransactionOverride(
+          gasLimit: BigInt.from(OrchidContractV0.gasLimitDirectoryPull)),
+    );
+    txHashes.add(tx.hash);
+    return txHashes;
   }
 }

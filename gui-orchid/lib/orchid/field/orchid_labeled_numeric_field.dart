@@ -60,10 +60,15 @@ class _OrchidLabeledNumericFieldState extends State<OrchidLabeledNumericField> {
     setState(() {});
     widget.onChange?.call(controller.value);
   }
-
 }
 
 class NumericValueFieldController extends ValueFieldController<double> {
+  NumericValueFieldController();
+
+  NumericValueFieldController.withListener(VoidCallback listener) {
+    this.addListener(listener);
+  }
+
   /// Return the value, or null if empty or invalid
   double? get value {
     final text = textController.text;
@@ -78,6 +83,31 @@ class NumericValueFieldController extends ValueFieldController<double> {
   }
 
   set value(double? value) {
+    text = value?.toString() ?? '';
+  }
+}
+
+class IntValueFieldController extends ValueFieldController<int> {
+  IntValueFieldController();
+
+  IntValueFieldController.withListener(VoidCallback listener) {
+    this.addListener(listener);
+  }
+
+  /// Return the value, or null if empty or invalid
+  int? get value {
+    final text = textController.text;
+    if (text.isEmpty) {
+      return null;
+    }
+    try {
+      return int.parse(text);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  set value(int? value) {
     text = value?.toString() ?? '';
   }
 }

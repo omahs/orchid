@@ -21,6 +21,7 @@ class OrchidLabeledTokenValueField extends StatelessWidget {
   final VoidCallback? onClear;
   final String? hintText;
   final Widget? trailing;
+  final Widget? bottom;
   final Widget? bottomBanner;
 
   // TODO: enhance this to include a message
@@ -38,6 +39,7 @@ class OrchidLabeledTokenValueField extends StatelessWidget {
     this.readOnly,
     this.hintText,
     this.trailing,
+    this.bottom,
     this.bottomBanner,
     this.error = false,
   }) : super(key: key);
@@ -91,6 +93,7 @@ class OrchidLabeledTokenValueField extends StatelessWidget {
                     tokenType: type,
                     value: controller.value,
                   ),
+                  if (bottom != null) bottom!,
                 ],
               ).pady(8).padx(16),
             ),
@@ -111,7 +114,12 @@ class TypedTokenValueFieldController extends ValueFieldController<Token> {
 
   TypedTokenValueFieldController({
     required this.type,
-  });
+    VoidCallback? listener,
+  }) {
+    if (listener != null) {
+      this.addListener(listener);
+    }
+  }
 
   /// Return the value, zero if empty, or null if invalid
   @override

@@ -7,18 +7,20 @@ import 'package:orchid/dapp/orchid/dapp_tab_context.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/dapp/preferences/dapp_transaction.dart';
 import 'package:orchid/dapp/preferences/user_preferences_dapp.dart';
+import 'package:orchid/orchid/field/orchid_labeled_numeric_field.dart';
 import 'package:orchid/orchid/field/orchid_labeled_token_value_field.dart';
+import 'package:orchid/orchid/menu/expanding_popup_menu_item.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'package:orchid/stake_dapp/orchid_web3_stake_v0.dart';
 
-class AddStakePanel extends StatefulWidget {
+class PullStakePanel extends StatefulWidget {
   final OrchidWeb3Context? web3context;
   final EthereumAddress? stakee;
   final Token? currentStake;
   final USD? price;
   final bool enabled;
 
-  const AddStakePanel({
+  const PullStakePanel({
     super.key,
     required this.web3context,
     required this.stakee,
@@ -28,14 +30,15 @@ class AddStakePanel extends StatefulWidget {
   });
 
   @override
-  State<AddStakePanel> createState() => _AddStakePanelState();
+  State<PullStakePanel> createState() => _PullStakePanelState();
 }
 
-class _AddStakePanelState extends State<AddStakePanel>
+class _PullStakePanelState extends State<PullStakePanel>
     with DappTabWalletContext {
   OrchidWeb3Context? get web3Context => widget.web3context;
 
-  late TypedTokenValueFieldController _addToStakeAmountController;
+  late TypedTokenValueFieldController _pullStakeAmountController;
+  late NumericValueFieldController _indexController;
 
   @override
   TokenType get tokenType => Tokens.OXT;
@@ -43,9 +46,10 @@ class _AddStakePanelState extends State<AddStakePanel>
   @override
   void initState() {
     super.initState();
-    _addToStakeAmountController =
-        TypedTokenValueFieldController(type: tokenType);
-    _addToStakeAmountController.addListener(_formFieldChanged);
+    _pullStakeAmountController = TypedTokenValueFieldController(
+        type: tokenType, listener: _formFieldChanged);
+    _indexController =
+        NumericValueFieldController.withListener(_formFieldChanged);
   }
 
   @override
@@ -54,15 +58,23 @@ class _AddStakePanelState extends State<AddStakePanel>
       children: [
         OrchidLabeledTokenValueField(
           enabled: widget.enabled,
-          label: "Add to Stake",
+          label: "Pull Stake",
           type: Tokens.OXT,
-          controller: _addToStakeAmountController,
-          error: _addStakeFieldError,
+          controller: _pullStakeAmountController,
+          error: _pullStakeFieldError,
           usdPrice: widget.price,
         ).top(32).padx(8),
+        OrchidLabeledNumericField(
+          enabled: widget.enabled,
+          integer: true,
+          label: "To Index",
+          controller: _indexController,
+          showPaste: false,
+          backgroundColor: OrchidColors.dark_background_2,
+        ).top(16).padx(8),
         DappButton(
-          text: s.addFunds,
-          onPressed: _formEnabled ? _addStake : null,
+          text: "PULL FUNDS",
+          onPressed: _formEnabled ? _pullStake : null,
         ).top(32),
       ],
     ).width(double.infinity);
@@ -75,52 +87,55 @@ class _AddStakePanelState extends State<AddStakePanel>
 
   bool get _formEnabled {
     return !txPending &&
-        _addStakeFieldValid &&
-        _addToStakeAmountController.value!.gtZero();
+        _pullStakeFieldValid &&
+        _pullStakeAmountController.value!.gtZero();
   }
 
-  bool get _addStakeFieldError {
-    return walletBalanceOf(tokenType) != null && !_addStakeFieldValid;
+  bool get _pullStakeFieldError {
+    return walletBalanceOf(tokenType) != null && !_pullStakeFieldValid;
   }
 
-  bool get _addStakeFieldValid {
-    var value = _addToStakeAmountController.value;
+  bool get _pullStakeFieldValid {
+    var value = _pullStakeAmountController.value;
     return value != null &&
-        value <= (walletBalanceOf(tokenType) ?? tokenType.zero);
+        value <= (widget.currentStake ?? tokenType.zero);
   }
 
-  void _addStake() async {
+  void _pullStake() async {
     final stakee = widget.stakee;
     final wallet = web3Context?.wallet;
-    final amount = _addToStakeAmountController.value;
+    final amount = _pullStakeAmountController.value;
+    final index = (_indexController.value ?? 0).toInt();
+
     if (wallet == null ||
         stakee == null ||
         amount == null ||
         amount.lteZero()) {
-      throw Exception('Invalid state for add funds');
+      throw Exception('Invalid state for pull funds');
     }
 
     setState(() {
       txPending = true;
     });
     try {
-      var txHashes = await OrchidWeb3StakeV0(web3Context!).orchidStakeFunds(
+      var txHashes = await OrchidWeb3StakeV0(web3Context!).orchidStakePullFunds(
         wallet: wallet,
         stakee: stakee,
         amount: amount,
+        index: index,
       );
 
       UserPreferencesDapp()
           .addTransactions(txHashes.map((hash) => DappTransaction(
                 transactionHash: hash,
                 chainId: web3Context!.chain.chainId, // always Ethereum
-                type: DappTransactionType.addFunds,
+                type: DappTransactionType.pullFunds,
               )));
 
-      _addToStakeAmountController.clear();
+      _pullStakeAmountController.clear();
       setState(() {});
     } catch (err) {
-      log('Error on add funds: $err');
+      log('Error on pull funds: $err');
     }
     setState(() {
       txPending = false;

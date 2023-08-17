@@ -4,6 +4,7 @@ import 'package:orchid/api/pricing/usd.dart';
 import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'add_stake_panel.dart';
+import 'pull_stake_panel.dart';
 
 /// The tabs for interacting with the V0 contract.
 class StakeTabs extends StatefulWidget {
@@ -58,7 +59,7 @@ class _StakeTabsState extends State<StakeTabs> {
           body: TabBarView(
             children: [
               _buildAddStakePanel(),
-              _buildAddStakePanel(),
+              _buildPullStakePanel(),
               _buildAddStakePanel(),
             ],
           ),
@@ -72,6 +73,20 @@ class _StakeTabsState extends State<StakeTabs> {
       child: SizedBox(
         width: 500,
         child: AddStakePanel(
+          enabled: _enabled,
+          web3context: widget.web3Context,
+          stakee: widget.stakee,
+          currentStake: widget.currentStake,
+          price: widget.price,
+        ),
+      ),
+    );
+  }
+  Widget _buildPullStakePanel() {
+    return Center(
+      child: SizedBox(
+        width: 500,
+        child: PullStakePanel(
           enabled: _enabled,
           web3context: widget.web3Context,
           stakee: widget.stakee,
