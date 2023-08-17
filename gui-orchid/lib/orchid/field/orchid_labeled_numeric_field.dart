@@ -93,21 +93,7 @@ class NumericValueFieldController extends ValueFieldController<double> {
     }
   }
 
-  set value(double? value) {
-    text = value?.toString() ?? '';
-  }
-}
-
-/*
-class IntValueFieldController extends ValueFieldController<int> {
-  IntValueFieldController();
-
-  IntValueFieldController.withListener(VoidCallback listener) {
-    this.addListener(listener);
-  }
-
-  /// Return the value, or null if empty or invalid
-  int? get value {
+  int? get intValue {
     final text = textController.text;
     if (text.isEmpty) {
       return null;
@@ -119,8 +105,8 @@ class IntValueFieldController extends ValueFieldController<int> {
     }
   }
 
-  set value(int? value) {
+  set value(double? value) {
     text = value?.toString() ?? '';
   }
 }
-*/
+

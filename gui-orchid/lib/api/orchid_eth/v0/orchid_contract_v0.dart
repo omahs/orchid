@@ -75,6 +75,7 @@ class OrchidContractV0 {
 
   static int gasLimitDirectoryPush = 300000;
   static int gasLimitDirectoryPull = 300000;
+  static int gasLimitDirectoryTake = 300000;
 
   static List<String> lotteryAbi = [
     'event Update(address indexed funder, address indexed signer, uint128 amount, uint128 escrow, uint256 unlock)',
@@ -92,6 +93,8 @@ class OrchidContractV0 {
   static List<String> directoryAbi = [
     'function heft(address stakee) external view returns (uint256)',
     'function push(address stakee, uint256 amount, uint128 delay)',
+    'function pull(address stakee, uint256 amount, uint256 index)',
+    'function take(uint256 index, uint256 amount, address payable target)',
     // 'function transfer(address recipient, uint256 amount) external returns (bool)',
     // 'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
     // 'function what() external view returns (IERC20)',
@@ -100,9 +103,7 @@ class OrchidContractV0 {
     // 'function seek(uint256 point) public view returns (address, uint128)',
     // 'function pick(uint128 percent) external view returns (address, uint128)',
     // 'function wait(address stakee, uint128 delay)',
-    // 'function take(uint256 index, uint256 amount, address payable target)',
     // 'function stop(uint256 index, uint256 amount, uint128 delay)',
-    // 'function pull(address stakee, uint256 amount, uint256 index)',
   ];
 }
 

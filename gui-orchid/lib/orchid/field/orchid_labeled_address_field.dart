@@ -10,6 +10,7 @@ class OrchidLabeledAddressField extends StatefulWidget {
   final AddressValueFieldController? controller;
   final ValueChanged<EthereumAddress?>? onChange;
   final EdgeInsets? contentPadding;
+  final bool enabled;
 
   OrchidLabeledAddressField({
     Key? key,
@@ -17,6 +18,7 @@ class OrchidLabeledAddressField extends StatefulWidget {
     this.controller,
     this.onChange,
     this.contentPadding,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class _OrchidLabeledAddressFieldState extends State<OrchidLabeledAddressField> {
     final error = controller.text.isNotEmpty && controller.value == null;
 
     return OrchidLabeledTextField(
+      enabled: widget.enabled,
       error: error,
       label: widget.label,
       controller: controller.textController,
@@ -78,6 +81,12 @@ class _OrchidLabeledAddressFieldState extends State<OrchidLabeledAddressField> {
 /// Manages an Ethereum Address
 class AddressValueFieldController
     extends ValueFieldController<EthereumAddress> {
+  AddressValueFieldController();
+
+  AddressValueFieldController.withListener(VoidCallback listener) {
+    this.addListener(listener);
+  }
+
   /// Return the value, or null if empty or invalid
   EthereumAddress? get value {
     final text = textController.text;
