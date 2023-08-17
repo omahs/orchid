@@ -35,6 +35,7 @@ class OrchidWeb3StakeV0 {
 
   /// Transfer the int amount from the user to the specified directory address.
   /// Amount won't exceed walletBalance.
+  // 'function push(address stakee, uint256 amount, uint128 delay)',
   Future<List<String> /*TransactionId*/ > orchidStakePushFunds({
     required OrchidWallet wallet,
     required EthereumAddress stakee,

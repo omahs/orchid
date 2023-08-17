@@ -59,6 +59,7 @@ class _AddStakePanelState extends State<AddStakePanel>
           error: _addStakeFieldError,
           usdPrice: widget.price,
         ).top(32).padx(8),
+        Text("Delay is zero").white.caption.top(16),
         DappButton(
           text: s.addFunds,
           onPressed: _formEnabled ? _addStake : null,
