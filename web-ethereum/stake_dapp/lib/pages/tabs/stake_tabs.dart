@@ -5,6 +5,7 @@ import 'package:orchid/dapp/orchid_web3/orchid_web3_context.dart';
 import 'package:orchid/orchid/orchid.dart';
 import 'add_stake_panel.dart';
 import 'pull_stake_panel.dart';
+import 'withdraw_stake_panel.dart';
 
 /// The tabs for interacting with the V0 contract.
 class StakeTabs extends StatefulWidget {
@@ -60,7 +61,7 @@ class _StakeTabsState extends State<StakeTabs> {
             children: [
               _buildAddStakePanel(),
               _buildPullStakePanel(),
-              _buildAddStakePanel(),
+              _buildWithdrawStakePanel(),
             ],
           ),
         ),
@@ -69,31 +70,32 @@ class _StakeTabsState extends State<StakeTabs> {
   }
 
   Widget _buildAddStakePanel() {
-    return Center(
-      child: SizedBox(
-        width: 500,
-        child: AddStakePanel(
-          enabled: _enabled,
-          web3context: widget.web3Context,
-          stakee: widget.stakee,
-          currentStake: widget.currentStake,
-          price: widget.price,
-        ),
-      ),
+    return AddStakePanel(
+      enabled: _enabled,
+      web3context: widget.web3Context,
+      stakee: widget.stakee,
+      currentStake: widget.currentStake,
+      price: widget.price,
     );
   }
+
   Widget _buildPullStakePanel() {
-    return Center(
-      child: SizedBox(
-        width: 500,
-        child: PullStakePanel(
-          enabled: _enabled,
-          web3context: widget.web3Context,
-          stakee: widget.stakee,
-          currentStake: widget.currentStake,
-          price: widget.price,
-        ),
-      ),
+    return PullStakePanel(
+      enabled: _enabled,
+      web3context: widget.web3Context,
+      stakee: widget.stakee,
+      currentStake: widget.currentStake,
+      price: widget.price,
+    );
+  }
+
+  Widget _buildWithdrawStakePanel() {
+    return WithdrawStakePanel(
+      enabled: _enabled,
+      web3context: widget.web3Context,
+      stakee: widget.stakee,
+      currentStake: widget.currentStake,
+      price: widget.price,
     );
   }
 }

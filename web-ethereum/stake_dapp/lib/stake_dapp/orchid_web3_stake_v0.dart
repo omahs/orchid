@@ -90,8 +90,8 @@ class OrchidWeb3StakeV0 {
   }
 
   /// Pull funds to the specified index.
+  // 'function pull(address stakee, uint256 amount, uint256 index)',
   Future<List<String> /*TransactionId*/ > orchidStakePullFunds({
-    required OrchidWallet wallet,
     required EthereumAddress stakee,
     required Token amount,
     required int index,
@@ -111,6 +111,34 @@ class OrchidWeb3StakeV0 {
       ],
       TransactionOverride(
           gasLimit: BigInt.from(OrchidContractV0.gasLimitDirectoryPull)),
+    );
+    txHashes.add(tx.hash);
+    return txHashes;
+  }
+
+
+  // Withdraw from index
+  // 'function take(uint256 index, uint256 amount, address payable target)',
+  Future<List<String> /*TransactionId*/ > orchidStakeWithdrawFunds({
+    required int index,
+    required Token amount,
+    required EthereumAddress target,
+  }) async {
+    amount.assertType(Tokens.OXT);
+    log("Withdraw funds amount: $amount, target: $target, index: $index");
+    List<String> txHashes = [];
+
+    // Do the withdraw call
+    var contract = _directoryContract.connect(context.web3.getSigner());
+    TransactionResponse tx = await contract.send(
+      'take',
+      [
+        index.toString(),
+        amount.intValue.toString(),
+        target.toString(),
+      ],
+      TransactionOverride(
+          gasLimit: BigInt.from(OrchidContractV0.gasLimitDirectoryTake)),
     );
     txHashes.add(tx.hash);
     return txHashes;
