@@ -8,12 +8,20 @@ class OrchidLabeledNumericField extends StatefulWidget {
   final String label;
   final NumericValueFieldController? controller;
   final ValueChanged<double?>? onChange;
+  final bool integer;
+  final bool enabled;
+  final bool showPaste;
+  final Color? backgroundColor;
 
   OrchidLabeledNumericField({
     Key? key,
     required this.label,
     this.controller,
     this.onChange,
+    this.integer = false,
+    this.enabled = true,
+    this.showPaste = true,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -30,17 +38,20 @@ class _OrchidLabeledNumericFieldState extends State<OrchidLabeledNumericField> {
 
   @override
   Widget build(BuildContext context) {
-    final showPaste = !BrowserDetector().browser.isFirefox;
+    final showPaste = widget.showPaste && !BrowserDetector().browser.isFirefox;
     final error = controller.text.isNotEmpty && controller.value == null;
 
     return OrchidLabeledTextField(
+      enabled: widget.enabled,
       error: error,
       label: widget.label,
       controller: controller.textController,
-      hintText: '0.0',
+      hintText: widget.integer ? '0' : '0.0',
       numeric: true,
+      decimal: !widget.integer,
       onChanged: (_) => _onChange(),
       onClear: _onChange,
+      backgroundColor: widget.backgroundColor,
       trailing: showPaste
           ? IconButton(
                   icon: Icon(Icons.paste, color: Colors.white),
@@ -87,6 +98,7 @@ class NumericValueFieldController extends ValueFieldController<double> {
   }
 }
 
+/*
 class IntValueFieldController extends ValueFieldController<int> {
   IntValueFieldController();
 
@@ -111,3 +123,4 @@ class IntValueFieldController extends ValueFieldController<int> {
     text = value?.toString() ?? '';
   }
 }
+*/

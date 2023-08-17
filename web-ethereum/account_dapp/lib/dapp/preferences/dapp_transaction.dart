@@ -4,6 +4,7 @@ enum DappTransactionType {
   unknown,
   addFunds,
   withdrawFunds,
+  pullFunds,
   fundContractDeployer,
   deploySingletonFactory,
   deployContract,

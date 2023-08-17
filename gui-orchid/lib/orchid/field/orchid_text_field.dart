@@ -16,6 +16,10 @@ class OrchidTextField extends StatelessWidget {
   final bool readOnly;
 
   final bool numeric;
+
+  /// If numeric, whether to allow decimal values
+  final bool decimal;
+
   final VoidCallback? onClear;
   final ValueChanged<String>? onChanged;
   final bool border;
@@ -34,6 +38,7 @@ class OrchidTextField extends StatelessWidget {
     this.enabled = true,
     this.readOnly = false,
     this.numeric = false,
+    this.decimal = true,
     this.onClear,
     this.onChanged,
     this.border = true,
@@ -105,13 +110,18 @@ class OrchidTextField extends StatelessWidget {
               suffixIcon: suffixIcon,
             ),
             cursorColor: Colors.white,
-            keyboardType:
-                numeric ? TextInputType.numberWithOptions(decimal: true) : null,
+            keyboardType: numeric
+                ? TextInputType.numberWithOptions(decimal: decimal)
+                : null,
             inputFormatters: numeric
-                ? <TextInputFormatter>[
-                    // include comma as decimal separator
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                  ]
+                ? (decimal
+                    ? <TextInputFormatter>[
+                        // include comma as decimal separator
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                      ]
+                    : <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ])
                 : null,
           ),
         ),

@@ -74,6 +74,7 @@ class OrchidContractV0 {
   static int gasLimitApprove = 200000;
 
   static int gasLimitDirectoryPush = 300000;
+  static int gasLimitDirectoryPull = 300000;
 
   static List<String> lotteryAbi = [
     'event Update(address indexed funder, address indexed signer, uint128 amount, uint128 escrow, uint256 unlock)',
