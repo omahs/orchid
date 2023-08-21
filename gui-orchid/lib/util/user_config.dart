@@ -1,34 +1,8 @@
+import 'package:flutter/foundation.dart';
 
 abstract class UserConfig {
-  bool evalBoolDefault(String expression, bool defaultValue);
-
-  bool evalBool(String expression);
-
-  int evalIntDefault(String expression, int defaultValue);
-
-  int? evalIntDefaultNull(String expression);
-
-  int evalInt(String expression);
-
-  double evalDoubleDefault(String expression, double defaultValue);
-
-  double? evalDoubleDefaultNull(String expression);
-
-  double evalDouble(String expression);
-
-  String evalStringDefault(String expression, String defaultValue);
-
-  String? evalStringDefaultNullable(String expression, String? defaultValue);
-
-  String? evalStringDefaultNull(String expression);
-
-  String? evalString(String expression);
-}
-
-class MapUserConfig implements UserConfig {
-  final Map<String, String> map;
-
-  MapUserConfig(this.map);
+  @protected
+  String? get(String expression);
 
   bool evalBoolDefault(String expression, bool defaultValue) {
     try {
@@ -39,7 +13,7 @@ class MapUserConfig implements UserConfig {
   }
 
   bool evalBool(String expression) {
-    var val = _eval(expression);
+    var val = get(expression);
     if (val?.toLowerCase() == 'true') {
       return true;
     }
@@ -68,7 +42,7 @@ class MapUserConfig implements UserConfig {
   }
 
   int evalInt(String expression) {
-    var val = _eval(expression);
+    var val = get(expression);
     try {
       return int.parse(val.toString());
     } catch (err) {
@@ -94,7 +68,7 @@ class MapUserConfig implements UserConfig {
   }
 
   double evalDouble(String expression) {
-    var val = _eval(expression);
+    var val = get(expression);
     try {
       return double.parse(val!);
     } catch (err) {
@@ -127,10 +101,17 @@ class MapUserConfig implements UserConfig {
   }
 
   String? evalString(String expression) {
-    return _eval(expression);
+    return get(expression);
   }
+}
 
-  String? _eval(String expression) {
+class MapUserConfig extends UserConfig {
+  final Map<String, String> map;
+
+  MapUserConfig(this.map);
+
+  @override
+  String? get(String expression) {
     return map[expression];
   }
 }

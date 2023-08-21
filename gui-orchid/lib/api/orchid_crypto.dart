@@ -208,12 +208,13 @@ class EthereumAddress {
   }
 
   static BigInt parse(String? text) {
+    print("parse: $text");
     if (text == null) {
       throw Exception("invalid, null");
     }
     text = Hex.remove0x(text);
     if (text.length != 40) {
-      throw Exception("invalid, length: $text");
+      throw Exception("invalid, length: $text, ${text.length}");
     }
     // eip55 check
     if (!Web3DartUtils.isEip55ValidEthereumAddress(text)) {

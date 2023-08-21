@@ -1,4 +1,3 @@
-import 'package:dartjsengine/dartjsengine.dart';
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
@@ -51,19 +50,17 @@ class OrchidAccountImport {
     try {
       // signer info
       final config = JSConfig(js);
-      JsArray accountsJs = config.evalObject('accounts') as JsArray;
-      final accounts = accountsJs.valueOf.map((account) {
+      var accountsJs = config.evalObject('accounts');
+      final accounts = accountsJs.map<Account>((account) {
         if (account == null) {
           throw "Account is null";
         }
-        final secret = account.properties['secret'].toString();
+        final secret = account['secret'].toString();
         final signer = resolveImportedKey(secret, existingKeys, []);
         final funder =
-            EthereumAddress.from(account.properties['funder'].toString());
-        final version =
-            (account.properties['version'] as JsNumber).valueOf.toInt();
-        final chainid =
-            (account.properties['chainid'] as JsNumber).valueOf.toInt();
+            EthereumAddress.from(account['funder'].toString());
+        final version = account['version'];
+        final chainid = account['chainid'];
         return Account.fromSignerKey(
           signerKey: signer,
           funder: funder,
