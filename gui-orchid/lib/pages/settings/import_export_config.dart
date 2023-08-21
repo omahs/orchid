@@ -189,7 +189,7 @@ class _ImportExportConfigState extends State<ImportExportConfig> {
   }
 
   void _copyToClipboard() {
-    Clipboard.setData(ClipboardData(text: widget.config));
+    Clipboard.setData(ClipboardData(text: widget.config ?? ''));
   }
 
   void _doQRCodeAction() {
@@ -231,5 +231,4 @@ class _ImportExportConfigState extends State<ImportExportConfig> {
           ),
         ));
   }
-
 }

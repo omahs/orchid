@@ -1,7 +1,7 @@
 class Json {
   /// Recursively descend the json and trim long strings
   static Map<String, dynamic> trimLongStrings(Map<String, dynamic> json,
-      {int max: 32}) {
+      {int max = 32}) {
     return json.map((String key, dynamic value) {
       if (value is String && value.length > max) {
         value = value.toString().substring(0, max) + '...';

@@ -46,4 +46,4 @@ class UserPreferences {
 }
 
 /// Should be implemented by enums of user preference keys.
-abstract class UserPreferenceKey extends Enum {}
+abstract class UserPreferenceKey implements Enum {}
