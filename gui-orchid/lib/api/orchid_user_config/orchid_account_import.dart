@@ -4,7 +4,7 @@ import 'package:orchid/api/orchid_eth/orchid_account.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/util/hex.dart';
-import 'package:orchid/util/js_config.dart';
+import 'package:orchid/vpn/orchid_vpn_config/js_config.dart';
 
 /// Import orchid accounts
 class OrchidAccountImport {

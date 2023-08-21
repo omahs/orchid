@@ -49,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void advancedConfigChanged() async {
     _tester = OrchidUserConfig.isTester;
 
-    var jsConfig = OrchidUserConfig().getUserConfigJS();
+    var jsConfig = OrchidUserConfig().getUserConfig();
     OrchidPlatform.pretendToBeAndroid =
         jsConfig.evalBoolDefault('isAndroid', false);
 

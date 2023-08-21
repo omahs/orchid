@@ -111,7 +111,7 @@ abstract class OrchidPurchaseAPI {
   /// Return the API config allowing overrides from configuration.
   static Future<PacApiConfig> apiConfigWithOverrides(
       PacApiConfig prodAPIConfig) async {
-    var jsConfig = OrchidUserConfig().getUserConfigJS();
+    var jsConfig = OrchidUserConfig().getUserConfig();
     return PacApiConfig(
       enabled: jsConfig.evalBoolDefault('pacs.enabled', prodAPIConfig.enabled),
       url: jsConfig.evalStringDefault('pacs.url', prodAPIConfig.url),
@@ -136,7 +136,7 @@ abstract class OrchidPurchaseAPI {
 
     /// Optionally override to lower the PAC daily purchase limit.
     /// Note: This can never raise the limit.
-    var jsConfig = await OrchidUserConfig().getUserConfigJS();
+    var jsConfig = await OrchidUserConfig().getUserConfig();
     var overrideDailyPurchaseLimit = jsConfig.evalDoubleDefault(
         'pacs.pacDailyPurchaseLimit', pacDailyPurchaseLimit.value);
     var dailyPurchaseLimit =

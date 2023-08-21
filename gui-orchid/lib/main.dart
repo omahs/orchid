@@ -19,7 +19,7 @@ void main() async {
   OrchidRoutingStatus().beginPollingStatus();
   OrchidAPI().applicationReady();
   OrchidPlatform.pretendToBeAndroid =
-      OrchidUserConfig().getUserConfigJS().evalBoolDefault('isAndroid', false);
+      OrchidUserConfig().getUserConfig().evalBoolDefault('isAndroid', false);
   if (OrchidPlatform.isApple || OrchidPlatform.isAndroid) {
     OrchidPurchaseAPI().initStoreListener();
   }

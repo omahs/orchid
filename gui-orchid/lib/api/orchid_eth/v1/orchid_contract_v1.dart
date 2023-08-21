@@ -14,7 +14,7 @@ class OrchidContractV1 {
     //   return _testLotteryContractAddressV1;
     // }
     return OrchidUserConfig()
-        .getUserConfigJS()
+        .getUserConfig()
         .evalStringDefault("lottery", _lotteryContractAddressV1);
   }
 

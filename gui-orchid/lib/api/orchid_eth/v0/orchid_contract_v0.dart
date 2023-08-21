@@ -20,7 +20,7 @@ class OrchidContractV0 {
     //   return _testLotteryContractAddressV0;
     // }
     return OrchidUserConfig()
-        .getUserConfigJS()
+        .getUserConfig()
         .evalStringDefault("lottery0", _lotteryContractAddressV0);
   }
 
@@ -33,7 +33,7 @@ class OrchidContractV0 {
       return _testOXTContractAddress;
     }
     return OrchidUserConfig()
-        .getUserConfigJS()
+        .getUserConfig()
         .evalStringDefault("oxt", _oxtContractAddress);
   }
 

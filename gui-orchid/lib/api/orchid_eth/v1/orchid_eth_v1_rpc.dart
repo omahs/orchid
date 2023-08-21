@@ -29,7 +29,7 @@ class OrchidEthereumV1JsonRpcImpl implements OrchidEthereumV1 {
   /// Get gas price cached
   Future<Token> getGasPrice(Chain chain, {bool refresh = false}) async {
     // Allow override via config for testing
-    var jsConfig = OrchidUserConfig().getUserConfigJS();
+    var jsConfig = OrchidUserConfig().getUserConfig();
     // TODO: gas price override should be per-chain
     double? overrideValue = jsConfig.evalDoubleDefaultNull('gasPrice');
     if (overrideValue != null) {

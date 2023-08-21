@@ -353,7 +353,7 @@ class OrchidPACServer {
     log('iap: check PAC server status');
 
     bool overrideDown = OrchidUserConfig()
-        .getUserConfigJS()
+        .getUserConfig()
         .evalBoolDefault('pacs.storeDown', false);
     if (overrideDown) {
       log('iap: override server status');
@@ -375,7 +375,7 @@ class OrchidPACServer {
 
     // parse store message
     var jsonMessage = Json.trimStringOrNull(responseJson['message']);
-    String message = (OrchidUserConfig().getUserConfigJS())
+    String message = (OrchidUserConfig().getUserConfig())
         .evalStringDefault('pacs.storeMessage', jsonMessage ?? '');
 
     // parse the seller address map

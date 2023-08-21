@@ -125,7 +125,7 @@ class _UserConfiguredChainPanelState extends State<UserConfiguredChainPanel> {
       var map = Map.of(Chains.knownChains);
       map.addAll(Chains.userConfiguredChains);
       final allowChainShadowing = OrchidUserConfig()
-          .getUserConfigJS()
+          .getUserConfig()
           .evalBoolDefault('allowChainShadowing', false);
       if (map.containsKey(chainId) && !allowChainShadowing) {
         text =

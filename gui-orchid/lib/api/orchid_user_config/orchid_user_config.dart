@@ -1,7 +1,8 @@
-import 'package:orchid/api/orchid_user_config/orchid_user_param.dart';
-import 'package:orchid/api/orchid_platform.dart';
-import 'package:orchid/api/preferences/user_preferences_ui.dart';
-import 'package:orchid/util/js_config.dart';
+import 'package:orchid/util/user_config.dart';
+
+// Conditionally import the JS implementation on mobile
+import 'orchid_user_config_vpn.dart'
+    if (dart.library.html) 'orchid_user_config_web.dart';
 
 /// This class supports stored JS configuration from user preferences.
 /// See OrchidUserParam for explicit URL parameters in the web context.
@@ -15,25 +16,12 @@ class OrchidUserConfig {
     return _shared;
   }
 
-  /// Return a JS queryable representation of the user-visible configuration.
-  /// On web any supplied user URL parameters are appended and override the
-  /// corresponding stored config values.
-  /// If there is an error parsing the configuation an empty JSConfig is returned.
-  JSConfig getUserConfigJS() {
-    try {
-      var js = UserPreferencesUI().userConfig.get() ?? '';
-      if (OrchidPlatform.isWeb) {
-        js += OrchidUserParams().asJS();
-      }
-      return JSConfig(js);
-    } catch (err) {
-      print("Error parsing user entered configuration as JS: $err");
-    }
-    return JSConfig('');
+  UserConfig getUserConfig() {
+    return UserConfigImpl.getUserConfig();
   }
 
   static bool get isTester {
-    var jsConfig = OrchidUserConfig().getUserConfigJS();
+    var jsConfig = OrchidUserConfig().getUserConfig();
     return jsConfig.evalBoolDefault('tester', false);
   }
 }

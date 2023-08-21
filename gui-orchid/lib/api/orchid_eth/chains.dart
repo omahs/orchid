@@ -26,7 +26,7 @@ class Chains {
 
   // Get the provider URL allowing override in the advanced config
   static String get _overriddenEthereumProviderUrl {
-    var jsConfig = OrchidUserConfig().getUserConfigJS();
+    var jsConfig = OrchidUserConfig().getUserConfig();
     // Note: This var is also used by the tunnel for the eth provider.
     return jsConfig.evalStringDefault('rpc', _defaultEthereumProviderUrl);
   }
