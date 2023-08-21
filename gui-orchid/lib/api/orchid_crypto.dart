@@ -174,6 +174,7 @@ class EthereumAddress {
   EthereumAddress.from(String text) : this.value = parse(text);
 
   static fromNullable(String? text) {
+    if (text == 'null') { return null; }
     return text == null ? null : EthereumAddress.from(text);
   }
 

@@ -29,7 +29,7 @@ void main() {
     test('legacy', () {
       // legacy tx
       var legacyJson =
-          '{"productId":"1234","transactionId":null,"state":"PacTransactionStateV0.Pending","receipt":null,"date":"2021-03-01T22:56:14.085235","retries":"0","serverResponse":null}';
+          '{"productId":"1234","transactionId":null,"state":"Pending","receipt":null,"date":"2021-03-01T22:56:14.085235","retries":"0","serverResponse":null}';
       PacTransaction tx1 = PacTransaction.fromJson(jsonDecode(legacyJson));
       expectTrue(tx1.type == PacTransactionType.None);
       expect(tx1.date, isNotNull);
@@ -37,7 +37,7 @@ void main() {
 
     test('add balance error', () {
       var txIn = PacAddBalanceTransaction.error("error string");
-      PacAddBalanceTransaction tx = roundTrip(txIn) as PacAddBalanceTransaction;
+      var tx = roundTrip(txIn) as PacAddBalanceTransaction;
       expectTrue(tx is PacAddBalanceTransaction);
       expect(tx.state, PacTransactionState.Error);
       expect(tx.serverResponse, "error string");

@@ -88,9 +88,7 @@ class PacTransaction {
 
   PacTransaction.fromJsonBase(Map<String, dynamic> json,
       {PacTransaction? parent})
-      :
-        // type = toTransactionType(json['type']) ?? PacTransactionType.None,
-        type = toTransactionType(json['type']),
+      : type = toTransactionType(json['type']) ?? PacTransactionType.None,
         state = toTransactionState(json['state']),
         date = DateTime.parse(json['date']),
         retries = int.parse(json['retries'] ?? "0"),
@@ -98,8 +96,7 @@ class PacTransaction {
         _parent = parent;
 
   static PacTransaction fromJson(Map<String, dynamic> json) {
-    // var type = toTransactionType(json['type']) ?? PacTransactionType.None;
-    var type = toTransactionType(json['type']);
+    var type = toTransactionType(json['type']) ?? PacTransactionType.None;
     switch (type) {
       case PacTransactionType.None:
         return PacTransaction.fromJsonBase(json);
@@ -140,14 +137,17 @@ class PacTransaction {
   }
 
   // Return the transaction type matching the string name ignoring case
-  static PacTransactionType toTransactionType(String s) {
+  static PacTransactionType? toTransactionType(String? s) {
+    if (s == null) {
+      return null;
+    }
     return PacTransactionType.values.byName(s);
   }
 }
 
 class PacAddBalanceTransaction extends PacTransaction
     implements ReceiptTransaction {
-  EthereumAddress signer;
+  EthereumAddress? signer;
   String productId;
   String? receipt;
   ReceiptType? receiptType;
@@ -163,7 +163,6 @@ class PacAddBalanceTransaction extends PacTransaction
 
   PacAddBalanceTransaction.error(String message)
       : this.productId = '',
-        this.signer = EthereumAddress.zero,
         super.error(
           message: message,
           type: PacTransactionType.AddBalance,
@@ -183,7 +182,7 @@ class PacAddBalanceTransaction extends PacTransaction
       : signer = EthereumAddress.fromNullable(json['signer']),
         productId = json['productId'],
         receipt = json['receipt'],
-        receiptType = ReceiptType.values.byName(json['receiptType']),
+        receiptType = ReceiptType.values.byName(json['receiptType'] ?? 'none'),
         super.fromJsonBase(json, parent: parent);
 
   @override
@@ -212,6 +211,7 @@ class PacAddBalanceTransaction extends PacTransaction
 }
 
 enum ReceiptType {
+  none,
   // ios in-app purchase receipt
   ios,
   // android play store in-app purchase receipt

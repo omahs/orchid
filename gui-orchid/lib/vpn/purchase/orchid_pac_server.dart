@@ -177,13 +177,13 @@ class OrchidPACServer {
 
   Future<String> _callAddBalance(PacAddBalanceTransaction tx) async {
     log('iap: submit add balance tx to PAC server');
-    if (tx.receipt == null) {
+    if (tx.receipt == null || tx.signer == null) {
       log('iap: null receipt');
       throw Exception('receipt is null');
     }
 
     return addBalance(
-        signer: tx.signer,
+        signer: tx.signer!,
         productId: tx.productId,
         receipt: tx.receipt,
         receiptType: tx.receiptType);
@@ -281,7 +281,7 @@ class OrchidPACServer {
       'product_id': productId,
       'receipt': receipt,
     };
-    String method;
+    String? method;
     switch (receiptType) {
       case ReceiptType.ios:
         method = 'payment_apple';
@@ -289,6 +289,8 @@ class OrchidPACServer {
       case ReceiptType.android:
         method = 'payment_google';
         break;
+      case ReceiptType.none:
+        throw Exception('iap: unknown receipt type: $receiptType');
     }
     log('pac_server: sending payment to method: $method');
     var result =
