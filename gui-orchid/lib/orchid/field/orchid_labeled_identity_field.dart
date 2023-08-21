@@ -133,7 +133,7 @@ class _OrchidLabeledImportIdentityFieldState
       widget.onChange(parsed);
       isValid = true;
       log("pasted code valid = $parsed");
-    } catch (err) {
+    } catch (err, stack) {
       widget.onChange(null);
       isValid = false;
       if (fromPaste) {
@@ -141,7 +141,7 @@ class _OrchidLabeledImportIdentityFieldState
       } else if (fromScan) {
         _scanQRCodeError();
       }
-      print("error parsing pasted orchid account: $err");
+      print("error parsing pasted orchid account: $err, \n$stack");
     }
     setState(() {});
   }

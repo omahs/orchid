@@ -10,7 +10,6 @@ import 'package:orchid/orchid/orchid_action_button.dart';
 import 'package:orchid/orchid/orchid_colors.dart';
 import 'package:orchid/pages/circuit/config_change_dialogs.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:jsparser/jsparser.dart';
 import 'package:orchid/util/localization.dart';
 
 import '../../common/app_colors.dart';
@@ -148,9 +147,9 @@ class _AdvancedConfigurationPageState extends State<AdvancedConfigurationPage> {
     var newConfig = _configFileTextController.text;
     try {
       // Just parse it to the AST to catch gross syntax errors.
-      if (newConfig.trim().isNotEmpty) {
-        parsejs(newConfig, filename: 'program.js');
-      }
+      // if (newConfig.trim().isNotEmpty) {
+      //   parsejs(newConfig, filename: 'program.js');
+      // }
     } catch (err) {
       print("Error parsing config: $err");
       ConfigChangeDialogs.showConfigurationChangeFailed(context,

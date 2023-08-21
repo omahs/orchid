@@ -208,7 +208,6 @@ class EthereumAddress {
   }
 
   static BigInt parse(String? text) {
-    print("parse: $text");
     if (text == null) {
       throw Exception("invalid, null");
     }

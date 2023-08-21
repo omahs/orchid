@@ -1,5 +1,6 @@
 import 'package:orchid/api/orchid_crypto.dart';
 import 'package:orchid/api/orchid_eth/orchid_account.dart';
+import 'package:orchid/api/orchid_log.dart';
 import 'package:orchid/api/preferences/user_preferences_keys.dart';
 import 'package:orchid/vpn/preferences/user_preferences_vpn.dart';
 import 'package:orchid/util/hex.dart';
@@ -24,6 +25,7 @@ class OrchidAccountImport {
       return OrchidAccountImport.parseSingleOrchidAccount(config, existingKeys);
     } catch (err) {
       // fall through to next test
+      log("Error parsing single orchid account: $err");
     }
 
     // Try a raw hex signer key
@@ -88,6 +90,7 @@ class OrchidAccountImport {
       // signer info
       final config = JSConfig(js);
       var secret = config.evalString('account.secret');
+      print("account.secret: $secret");
       if (secret == null) {
         throw "Account secret is null";
       }

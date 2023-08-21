@@ -127,14 +127,14 @@ class _ScanOrPasteOrchidIdentityState extends State<ScanOrPasteOrchidIdentity> {
       final parsed = _parse(_pasteField.text);
       widget.onChange(parsed);
       log("pasted code valid = $parsed");
-    } catch (err) {
+    } catch (err, stack) {
       widget.onChange(null);
       if (fromPaste) {
         _pasteCodeError();
       } else if (fromScan) {
         _scanQRCodeError();
       }
-      print("error parsing pasted orchid account: $err");
+      print("error parsing pasted orchid account: $err, \n$stack");
     }
     setState(() {});
   }
