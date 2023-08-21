@@ -21,15 +21,10 @@ dependencies:
   badges: 3.1.1
   browser_detector: 2.0.0
   cupertino_icons: 1.0.2
-
-  dartjsengine:
-    path: dartjsengine/dartjsengine-1.0.1
-
-  fixnum: ^1.1.0
-  flutter_js: ^0.8.0
-
   dotted_border: 2.0.0+2
   email_validator: 2.0.1
+  fixnum: ^1.1.0
+  flutter_js: ^0.8.0
   flutter:
     sdk: flutter
   flutter_html: 3.0.0-alpha.6
