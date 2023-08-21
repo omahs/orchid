@@ -10,8 +10,6 @@ environment:
 dependencies:
   badges: 3.1.1
   cupertino_icons: 1.0.2
-  dartjsengine:
-    path: dartjsengine/dartjsengine-1.0.1
   dotted_border: 2.0.0+2
   email_validator: 2.0.1
   flutter:

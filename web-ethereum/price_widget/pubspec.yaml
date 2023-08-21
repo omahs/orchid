@@ -8,10 +8,6 @@ environment:
 
 dependencies:
   cupertino_icons: 1.0.2
-
-  dartjsengine:
-    path: dartjsengine/dartjsengine-1.0.1
-
   flutter:
     sdk: flutter
   flutter_localizations:
