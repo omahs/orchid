@@ -201,7 +201,9 @@ class _OrchidHopPageState extends State<OrchidHopPage> {
                 return AccountSelectorDialog(
                   accounts: accounts!.toList(),
                   singleSelection: true,
-                  selectedAccounts: Set.from([_selectedAccount]),
+                  selectedAccounts: _selectedAccount != null
+                      ? Set.from([_selectedAccount])
+                      : {},
                   selectedAccountsChanged: (Set<Account> selected) {
                     setState(() {
                       _selectedAccount = selected.first;

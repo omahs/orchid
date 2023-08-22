@@ -144,7 +144,7 @@ void main() {
     test('js util test', () async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final jsEngine =
-      getJavascriptRuntime(forceJavascriptCoreOnAndroid: false);
+          getJavascriptRuntime(forceJavascriptCoreOnAndroid: false);
       JsEvalResult eval = jsEngine.evaluate("42.0;");
       print(eval);
       eval = jsEngine.evaluate("true");
@@ -172,13 +172,32 @@ void main() {
         },
       ]
       """;
-      final jsEngine = getJavascriptRuntime(forceJavascriptCoreOnAndroid: false);
+      final jsEngine =
+          getJavascriptRuntime(forceJavascriptCoreOnAndroid: false);
       JsEvalResult eval = jsEngine.evaluate(js);
       eval = jsEngine.evaluate("JSON.stringify(accounts)");
       var json = jsonDecode(eval.toString());
-      for(var account in json) {
+      for (var account in json) {
         print(account['version'].runtimeType);
       }
+    });
+
+    test('js util test 3', () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      // Note: Not a real key, just for testing.
+      var js = 'account={ secret: "128967e28f170a389664e98a701781de4cb18f6f1a1ba00ca4bdd62dd92430c3" }';
+      final jsEngine = getJavascriptRuntime(forceJavascriptCoreOnAndroid: false);
+      JsEvalResult eval = jsEngine.evaluate(js);
+      eval = jsEngine.evaluate("account.secret");
+      print(eval.toString());
+      eval = jsEngine.evaluate("account.foo");
+      print("account.foo = " +eval.toString());
+      try {
+        eval = jsEngine.evaluate("bar");
+      }catch(err) {
+        print("error fetching bar = " +err.toString());
+      }
+      print("bar = " +eval.toString());
     });
 
     //

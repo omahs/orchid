@@ -14,11 +14,18 @@ class JSConfig extends UserConfig {
   }
 
   dynamic evalObject(String expression) {
-    return jsonDecode(jsEngine.evaluate("JSON.stringify($expression)").toString());
+    return jsonDecode(
+        jsEngine.evaluate("JSON.stringify($expression)").toString());
   }
 
   @override
   String? get(String expression) {
-    return jsEngine.evaluate(expression).toString();
+    var result = jsEngine.evaluate(expression).toString();
+    if (result == 'undefined' ||
+        // UG... this api returns string error messages.
+        result.startsWith("ERROR: Can't find variable:")) {
+      return null;
+    }
+    return result;
   }
 }

@@ -90,7 +90,6 @@ class OrchidAccountImport {
       // signer info
       final config = JSConfig(js);
       var secret = config.evalString('account.secret');
-      print("account.secret: $secret");
       if (secret == null) {
         throw "Account secret is null";
       }
@@ -127,7 +126,7 @@ class OrchidAccountImport {
     var secret = secretIn.toLowerCase().trim();
     RegExp hexEncodedSecret = RegExp(r'^(0x)?[a-f0-9]{64}$');
     if (!hexEncodedSecret.hasMatch(secret)) {
-      throw Exception("Invalid key");
+      throw Exception("Invalid key: $secret");
     }
     try {
       var newKeys = <StoredEthereumKey>[];
